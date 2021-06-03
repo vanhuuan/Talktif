@@ -1,0 +1,25 @@
+@{
+    ViewData["Title"] = "Chat";
+}
+
+<head>
+    <link rel="stylesheet" href="~/css/Chat.css" />
+</head>
+
+<body>
+    <div class="row chat-page">
+        <div class="container mx-auto chat-box">
+            <div id="chatMessages" class="container h-100">
+            </div>
+            <div class="container chat-action">
+                <form class="form-inline p-3">
+                    <input id="messageInput" class="form-control chat-input mr-auto" type="text" placeholder="Nhập tin nhắn" />
+                    <button id="sendButton" type="submit" class="btn btn-success ml-auto">Gửi</button>
+                </form>
+            </div>
+        </div>
+        <button id="skipButton" class="btn btn-danger m-auto">Bỏ qua</button>
+    </div>
+    <script src="~/js/signalr/dist/browser/signalr.js"></script>
+    <script src="~/js/chat.js"></script>
+</body>

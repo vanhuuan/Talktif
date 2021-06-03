@@ -9,7 +9,7 @@ using Talktif.Models;
 using Talktif.Repository;
 using Microsoft.AspNetCore.Http;
 
-namespace Program.Controllers
+namespace Talktif.Controllers
 {
     public class UserController : Controller
     {

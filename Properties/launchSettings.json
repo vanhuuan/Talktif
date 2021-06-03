@@ -15,7 +15,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "Program": {
+    "Talktif": {
       "commandName": "Project",
       "dotnetRunMessages": "true",
       "launchBrowser": true,

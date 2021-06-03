@@ -9,7 +9,7 @@ using Talktif.Models;
 using Talktif.Repository;
 using Newtonsoft.Json;
 
-namespace Program.Controllers
+namespace Talktif.Controllers
 {
     public class LoginController : Controller
     {
