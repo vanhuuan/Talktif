@@ -1,4 +1,4 @@
-@model global::Talktif.Models.ViewModel;
+@model global::Talktif.Models.FriendsViewModel;
 @{
     ViewData["Title"] = "Chat";
 }
@@ -15,11 +15,11 @@
         }
     </form>
     <div class="container">
-        @foreach (var item in Model.UserFavs)
+        @foreach (var item in Model.RoomList)
         {
             <div class="m-2">
-                @using(Html.BeginForm("Chat", "Home", new {fromID = Model.UserID , toID = item.ID} ,FormMethod.Post)){
-                <button name="chatUser" class="btn btn-success" value=@item.ID>@item.ToString()</button>
+                @using(Html.BeginForm("Chat", "Home", new {fromID = Model.UserID , toID = item.id} ,FormMethod.Post)){
+                <button name="chatUser" class="btn btn-success" value=@item.id>@item.ToString()</button>
                 }
             </div>
         }

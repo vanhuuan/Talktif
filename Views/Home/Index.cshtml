@@ -1,57 +1,10 @@
-﻿@model global::Talktif.Models.ViewModel;
+﻿@* @model global::Talktif.Models.ViewModel; *@
 @{
     ViewData["Title"] = "Home Page";
 }
-
-@if (Model == null)
-{
-    @using(Html.BeginForm("Index", "Home" ,FormMethod.Post)){
-    <form class="container">
-        <div class="row">&nbsp;</div>
-        <div class="row">
-            <div class="col-2">User ID</div>
-            <div class="col-2">@Html.TextBoxFor(m => m.UserID)</div>
-        </div>
-        <div class="row">
-            <div class="col-2"><input type="submit" id="displayBtn" value="Display" /></div>
-        </div>
-    </form>
-    }
-}
-else
-{
-    <h3 id="roomID">@Model.RoomID</h3>
-    <form class="container">
-        <div class="row">&nbsp;</div>
-        @if (Model.RoomID > 0){
-        <div class="row">
-            <div class="col-2">Message</div>
-            <div class="col-4"><input type="text" id="messageInput" /></div>
-            <div class="row"><input type="submit" id="sendButton" value="Send" /></div>
-        </div>
-        }
-    </form>
-    <div class="container">
-        @foreach (var item in Model.UserFavs)
-        {
-            <div class="m-2">
-                @using(Html.BeginForm("Index", "Home", new {userID = Model.UserID , toID = item.ID} ,FormMethod.Post)){
-                <button name="chatUser" class="btn btn-success" value=@item.ID>@item.ToString()</button>
-                }
-            </div>
-        }
-    </div>
-    <div class="row">
-        <div class="col-12">
-            <hr />
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-6">
-            <ul id="messagesList"></ul>
-        </div>
-    </div>
-}
-<script src="~/js/signalr/dist/browser/signalr.js"></script>
-<script src="~/js/chat.js"></script>
-
+@using Talktif.Models
+@model User_Infor
+<div class="text-center">
+    <h1 class="display-4">Welcome @Model.name</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>

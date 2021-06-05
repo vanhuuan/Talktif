@@ -33,7 +33,7 @@
         <a href="#" class="navbar-brand text-center img-logo">
             <img src="../img/logo_main.png" alt="" srcset="" />
         </a>
-        <form action = "/User/Home" method = "POST">
+        <form action = "/User/Logout" method = "POST">
             <button class="btn btn-exit">
                 Thoát <i class="fas fa-chevron-circle-right"></i>
             </button>
@@ -79,27 +79,19 @@
                     </a>
                 </li>
                 <li>
-                    <a asp-controller="User" asp-action="History">   
-                        <i class="fas fa-th-list"></i>
-                        <span>
-                            Lịch Sử
-                        </span>
+                    <a asp-controller="Chat" asp-action="Index">
+                        <i class="fas fa-envelope"></i>
+                        <span>Nhắn tin</span>
                     </a>
                 </li>
                 <li>
-                    <a href="">
+                    <a asp-controller="Chat" asp-action="Friends">
                         <i class="fas fa-user-friends"></i>
                         <span>Bạn Bè</span>
                     </a>
                 </li>
                 <li>
-                    <a href="">
-                        <i class="fas fa-envelope"></i>
-                        <span>Tin Nhắn</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="">
+                    <a asp-controller = "User" asp-action= "Setting">
                         <!-- <span class="ti-settings icon"></span> -->
                         <i class="fas fa-cogs"></i>
                         <span>Cài Đặt</span>

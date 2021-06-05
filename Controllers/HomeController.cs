@@ -25,42 +25,25 @@ namespace Talktif.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            // if(Repo.Instance.data == null)
-            // {
-            //     Repo.Instance.data = new User_Infor();
-            //     return RedirectToAction("Login","Login");
-            // } 
-            // //return View(Repo.Instance.data);
-            // if(Repo.Instance.data.isAdmin == false) return RedirectToAction("Home","User");
-            // else return RedirectToAction("Home","Admin");
-            return RedirectToAction("Index", "Chat");
-        } 
-        
-        // [HttpGet]
-        // [Route("VerifyEmail")]
-        // public IActionResult VerifyEmail(int id,string token)
+            if(UserRepo.Instance.data == null)
+            {
+                return RedirectToAction("Index","Login");
+            }
+            if(UserRepo.Instance.data.isAdmin == false) return RedirectToAction("Home","User");
+            else return RedirectToAction("Home","Admin");
+        }
+
+        // [HttpPost]
+        // public IActionResult Index(int userID, int toID = -1)
         // {
-        //     try{
-        //         Console.WriteLine(id+ " "+token);
-        //         Repo.Instance.VertifyEmail(id,token);
-        //         return RedirectToAction("Login","Login"); 
-        //     }catch (Exception e){
-        //         Console.WriteLine(e.Message);
-        //         return RedirectToAction("Login","Login");
-        //     }
+        //     ViewModel vm = new ViewModel(userID, _repository.FetchRoomID(userID, toID), _repository.FetchUserFavs(userID));
+        //     return View(vm);
         // }
 
-        [HttpPost]
-        public IActionResult Index(int userID, int toID = -1)
-        {
-            ViewModel vm = new ViewModel(userID, _repository.FetchRoomID(userID, toID), _repository.FetchUserFavs(userID));
-            return View(vm);
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
-        }
+        // public IActionResult Privacy()
+        // {
+        //     return View();
+        // }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

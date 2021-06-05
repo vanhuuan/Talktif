@@ -6,11 +6,10 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Program;
 
 namespace Talktif
 {
-    public class Program
+    public class Talktif
     {
         public static void Main(string[] args)
         {

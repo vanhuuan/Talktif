@@ -2,6 +2,18 @@
 var connection = new signalR.HubConnectionBuilder().withUrl("/chathub").build();
 var userCnnID;
 
+function AddMessage(user, room, msg, token) {
+  var xhr = new XMLHttpRequest();
+  xhr.open(
+    "POST",
+    "https://talktifapi.azurewebsites.net/api/Chat/AddMessage",
+    true
+  );
+  xhr.setRequestHeader("Content-Type", "application/json");
+  xhr.setRequestHeader("Authorization", "Bearer " + token);
+  xhr.send(`{"Message":"${msg}","IdSender":"${user}","idChatRoom":"${room}"}`);
+}
+
 //Disable send button until connection is established
 document.getElementById("sendButton").disabled = true;
 
@@ -39,7 +51,7 @@ connection
   .then(function () {
     if (!userCnnID) userCnnID = connection.connectionId;
     document.getElementById("sendButton").disabled = false;
-    connection.invoke("AddToQueue", userID, username).catch((err) => {
+    connection.invoke("JoinFriendChat", String(roomID)).catch((err) => {
       return console.error(err.toString());
     });
   })
@@ -48,7 +60,7 @@ connection
   });
 
 window.onbeforeunload = function () {
-  connection.invoke("LeaveChat", userID, username).catch((err) => {
+  connection.invoke("LeaveFriendChat", String(roomID)).catch((err) => {
     return console.error(err.toString());
   });
 };
@@ -57,29 +69,16 @@ document
   .getElementsByTagName("form")[0]
   .addEventListener("submit", function (event) {
     event.preventDefault();
+
+    // Send msg real-time
     var message = document.getElementById("messageInput").value;
     document.getElementById("messageInput").value = "";
-    connection.invoke("SendMessage", message).catch(function (err) {
-      return console.error(err.toString());
-    });
-  });
-
-if (userID) {
-  document
-    .getElementById("addFriendButton")
-    .addEventListener("click", function (event) {
-      event.preventDefault();
-      connection.invoke("AddFriend").catch((err) => {
+    connection
+      .invoke("SendFriendMessage", String(roomID), message)
+      .catch(function (err) {
         return console.error(err.toString());
       });
-    });
-}
 
-document
-  .getElementById("skipButton")
-  .addEventListener("click", function (event) {
-    event.preventDefault();
-    connection.invoke("SkipChat", userID, username).catch((err) => {
-      return console.error(err.toString());
-    });
+    // Call API add message
+    AddMessage(String(userID), String(roomID), message, token);
   });

@@ -27,9 +27,9 @@ namespace Talktif.Controllers
 
                 Message m = new Message
                 {
-                    User = user,
-                    Content = message,
-                    SentAt = DateTime.Now
+                    sender = user.Length,
+                    content = message,
+                    sentAt = DateTime.Now
                 };
                 messagesList.Add(m);
             });

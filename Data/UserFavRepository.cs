@@ -10,18 +10,18 @@ namespace Talktif.Data
 {
     public interface IUserFavRepository
     {
-        List<UserFav> FetchUserFavs(int userID);
+        List<Room> FetchUserFavs(int userID);
         int FetchRoomID(int user, int destID);
     }
     public class UserFavRepository : IUserFavRepository
     {
-        public List<UserFav> FetchUserFavs(int userID)
+        public List<Room> FetchUserFavs(int userID)
         {
             string jsonString = File.ReadAllText("Data/SampleUserFav.json", Encoding.UTF8);
-            List<UserFav> data = JsonSerializer.Deserialize<List<UserFav>>(jsonString);
-            foreach (UserFav i in data)
+            List<Room> data = JsonSerializer.Deserialize<List<Room>>(jsonString);
+            foreach (Room i in data)
             {
-                if (i.ID == userID)
+                if (i.id == userID)
                 {
                     data.Remove(i);
                     break;

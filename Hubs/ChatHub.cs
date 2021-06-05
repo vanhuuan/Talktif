@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.SignalR;
 using System.Threading.Tasks;
 using Talktif.Models;
+using Talktif.Repository;
 
 namespace Talktif.Hubs
 {
@@ -30,11 +31,13 @@ namespace Talktif.Hubs
             //     System.Console.WriteLine(item.ConnectionID);
             // }
         }
-        public async Task AddToQueue()
+        public async Task AddToQueue(int userID, string username)
         {
             RandomRoom room = QueueManager.Instance.Enqueue(new WaitUser
             {
-                ConnectionID = Context.ConnectionId
+                ConnectionID = Context.ConnectionId,
+                UserID = userID,
+                UserName = username
             });
 
             if (room != null)
@@ -63,14 +66,16 @@ namespace Talktif.Hubs
             // }
         }
 
-        public async Task LeaveChat()
+        public async Task LeaveChat(int userID, string username)
         {
             if (RoomManager.Instance.GetRoom(Context.ConnectionId) != null)
             {
                 // If user leaves while in a room
                 RandomRoom room = RoomManager.Instance.RemoveRoom(new WaitUser
                 {
-                    ConnectionID = Context.ConnectionId
+                    ConnectionID = Context.ConnectionId,
+                    UserID = userID,
+                    UserName = username
                 });
                 if (room != null)
                 {
@@ -120,11 +125,13 @@ namespace Talktif.Hubs
             // }
         }
 
-        public async Task SkipChat()
+        public async Task SkipChat(int userID, string username)
         {
             WaitUser user = new WaitUser
             {
-                ConnectionID = Context.ConnectionId
+                ConnectionID = Context.ConnectionId,
+                UserID = userID,
+                UserName = username
             };
             RandomRoom usrroom = RoomManager.Instance.GetRoom(user.ConnectionID);
             if (usrroom != null)
@@ -175,6 +182,52 @@ namespace Talktif.Hubs
             // {
             //     System.Console.WriteLine(item.ConnectionID);
             // }
+        }
+
+        public async Task AddFriend()
+        {
+            RandomRoom room = RoomManager.Instance.GetRoom(Context.ConnectionId);
+            if (room != null)
+            {
+                foreach (WaitUser usr in room.Members)
+                {
+                    if (usr.UserID <= 0) {
+                        await Clients.Group(room.ID).BroadcastMessage($"Người dùng {Context.ConnectionId} đề xuất kết bạn thất bại vì ít nhất 1 trong 2 người chưa đăng nhập!");
+                        return;
+                    }
+                    if (usr.ConnectionID == Context.ConnectionId) usr.FriendRequest = true;
+                }
+
+                await Clients.Group(room.ID).BroadcastMessage($"Người dùng {Context.ConnectionId} đã đề xuất kết bạn!");
+
+                // Call API create chat room
+                if (room.Members.Length >= 2 && room.Members[0].FriendRequest && room.Members[1].FriendRequest)
+                {
+                    ChatRepo.Instance.CreateChatRoom(new CreateChatRoomRequest
+                    {
+                        User1Id = room.Members[0].UserID,
+                        User2Id = room.Members[1].UserID,
+                        User1NickName = room.Members[0].UserName,
+                        User2NickName = room.Members[1].UserName
+                    });
+                }
+            }
+        }
+
+        // Friend Chat
+        public async Task JoinFriendChat(string roomID)
+        {
+            await Groups.AddToGroupAsync(Context.ConnectionId, roomID);
+            await Clients.Group(roomID).BroadcastMessage($"Người dùng {Context.ConnectionId} đã tham gia phòng chat {roomID}.");
+        }
+        public async Task LeaveFriendChat(string roomID)
+        {
+            await Groups.RemoveFromGroupAsync(Context.ConnectionId, roomID);
+            await Clients.Group(roomID).BroadcastMessage($"Người dùng {Context.ConnectionId} đã tham gia phòng chat {roomID}.");
+        }
+        public async Task SendFriendMessage(string roomID, string message)
+        {
+            await Clients.Group(roomID).ReceiveMessage(Context.ConnectionId, message);
         }
     }
 }

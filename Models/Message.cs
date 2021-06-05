@@ -3,8 +3,9 @@ namespace Talktif.Models
 {
     public class Message
     {
-        public string User { get; set; }
-        public string Content { get; set; }
-        public DateTime SentAt { get; set; }
+        public int id { get; set; }
+        public int sender { get; set; }
+        public string content { get; set; }
+        public DateTime sentAt { get; set; }
     }
 }

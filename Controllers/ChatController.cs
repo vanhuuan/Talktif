@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using Talktif.Models;
 using Talktif.Data;
 using Talktif.Repository;
@@ -24,20 +25,59 @@ namespace Talktif.Controllers
 
         public IActionResult Index()
         {
-            return View();
-        } 
-
-        [HttpPost]
-        public IActionResult Index(int userID, int toID = -1)
+            User_Infor usr = UserRepo.Instance.data;
+            return View(usr);
+        }
+        public IActionResult Friends(int? id)
         {
-            ViewModel vm = new ViewModel(userID, _repository.FetchRoomID(userID, toID), _repository.FetchUserFavs(userID));
+            // Get user info and pre-setup
+            User_Infor usr = UserRepo.Instance.data;
+            if (usr == null)
+            {
+                return RedirectToAction("Index", "Login");
+            };
+
+            FriendsViewModel vm = new FriendsViewModel
+            {
+                UserID = usr.id,
+                UserToken = usr.token,
+                RoomID = id != null ? (int)id : 0
+            };
+
+            // Fetch all chat rooms
+            var chatroomResult = ChatRepo.Instance.FetchAllChatRoom(usr.id);
+            string crstring = chatroomResult.Content.ReadAsStringAsync().Result;
+            if (chatroomResult.IsSuccessStatusCode)
+            {
+                vm.RoomList = JsonConvert.DeserializeObject<List<Room>>(crstring);
+            }
+
+            // Fetch all messages
+            if (vm.RoomID > 0)
+            {
+                FetchMessageRequest req = new FetchMessageRequest
+                {
+                    RoomId = vm.RoomID,
+                    Top = 20
+                };
+                var messagesResult = ChatRepo.Instance.FetchMessage(req);
+                string mrstring = messagesResult.Content.ReadAsStringAsync().Result;
+                if (messagesResult.IsSuccessStatusCode)
+                {
+                    vm.Messages = JsonConvert.DeserializeObject<List<Message>>(mrstring).OrderBy(m => m.sentAt).ToList();
+                }
+            }
             return View(vm);
         }
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
+        // [HttpPost]
+        // public IActionResult Index(int userID, int toID = -1)
+        // {
+        // }
+        // public IActionResult Privacy()
+        // {
+        //     return View();
+        // }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

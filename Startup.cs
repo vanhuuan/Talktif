@@ -11,7 +11,7 @@ using Microsoft.Extensions.Hosting;
 using Talktif.Hubs;
 using Talktif.Data;
 
-namespace Program
+namespace Talktif
 {
     public class Startup
     {

@@ -1,3 +1,5 @@
+@using Talktif.Models;
+@model User_Infor;
 @{
     ViewData["Title"] = "Chat";
 }
@@ -13,13 +15,33 @@
             </div>
             <div class="container chat-action">
                 <form class="form-inline p-3">
-                    <input id="messageInput" class="form-control chat-input mr-auto" type="text" placeholder="Nhập tin nhắn" />
+                    <input id="messageInput" class="form-control chat-input mr-auto" type="text"
+                        placeholder="Nhập tin nhắn" />
                     <button id="sendButton" type="submit" class="btn btn-success ml-auto">Gửi</button>
                 </form>
             </div>
         </div>
-        <button id="skipButton" class="btn btn-danger m-auto">Bỏ qua</button>
+        <div class="m-auto">
+            @if (Model != null)
+            {
+                <button id="addFriendButton" class="btn btn-primary m-4"
+                title="Sau khi kết bạn, cả 2 sẽ biết tên hiển thị của nhau và có thể chat lần sau.">Kết bạn</button>
+            }
+            <button id="skipButton" class="btn btn-danger m-4">Bỏ qua</button>
+        </div>
     </div>
     <script src="~/js/signalr/dist/browser/signalr.js"></script>
+    @if (Model != null)
+    {
+        <script type="text/javascript">
+            var userID = @Model.id, username = "@Model.name";
+        </script>
+    }
+    else
+    {
+        <script type="text/javascript">
+            var userID = 0, username = null;
+        </script>
+    }
     <script src="~/js/chat.js"></script>
 </body>

@@ -20,25 +20,24 @@ namespace Talktif.Controllers
             _logger = logger;
         }
         [HttpGet]
-        public IActionResult Login()
+        public IActionResult Index(MessageRequest m)
         {
-            return View();
+            return View(m);
         }
         [HttpPost]
         public IActionResult Sign_In(IFormCollection form)
         {
             LoginRequest lr = new LoginRequest(){Email = form["Email"].ToString(),Password = form["Password"].ToString(),Device = (System.Environment.MachineName).ToString()};
-            var loginResult = Repo.Instance.Sign_In(lr);
-            Console.WriteLine(loginResult);
+            var loginResult = UserRepo.Instance.Sign_In(lr);
+            //Console.WriteLine(loginResult);
+            string a = loginResult.Content.ReadAsStringAsync().Result;
             if(loginResult.IsSuccessStatusCode){
-                string a = loginResult.Content.ReadAsStringAsync().Result;
-                Repo.Instance.data = JsonConvert.DeserializeObject<User_Infor>(a);
-                
-                //Repo.Instance.ShowInformation();
-                
+                UserRepo.Instance.data = new User_Infor();
+                UserRepo.Instance.data = JsonConvert.DeserializeObject<User_Infor>(a);
                 return RedirectToAction("Index","Home");
             }
-            return RedirectToAction("Login");
+            MessageRequest m = new MessageRequest(){Message = a};
+            return RedirectToAction("Login",m);
         }
         [HttpPost]
         public IActionResult Sign_Up(IFormCollection form)
@@ -48,22 +47,46 @@ namespace Talktif.Controllers
                 Email = form["Email"].ToString(),
                 Password = form["Password"].ToString(),
                 Gender = true,
-                CityId = 49,
-                Hobbies = "hook up",
+                CityId = 15,
+                Hobbies = "",
                 Device = System.Environment.MachineName,
             };
-            var signUpResult = Repo.Instance.Sign_Up(sr);
+            var signUpResult = UserRepo.Instance.Sign_Up(sr);
+            string a = signUpResult.Content.ReadAsStringAsync().Result;
             if(signUpResult.IsSuccessStatusCode)
             {
-                string a = signUpResult.Content.ReadAsStringAsync().Result;
-                Repo.Instance.data = JsonConvert.DeserializeObject<User_Infor>(a);
+                UserRepo.Instance.data = JsonConvert.DeserializeObject<User_Infor>(a);
                 return RedirectToAction("Index","Home");
             }
-            return RedirectToAction("Login");
+            MessageRequest m = new MessageRequest(){Message = a};
+            return RedirectToAction("Login",m);
         }
         public IActionResult ForgotPass()
         {
             return View();
+        }
+        [HttpPost]
+        public IActionResult ForgotPass(IFormCollection form)
+        {
+            ResetPassRequest rp = new ResetPassRequest(){Email = form["Email"].ToString()};
+            var resetPassResult = UserRepo.Instance.ResetPass(rp);
+            Console.WriteLine(resetPassResult);
+            string a = resetPassResult.Content.ReadAsStringAsync().Result;
+            if(resetPassResult.IsSuccessStatusCode)
+            {
+                //sent a to new page
+                return RedirectToAction("ResetPasswordEmail");
+            }//else sent to old page and the message 
+            return NotFound();
+        }
+        public IActionResult ResetPasswordEmail()
+        {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult ResetPasswordEmail(IFormCollection form)
+        {
+            return NotFound();
         }
     }
 }
