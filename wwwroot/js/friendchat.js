@@ -33,6 +33,13 @@ connection.on("ReceiveMessage", function (user, message) {
   div.className = "row w-100 m-0";
   div.appendChild(span);
   document.getElementById("chatMessages").appendChild(div);
+  if (user != userCnnID) {
+    var messAudio = new Audio("message.mp3");
+    messAudio.play();
+  }
+  document
+    .getElementById("chatMessages")
+    .scrollTo(0, document.getElementById("chatMessages").scrollHeight);
 });
 
 connection.on("BroadcastMessage", function (message) {
@@ -44,6 +51,9 @@ connection.on("BroadcastMessage", function (message) {
   var li = document.createElement("li");
   li.textContent = encodedMsg;
   document.getElementById("chatMessages").appendChild(li);
+  document
+    .getElementById("chatMessages")
+    .scrollTo(0, document.getElementById("chatMessages").scrollHeight);
 });
 
 connection
