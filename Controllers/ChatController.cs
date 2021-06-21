@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Talktif.Models;
-using Talktif.Data;
+using Talktif.Service;
 using Talktif.Repository;
 
 namespace Talktif.Controllers
@@ -15,23 +15,25 @@ namespace Talktif.Controllers
     public class ChatController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly IUserFavRepository _repository;
+        private IUserService _userService;
+        private IChatRepo _chatRepo;
 
-        public ChatController(ILogger<HomeController> logger, IUserFavRepository repository)
+        public ChatController(ILogger<HomeController> logger, IUserService userService, IChatRepo chatRepo)
         {
             _logger = logger;
-            _repository = repository;
+            _userService = userService;
+            _chatRepo = chatRepo;
         }
 
         public IActionResult Index()
         {
-            User_Infor usr = UserRepo.Instance.data;
+            User_Infor usr = _userService.Get_User_Infor(Request, Response);
             return View(usr);
         }
         public IActionResult Friends(int? id)
         {
             // Get user info and pre-setup
-            User_Infor usr = UserRepo.Instance.data;
+            User_Infor usr = _userService.Get_User_Infor(Request, Response);
             if (usr == null)
             {
                 return RedirectToAction("Index", "Login");
@@ -45,7 +47,7 @@ namespace Talktif.Controllers
             };
 
             // Fetch all chat rooms
-            var chatroomResult = ChatRepo.Instance.FetchAllChatRoom(usr.id);
+            var chatroomResult = _chatRepo.FetchAllChatRoom(usr.id, usr.token);
             string crstring = chatroomResult.Content.ReadAsStringAsync().Result;
             if (chatroomResult.IsSuccessStatusCode)
             {
@@ -55,12 +57,7 @@ namespace Talktif.Controllers
             // Fetch all messages
             if (vm.RoomID > 0)
             {
-                FetchMessageRequest req = new FetchMessageRequest
-                {
-                    RoomId = vm.RoomID,
-                    Top = 20
-                };
-                var messagesResult = ChatRepo.Instance.FetchMessage(req);
+                var messagesResult = _chatRepo.FetchMessage(usr.id, vm.RoomID, 20, usr.token);
                 string mrstring = messagesResult.Content.ReadAsStringAsync().Result;
                 if (messagesResult.IsSuccessStatusCode)
                 {
@@ -70,14 +67,6 @@ namespace Talktif.Controllers
             return View(vm);
         }
 
-        // [HttpPost]
-        // public IActionResult Index(int userID, int toID = -1)
-        // {
-        // }
-        // public IActionResult Privacy()
-        // {
-        //     return View();
-        // }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

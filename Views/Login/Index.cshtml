@@ -1,11 +1,14 @@
+@using Talktif.Models;
 @{
     Layout = null;
+    string Message = (ViewBag.Message != null) ? ViewBag.Message : "";
+    List<City> cities = new List<City>();
+    if (ViewBag.Cities != null)
+    {
+        cities = ViewBag.Cities;
+    }
 }
-@using Talktif.Models;
-@model MessageRequest;
-@{
-    ViewData["Message"] = (Model != null) ? Model.Message : "";
-}
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -15,7 +18,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="../css/Login.css" />
 
     <!-- jQuery library -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -30,31 +33,22 @@
 
 <body>
     <section>
-        <!-- <div class="circle">
-            <div class="circle-one"></div>
-            <div class="circle-two"></div>
-        </div> -->
         <img src="../img/shape.png" class="square" alt="" />
         <div class="form_1">
             <header>
-                <!-- <a href="#"><img src="img/logo.jpg" class="logo" alt=""></a> -->
                 <div class="logo">
-                    <!-- <div class="small-circle-1"></div>
-                    <div class="small-circle-2"></div>
-                    <div class="small-circle-3"></div> -->
-                    <!-- <a href="#">
-                        <h2 class="title">TALKTIF</h2>
-                    </a> -->
                     <a href=""><img src="../img/logo_main.png" alt="" srcset="" class="logo_main" /></a>
                 </div>
             </header>
             <div class="container">
-                <div class="row">
+                <div class="row main-section">
                     <div class="textbox col-lg-7 col-md-7 col-sm-7 col-xs-7">
                         <h2 class="name">Chat App Community</h2>
                         <p>
-                            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vitae id totam sint impedit consequuntur culpa quia, sed corrupti doloremque odio delectus iusto esse alias natus voluptatibus earum modi dolorum eligendi.
-                            @ViewData["Message"]
+                            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vitae id totam sint impedit
+                            consequuntur culpa quia, sed corrupti doloremque odio delectus iusto esse alias natus
+                            voluptatibus earum modi dolorum eligendi.
+                            @Message
                         </p>
                     </div>
                     <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
@@ -63,11 +57,6 @@
                 </div>
             </div>
             <div class="btn-group">
-                @* <a class="text-dark">
-                <button class="submit mt-4 resize_font mr-1">
-                    Get Started
-                </button>
-                </a> *@
                 <a class="submit mt-4 resize_font mr-1 action_home" href="/chat">Get Started</a>
                 <button id="#dangnnhap" data-toggle="collapse" aria-expanded="false" class="mt-4 ml-3 resize_font submit">
                     Sign In
@@ -80,20 +69,37 @@
         </div>
     </section>
     <!-- // Form Login -->
-    <div id="wrapper" class="collapse cont">
+    <div id="wrapper" class="cont">
+        <div class="img-mobile">
+            <div class="img-text m-up-sign-up">
+                <h5>New here?</h5>
+                <p>Sign up and discover great amount of new opportunities!</p>
+            </div>
+            <div class="img-text m-up-sign-in">
+                <h5>One of us?</h5>
+                <p>
+                    If you already has an account, just sign in. We've missed you!
+                </p>
+            </div>
+            <div class="img-btn-mobile">
+                <span class="m-up-sign-up">Sign Up</span>
+                <span class="m-in-sign-in">Sign In</span>
+            </div>
+        </div>
         <div class="form sign-in">
             <h2>Sign In</h2>
-            <form action="/Login/Sign_In" method="post" class="form_user">
-                <input id="login_email" type="email" name="Email" placeholder="Email Address" value="" oninput="CheckEmail(event)" />
-                <div id="error_email" class="text-center"></div>
-                <input id="login_password" type="password" name="password" placeholder="Password" value="" oninput="CheckPassword(event)" />
-                <div id="error_password" class="text-center"></div>
-                <button type="submit" id="btnDangNhap" class="submit" type="button" >
+            <form action="/Login/Sign_In" method="POST" class="form_user">
+                <input id="login_email" type="email" name="Email" placeholder="Email Address" value=""
+                    oninput="CheckEmail(event)" />
+                <div id="error_email" class="text-center font-error"></div>
+                <input id="login_password" type="password" name="password" placeholder="Password" value=""
+                    oninput="CheckPassword(event)" />
+                <div id="error_password" class="text-center font-error"></div>
+                <button type="submit" id="btnDangNhap" class="submit" type="button">
                     Sign In
                 </button>
             </form>
             <p class="forgot-pass"><a asp-controller="Login" asp-action="ForgotPass">Forgot Password ?</a></p>
-            
 
             <div class="social-media">
                 <ul>
@@ -101,7 +107,6 @@
                         <a href="https://www.facebook.com" target="_blank"><img src="../img/facebook.png" /></a>
                     </li>
                     <li><img src="../img/search (1).png" /></li>
-                    <li><img src="../img/github-sign.png" /></li>
                 </ul>
             </div>
         </div>
@@ -127,86 +132,167 @@
                 <h2>Sign Up</h2>
                 <form action="/Login/Sign_Up" method="post" id="form_login">
                     <input id="name" type="text" name="Name" placeholder="Name" oninput="CheckName(event)" />
-                    <div id="error_name" class="text-center"></div>
-                    <input id="email" type="email" name = "Email" placeholder="Email" oninput="CheckEmail_SignUp(event)" />
-                    <div id="error_email_sign_up" class="text-center"></div>
-                    <input id="password" type="password" name = "Password" placeholder="Password" oninput="CheckPassword_SignUp()" />
-                    <div id="error_password_sign_up" class="text-center"></div>
-                    <input id="confirm_password" type="password" placeholder="Confirm Password" oninput="CheckConfirmPassword(event)" />
-                    <div id="error_confirm_password" class="text-center"></div>
-                    <button id="Confirm_SignIn" type="submit" class="submit submit_sign_up" data-toggle="collapse" aria-expanded="false" >
-              Sign Up Now
-            </button>
+
+                    <input id="email" type="email" name="Email" placeholder="Email"
+                        oninput="CheckEmail_SignUp(event)" />
+                    <div id="error_name" class="text-center font-error"></div>
+                    <div id="error_email_sign_up" class="text-center font-error"></div>
+
+                    <input id="password" type="password" name="Password" placeholder="Password"
+                        oninput="CheckPassword_SignUp()" />
+
+                    <input id="confirm_password" type="password" placeholder="Confirm Password"
+                        oninput="CheckConfirmPassword(event)" />
+                    <div id="error_password_sign_up" class="text-center font-error"></div>
+                    <div id="error_confirm_password" class="text-center font-error"></div>
+
+                    <div class="hobbies-ls">
+                        <div class="hobbies-title">
+                            <span>Hobbies</span>
+                        </div>
+
+                        <div class="hobbies-select">
+
+                            <div class="hobbies">
+                                <input type="checkbox" value="Sport" name="hobbies" />Sport
+                            </div>
+
+
+                            <div class="hobbies">
+                                <input type="checkbox" value="Sport" name="hobbies" /> Travel
+                            </div>
+
+
+                            <div class="hobbies">
+                                <input type="checkbox" value="Sport" name="hobbies" /> Camping
+                            </div>
+
+
+                            <div class="hobbies">
+                                <input type="checkbox" value="Sport" name="hobbies" /> Jogging
+                            </div>
+
+                            <div class="hobbies">
+                                <input type="checkbox" value="Sport" name="hobbies" /> Alone
+                            </div>
+
+                            <div class="hobbies">
+                                <input type="checkbox" value="Sport" name="hobbies" /> Talking
+                            </div>
+
+                            <div class="hobbies">
+                                <input type="checkbox" value="Sport" name="hobbies" /> Swimming
+                            </div>
+
+                            <div class="hobbies">
+                                <input type="checkbox" value="Sport" name="hobbies" /> Learning
+                            </div>
+
+
+                        </div>
+                    </div>
+
+                   <div class="gender-details">
+                        <span class="gender-title">Gender</span>
+                        <div class="category">
+                            <label>
+                                @Html.RadioButton("Gender","Male")
+                                <td>
+                                    Male
+                                </td>
+                            </label>
+                            <label>
+                                @Html.RadioButton("Gender","Female")
+                                <td>
+                                    Female
+                                </td>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="city">
+                        <select name="format" id="format" defaultValue="All">
+                            @foreach (var city in cities)
+                            {
+                                <option value="@city.id">
+                                    @city.name
+                                </option>
+                            }
+                        </select>
+                    </div>
+                    <button id="Confirm_SignIn" type="submit" class="submit submit_sign_up" data-toggle="collapse"
+                        aria-expanded="false">
+                        Sign Up Now
+                    </button>
                 </form>
             </div>
         </div>
     </div>
-    <div id="Confirm1" class="alert alert-success alert-dismissible collapse">
-        <strong>Success!</strong> Create Account Successfully
-        <button type="button" class="close1">&times;</button>
-    </div>
-    <div id="Confirm2" class="alert alert-danger alert-dismissible collapse">
-        <strong>Error!</strong> Account does'nt create successfully
-        <button type="button" class="close2">&times;</button>
+
+
     </div>
     <script>
-        $(document).ready(function() {
-            $("button").click(function() {
+        $(document).ready(function () {
+            $("button").click(function () {
                 $("#wrapper").show();
                 $("section").addClass("blurs");
             });
-            $(".exit").click(function() {
+            $(".exit").click(function () {
                 $("#wrapper").hide();
                 $("section").removeClass("blurs");
             });
-            $(".close1").click(function() {
+            $(".close1").click(function () {
                 $("#Confirm1").hide();
             });
-            $(".close2").click(function() {
+            $(".close2").click(function () {
                 $("#Confirm2").hide();
             });
+            var width = $(window).width();
+            $("#wrapper").hide();
+            $(".img .exit").click(function () {
+                $(".form_1").show();
+                $("#wrapper").hide();
+            })
+            $("#dangnnhap").click(function () {
+                $(".form_1").hide();
+                $("#wrapper").show();
+                if (width <= 880) {
+                    console.log(width);
+                    $("section").attr("style", "display: none !important");
+                }
+                else {
+                    $("section").removeAttr("style", "display:  none");
+                }
+            })
 
-            $("#login_password").keypress(function(event) {
+            $("#login_password").keypress(function (event) {
                 var keycode = event.keyCode ? event.keyCode : event.which;
                 var email_value = document.getElementById("login_email").value;
                 var password_value = document.getElementById("login_password").value;
                 if (
-                    email_value.slice(-9) === "gmail" + "." + "com" &&
+                    validate(email_value) &&
                     password_value != "" &&
                     keycode == "13"
                 ) {
                     Home();
                 }
             });
-            $("#login_email").keypress(function(event) {
+            $("#login_email").keypress(function (event) {
                 var keycode = event.keyCode ? event.keyCode : event.which;
                 var email_value = document.getElementById("login_email").value;
                 var password_value = document.getElementById("login_password").value;
                 if (
-                    email_value.slice(-9) === "gmail" + "." + "com" &&
+                    validate(email_value) &&
                     password_value != "" &&
                     keycode == "13"
                 ) {
                     Home();
                 }
             });
+            $(".img-btn-mobile").click(function () {
+                $(".cont").toggleClass("sign-up");
+            })
         });
     </script>
-    <!-- <script>
-        var user = [];
-        var email = document.getElementById("login_email").value;
-        var password = document.getElementById("login_password").value;
-        fetch("http://localhost:3000/auth/read")
-            .then((response) => response.json())
-            .then((data) => {
-                console.log(data);
-
-                //  user(response.data);
-                //  console.log(user); // Prints result from `response.json()` in getRequest
-                // console.log(typeof data);
-            })
-            .catch((error) => console.error(error));
-    </script> -->
     <script type="text/javascript" src="../js/script.js"></script>
     <script type="text/javascript" src="../js/main.js"></script>
 </body>

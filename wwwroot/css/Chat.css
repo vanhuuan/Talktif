@@ -49,3 +49,6 @@
     width: 6em;
     border-radius: 50%;
 }
+.modal-body {
+    text-align: left;
+}

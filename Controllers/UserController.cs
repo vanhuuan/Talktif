@@ -1,43 +1,40 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Talktif.Models;
-using Talktif.Repository;
-using Microsoft.AspNetCore.Http;
-using Newtonsoft.Json;
+using Talktif.Service;
 
 namespace Talktif.Controllers
 {
     public class UserController : Controller
     {
         private readonly ILogger<UserController> _logger;
-
-        public UserController(ILogger<UserController> logger)
+        private IUserService _userService;
+        public UserController(ILogger<UserController> logger, IUserService userService)
         {
             _logger = logger;
+            _userService = userService;
         }
         public IActionResult Home()
         {
-            //if(Repo.Instance.data.isAdmin == true) return NotFound();
-            return View(UserRepo.Instance.data);
+            User_Infor user = _userService.Get_User_Infor(Request, Response);
+            return View(user);
         }
         public IActionResult History()
         {
-            return View(UserRepo.Instance.data);
+            User_Infor user = _userService.Get_User_Infor(Request, Response);
+            return View(user);
         }
-        [HttpPost]
-        public IActionResult Logout(IFormCollection formCollection)
+        public IActionResult Logout()
         {
-            UserRepo.Instance.data = null;
-            return RedirectToAction("Index","Login");
+            _userService.RemoveCookie(Response);
+            return RedirectToAction("Index", "Login");
         }
         public IActionResult Setting()
         {
-            return View(UserRepo.Instance.data);
+            User_Infor user = _userService.Get_User_Infor(Request, Response);
+            ViewBag.Data = user;
+            ViewBag.Cities = _userService.GetCity();
+            return View();
         }
     }
 }

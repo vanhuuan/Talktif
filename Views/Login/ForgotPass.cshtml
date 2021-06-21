@@ -1,5 +1,6 @@
 @{
     Layout = null;
+    string Message = (ViewBag.Message != null) ? ViewBag.Message : "";
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -43,17 +44,17 @@
                         <div class="col-sm-7 col-xs-7 col-md-7 col-lg-7">
                             <h2 class="title_reset">Reset Your Password</h2>
                             <p class="sub_reset">
-                                The verification email will be sent to the mailbox.
+                                The verification email will be sent to the mailbox.@Message
                                 <br /> Please check it.
                             </p>
                             <h5 class="email_title">Email</h5>
-                            <form action = "/Login/ForgotPassword" method = "POST">
-                                <input type="text" class="email_input mt-3" placeholder="Enter your email" />
+                            <form action = "/Login/ForgotPass" method = "POST">
+                                <input type="text" name = "Email" class="email_input mt-3" placeholder="Enter your email" />
                                 <button type="submit" id="btnDangNhap" class="submit float-left mt-4">
                                     Send
                                 </button>
                             </form>
-                            <a asp-controller = "Login" asp-action = "Login">
+                            <a asp-controller = "Login" asp-action = "Index">
                                 <h5 class="back_login">
                                     Back to Login
                                 </h5>

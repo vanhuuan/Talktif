@@ -10,6 +10,50 @@
 
 <body>
     <div class="row chat-page">
+        @if (Model != null)
+        {
+            <div class="container m-3 text-left">
+                <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary m-3" data-toggle="modal" data-target="#filterModal">
+                    Tùy chọn ưu tiên tìm kiếm
+                </button>
+            </div>
+            <!-- Modal -->
+            <div class="modal fade" id="filterModal" tabindex="-1" role="dialog" aria-labelledby="filterTitle"
+            aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="filterTitle">Tùy chọn ưu tiên ghép đôi người dùng</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input filter-option" id="hobbiesOption">
+                                <label class="custom-control-label" for="hobbiesOption">Có sở thích chung</label>
+                            </div>
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input filter-option" id="addressOption">
+                                <label class="custom-control-label" for="addressOption">Có địa chỉ chung</label>
+                            </div>
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input filter-option" id="femaleOption">
+                                <label class="custom-control-label" for="femaleOption">Có giới tính chung</label>
+                            </div>
+                            <i>Tính năng chỉ áp dụng với những người sử dụng tùy chọn này</i>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                            <button type="button" class="btn btn-danger" id="saveFilter"
+                            title="Hành động này sẽ thoát khỏi phòng chat hiện tại và tiến hành đợi ghép phòng mới">Lưu
+                                tùy chọn</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
         <div class="container mx-auto chat-box">
             <div id="chatMessages" class="container h-100">
             </div>
@@ -30,17 +74,18 @@
             <button id="skipButton" class="btn btn-danger m-4">Bỏ qua</button>
         </div>
     </div>
+
     <script src="~/js/signalr/dist/browser/signalr.js"></script>
     @if (Model != null)
     {
         <script type="text/javascript">
-            var userID = @Model.id, username = "@Model.name";
+            var userID = @Model.id, username = "@Model.name", token = "@Model.token", userHobbies = "@Model.hobbies", userAddress = "@Model.cityId", userGender = "@(Model.gender ? "Female" : "Male")";
         </script>
     }
     else
     {
         <script type="text/javascript">
-            var userID = 0, username = null;
+            var userID = 0, username = null, token = null, userHobbies = null, userGender = null, userAddress = null;
         </script>
     }
     <script src="~/js/chat.js"></script>

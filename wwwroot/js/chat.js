@@ -39,7 +39,7 @@ connection
   .then(function () {
     if (!userCnnID) userCnnID = connection.connectionId;
     document.getElementById("sendButton").disabled = false;
-    connection.invoke("AddToQueue", userID, username).catch((err) => {
+    connection.invoke("AddToQueue", userID, username, null).catch((err) => {
       return console.error(err.toString());
     });
   })
@@ -69,7 +69,21 @@ if (userID) {
     .getElementById("addFriendButton")
     .addEventListener("click", function (event) {
       event.preventDefault();
-      connection.invoke("AddFriend").catch((err) => {
+      connection.invoke("AddFriend", token).catch((err) => {
+        return console.error(err.toString());
+      });
+    });
+
+  document
+    .getElementById("saveFilter")
+    .addEventListener("click", function (event) {
+      event.preventDefault();
+      var filterString = "";
+      var filterInputs = document.getElementsByClassName("filter-option");
+      if (filterInputs[0].checked) filterString += (filterString == "" ? "" : ",") + userHobbies;
+      if (filterInputs[1].checked) filterString += (filterString == "" ? "" : ",") + userAddress;
+      if (filterInputs[2].checked) filterString += (filterString == "" ? "" : ",") + (userGender ? "female" : "male");
+      connection.invoke("SaveFilter", userID, username, filterString).catch((err) => {
         return console.error(err.toString());
       });
     });

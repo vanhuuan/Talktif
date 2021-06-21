@@ -10,6 +10,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Talktif.Hubs;
 using Talktif.Data;
+using Talktif.Repository;
+using Talktif.Service;
 
 namespace Talktif
 {
@@ -25,8 +27,15 @@ namespace Talktif
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services
+                .AddSingleton<IAdminRepo,AdminRepo>()
+                .AddSingleton<IChatRepo,ChatRepo>()
+                .AddSingleton<IUserRepo,UserRepo>(); 
+            services
+                .AddScoped<ICookieService, CookieService>()
+                .AddScoped<IUserService, UserService>()
+                .AddScoped<IAdminService, AdminService>();
             services.AddControllersWithViews();
-            services.AddTransient<IUserFavRepository, UserFavRepository>();
             services.AddSignalR();
         }
 

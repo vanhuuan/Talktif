@@ -1,121 +1,123 @@
 @using Talktif.Models
-@model User_Infor
 @{
     Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
-    ViewData["Name"] = (Model != null) ? Model.name : "";
-    ViewData["Email"] = (Model != null) ? Model.email : "";
+    List<City> cities = new List<City>();
+    if (ViewBag.Cities != null)
+    {
+        cities = ViewBag.Cities;
+    }
+    User_Infor user = new User_Infor();
+    user = ViewBag.Data;
+    ViewData["Name"] = user.name;
     <link rel="stylesheet" href="../css/Setting.css" />
 }
 <div class="container-fluid">
-        <div class="row row-wrapper">
-            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 tablet">
-                <div class="user-profile">
-                    <h2 class="title">User Profile</h2>
-                    <form action="#" class="form">
-                        <div class="user-info">
-                            <span class="details">UserName :</span>
-                            <input id="username" type="text" value= '@(ViewData["Name"])' placeholder="Username" required />
-                            <i class="fas fa-edit"></i>
+    <div class="row row-wrapper">
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 tablet">
+            <div class="user-profile">
+                <h2 class="title">User Profile</h2>
+                <form action="#" class="form">
+                    <div class="user-info">
+                        <span class="details">UserName :</span>
+                        <input id="username" type="text" value=@((user == null) ? "" : user.name) placeholder="Username"
+                            required />
+                        <i class="fas fa-edit"></i>
+                    </div>
+                    <div class="user-info">
+                        <span class="details">Email :</span>
+                        <input id="email" type="email" value=@((user == null) ? "" : user.email) placeholder="Email"
+                            required />
+                    </div>
+                    <div class="user-info">
+                        <span class="details">Password :</span>
+                        <input id="password" type="password" value="" placeholder="Password" required />
+                        <i class="fas fa-edit"></i>
+                    </div>
+                    <div class="user-info">
+                        <span class="details">Confirm Password :</span>
+                        <input id="confirmpassword" type="password" value="" placeholder="Confirm Password" required />
+                    </div>
+                    <div class="hobbies-ls">
+                        <div class="hobbies-title">
+                            <span>Hobbies</span>
                         </div>
-                        <div class="user-info">
-                            <span class="details">Email :</span>
-                            <input id="email" type="email" value= '@(ViewData["Email"])' placeholder="Email" required />
-                        </div>
-                        <div class="user-info">
-                            <span class="details">Password :</span>
-                            <input id="password" type="password" value="" placeholder="Password" required />
-                            <i class="fas fa-edit"></i>
-                        </div>
-                        <div class="user-info">
-                            <span class="details">Confirm Password :</span>
-                            <input id="confirmpassword" type="password" value="" placeholder="Confirm Password" required />
-                        </div>
-                        <div class="hobbies-ls">
-                            <div class="hobbies-title">
-                                <span>Hobbies</span>
-                            </div>
-                            <div class="hobbies-select">
-                                <div class="row">
-                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-                                        <div class="hobbies">
-                                            <input type="checkbox" value="Sport" name="hobbies" /> Sport
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-                                        <div class="hobbies">
-                                            <input type="checkbox" value="Sport" name="hobbies" /> Travel
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-                                        <div class="hobbies">
-                                            <input type="checkbox" value="Sport" name="hobbies" /> Camping
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-                                        <div class="hobbies">
-                                            <input type="checkbox" value="Sport" name="hobbies" /> Jogging
-                                        </div>
+                        <div class="hobbies-select">
+                            <div class="row">
+                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                    <div class="hobbies">
+                                        <input type="checkbox" value="Sport" name="hobbies" /> Sport
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-                                        <div class="hobbies">
-                                            <input type="checkbox" value="Sport" name="hobbies" /> Alone
-                                        </div>
+                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                    <div class="hobbies">
+                                        <input type="checkbox" value="Sport" name="hobbies" /> Travel
                                     </div>
-                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-                                        <div class="hobbies">
-                                            <input type="checkbox" value="Sport" name="hobbies" /> Talking
-                                        </div>
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                    <div class="hobbies">
+                                        <input type="checkbox" value="Sport" name="hobbies" /> Camping
                                     </div>
-                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-                                        <div class="hobbies">
-                                            <input type="checkbox" value="Sport" name="hobbies" /> Swimming
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-                                        <div class="hobbies">
-                                            <input type="checkbox" value="Sport" name="hobbies" /> Learning
-                                        </div>
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                    <div class="hobbies">
+                                        <input type="checkbox" value="Sport" name="hobbies" /> Jogging
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="gender-details">
-                            @* <input type="radio" name="gender" id="dot-1" />
-                            <input type="radio" name="gender" id="dot-2" /> *@
-                            @* <input type="radio" name="gender" id="dot-3" /> *@
-                            <span class="gender-title">Gender</span>
-                            <div class="category">
-                                @* <label for="dot-1">
-                                    <span class="dot one"></span>
-                                    <span class="gender">Female</span>
-                                </label>
-                                <label for="dot-2">
-                                    <span class="dot two"></span>
-                                    <span class="gender">Male</span>
-                                </label> *@
-                                <label>
-                                    @Html.RadioButton("Gender","Male",Model.gender)
-                                    <td>
-                                        Male
-                                    </td>
-                                </label>
-                                <label>
-                                    @Html.RadioButton("Gender","Female",!Model.gender)
-                                    <td>
-                                        Female
-                                    </td>
-                                </label>
-                                @* <label for="dot-3">
-                                    <span> class="dot three"></span>
-                                    <span class="gender">Underfied</span>
-                                </label> *@
+                            <div class="row">
+                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                    <div class="hobbies">
+                                        <input type="checkbox" value="Sport" name="hobbies" /> Alone
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                    <div class="hobbies">
+                                        <input type="checkbox" value="Sport" name="hobbies" /> Talking
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                    <div class="hobbies">
+                                        <input type="checkbox" value="Sport" name="hobbies" /> Swimming
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                    <div class="hobbies">
+                                        <input type="checkbox" value="Sport" name="hobbies" /> Learning
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="submit"><input type="submit" value="Change" class = "Update-Profile"/></div>
-                    </form>
-                </div>
+                    </div>
+                    <div class="gender-details">
+                        <span class="gender-title">Gender</span>
+                        <div class="category">
+                            <label>
+                                @Html.RadioButton("Gender","Male",user.gender)
+                                <td>
+                                    Male
+                                </td>
+                            </label>
+                            <label>
+                                @Html.RadioButton("Gender","Female",!user.gender)
+                                <td>
+                                    Female
+                                </td>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="city d-flex justify-content-center align-items-center mb-3">
+                        <select name="format" id="format">
+                            @foreach (var city in cities)
+                            {
+                                <option value="@city.id" selected="@((user != null) && (user.cityId == city.id))">
+                                    @city.name
+                                </option>
+                            }
+                        </select>
+                    </div>
+                    <div class="submit"><input type="submit" value="Change" class="Update-Profile" /></div>
+                </form>
             </div>
         </div>
     </div>
+</div>

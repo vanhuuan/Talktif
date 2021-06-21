@@ -4,20 +4,21 @@
     <link rel="stylesheet" href="../css/Admin.css" />
 }
 @using Talktif.Models
-@model User_Infor
+@model Statistic
 <main>
     <h2 class="dash-title">Overview</h2>
     <div class="dash-cards">
         <div class="card-single">
             <div class="card-body">
-                <span class="ti-briefcase"></span>
+                @* <span class="ti-briefcase"></span> *@
+                <span class="ti-face-smile"></span>
                 <div>
                     <h5>User</h5>
-                    <h4>30</h4>
+                    <h4>@(Model.numOfUser)</h4>
                 </div>
             </div>
             <div class="card-footer">
-                <a href="">View all</a>
+                <a href="/Admin/Users">View all</a>
             </div>
         </div>
 
@@ -25,8 +26,8 @@
             <div class="card-body">
                 <span class="ti-reload"></span>
                 <div>
-                    <h5>Messages</h5>
-                    <h4>30</h4>
+                    <h5>ChatRoom</h5>
+                    <h4>@(Model.numOfChatRoom)</h4>
                 </div>
             </div>
             <div class="card-footer">
@@ -38,12 +39,12 @@
             <div class="card-body">
                 <span class="ti-check-box"></span>
                 <div>
-                    <h5>User online</h5>
-                    <h4>30</h4>
+                    <h5>Report</h5>
+                    <h4>@(Model.numOfReport)</h4>
                 </div>
             </div>
             <div class="card-footer">
-                <a href="">View all</a>
+                <a href="/Admin/ReportUser">View all</a>
             </div>
         </div>
     </div>
@@ -165,14 +166,14 @@
                     <div class="bday-img"></div>
                         <div class="bday-info">
                             <h5>Hai Quy</h5>
-                            <small>Birthday Today</small>
+                            <small>Just passed away</small>
                         </div>
                     </div>
 
                     <div class="text-center">
                         <button>
                             <span class="ti-gift"></span>
-                            Wish him
+                            Press F to respect
                         </button>
                     </div>
                 </div>

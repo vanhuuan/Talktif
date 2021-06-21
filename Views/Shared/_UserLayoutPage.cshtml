@@ -15,11 +15,14 @@
     <!-- Popper JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lykmapipo/themify-icons@0.1.2/css/themify-icons.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+        rel="stylesheet" />
     <!-- Latest compiled JavaScript -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+        integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous" />
 
-    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+        integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
     <link rel="stylesheet" href="../css/UserMainForm.css" />
@@ -33,7 +36,7 @@
         <a href="#" class="navbar-brand text-center img-logo">
             <img src="../img/logo_main.png" alt="" srcset="" />
         </a>
-        <form action = "/User/Logout" method = "POST">
+        <form action="/User/Logout">
             <button class="btn btn-exit">
                 Thoát <i class="fas fa-chevron-circle-right"></i>
             </button>
@@ -51,14 +54,9 @@
             <div class="profile">
                 <img class="rounded-circle pt-2" src="../img/Admin.jpg" alt="" srcset="">
                 <span class="change_avt">
-                  <i class="fas fa-camera"></i>
-                  <p>Change</p>
-                  <input
-                    type="file"
-                    name="file"
-                    id="file_upload"
-                    onChange={changeAvatar}
-                  />
+                    <i class="fas fa-camera"></i>
+                    <p>Change</p>
+                    <input type="file" name="file" id="file_upload" onChange={changeAvatar} />
                 </span>
             </div>
             <h5 class="text-center font-weight-bold mt-2">
@@ -70,10 +68,10 @@
             </div>
             <i class="fas fa-thumbs-up like mb-2">
                 <span class="pl-2">10</span>
-              </i>
+            </i>
             <ul class="mt-4 ml-2">
                 <li class="active">
-                    <a asp-controller = "User" asp-action= "Home">
+                    <a asp-controller="User" asp-action="Home">
                         <i class="fab fa-discourse"></i>
                         <span>Phòng Chat</span>
                     </a>
@@ -101,47 +99,47 @@
         </div>
     </div>
     <div class="container-fluid">
-            @RenderBody()
+        @RenderBody()
     </div>
 
-        <script>
-            $(document).ready(function() {
-                $(".sidebar li").hover(
-                    function() {
-                        $(this).addClass("active");
-                    },
-                    function() {
-                        $(this).removeClass("active");
-                    }
-                );
-            });
-            $('.dark').click(function() {
-                $('nav').addClass('bg-dark');
-                $('.container-fluid').addClass('bg-dark');
-                $('.type-actor').addClass('bg-dark');
-                $('.fa-times-circle').attr("style", "filter:invert(1)");
-                $('.navbar-toggler-icon').attr("style", "filter:invert(1)");
-                $('i.fa-chevron-down').attr("style", "filter:invert(1)");
-                $('.effect').attr('style', 'border-bottom : 3px solid white !important');
-            });
-            $('.light').click(function() {
-                $('nav').removeClass('bg-dark');
-                $('.container-fluid').removeClass('bg-dark');
-                $('.type-actor').removeClass('bg-dark');
-                $('.fa-times-circle').removeAttr("style", "filter:invert(1)");
-                $('.navbar-toggler-icon').removeAttr("style", "filter:invert(1)");
-                $('i.fa-chevron-down').removeAttr("style", "filter:invert(1)");
-                $('.effect').removeAttr('style', 'border-bottom : 3px solid white !important');
-            });
-            $(window).scroll(function() {
-                $('nav').toggleClass('sticky-top', window.scrollY > 0);
-            });
-            $('.btn-next-person').click(function() {
-                $('.text').html('Next');
-                $('.Text-Meeting').remove();
-                $('.avt-couple').remove();
-            });
-        </script>
+    <script>
+        $(document).ready(function () {
+            $(".sidebar li").hover(
+                function () {
+                    $(this).addClass("active");
+                },
+                function () {
+                    $(this).removeClass("active");
+                }
+            );
+        });
+        $('.dark').click(function () {
+            $('nav').addClass('bg-dark');
+            $('.container-fluid').addClass('bg-dark');
+            $('.type-actor').addClass('bg-dark');
+            $('.fa-times-circle').attr("style", "filter:invert(1)");
+            $('.navbar-toggler-icon').attr("style", "filter:invert(1)");
+            $('i.fa-chevron-down').attr("style", "filter:invert(1)");
+            $('.effect').attr('style', 'border-bottom : 3px solid white !important');
+        });
+        $('.light').click(function () {
+            $('nav').removeClass('bg-dark');
+            $('.container-fluid').removeClass('bg-dark');
+            $('.type-actor').removeClass('bg-dark');
+            $('.fa-times-circle').removeAttr("style", "filter:invert(1)");
+            $('.navbar-toggler-icon').removeAttr("style", "filter:invert(1)");
+            $('i.fa-chevron-down').removeAttr("style", "filter:invert(1)");
+            $('.effect').removeAttr('style', 'border-bottom : 3px solid white !important');
+        });
+        $(window).scroll(function () {
+            $('nav').toggleClass('sticky-top', window.scrollY > 0);
+        });
+        $('.btn-next-person').click(function () {
+            $('.text').html('Next');
+            $('.Text-Meeting').remove();
+            $('.avt-couple').remove();
+        });
+    </script>
 </body>
 
 </html>

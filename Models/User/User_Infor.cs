@@ -11,6 +11,7 @@ namespace Talktif.Models
         public bool isAdmin { get; set; }
         public bool isActive { get; set; }
         public string hobbies { get; set; }
+        public int cityId {get;set;}
         public string token { get; set; }
     }
 }
