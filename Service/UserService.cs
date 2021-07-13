@@ -4,21 +4,26 @@ using Newtonsoft.Json;
 using Talktif.Models;
 using Talktif.Repository;
 using Microsoft.AspNetCore.Http;
+using System;
+using System.Threading.Tasks;
 
 namespace Talktif.Service
 {
     public interface IUserService
     {
-        void CreateCookie(HttpResponse Response, Cookie_Data data);
-        Cookie_Data ReadCookie(HttpRequest Request);
+        void CreateUserCookie(HttpResponse Response, Cookie_Data data);
+        Cookie_Data ReadUserCookie(HttpRequest Request);
         bool IsAdmin(HttpRequest Request);
-        void RemoveCookie(HttpResponse Response);
-        HttpResponseMessage Sign_Up(SignUpRequest sr);
-        HttpResponseMessage Sign_In(LoginRequest lr);
-        HttpResponseMessage ResetPass(string email);
-        User_Infor Get_User_Infor(HttpRequest Request, HttpResponse Response);
-        void RefreshToken(HttpResponse Response, Cookie_Data cookie);
-        List<City> GetCity();
+        void RemoveUserCookie(HttpResponse Response);
+        Task<HttpResponseMessage> Sign_Up(SignUpRequest sr);
+        Task<HttpResponseMessage> Sign_In(LoginRequest lr);
+        Task<HttpResponseMessage> CheckEmail(string email);
+        Task ResetPass(HttpResponse Response, string email, string pass);
+        Task<User_Infor> Get_User_Infor(HttpRequest Request, HttpResponse Response);
+        Task RefreshToken(HttpResponse Response, Cookie_Data cookie);
+        Task<List<City>> GetCity();
+        Task<string> GetNameCity(int cityID);
+        Task<string> UpdateUserInfor(HttpRequest Request, HttpResponse Response, string name, string email, string pass, string oldpass, int cityID, bool gender);
     }
     public class UserService : IUserService
     {
@@ -30,39 +35,63 @@ namespace Talktif.Service
             _cookieService = cookieService;
         }
 
-        public void CreateCookie(HttpResponse Response, Cookie_Data data)
+        public void CreateUserCookie(HttpResponse Response, Cookie_Data data)
         {
-            _cookieService.CreateCookie(Response, data);
+            string a = JsonConvert.SerializeObject(data);
+            _cookieService.CreateCookie(Response, a, "user");
         }
-        public Cookie_Data ReadCookie(HttpRequest Request)
+        public Cookie_Data ReadUserCookie(HttpRequest Request)
         {
-            return _cookieService.ReadCookie(Request);
+            try
+            {
+                return JsonConvert.DeserializeObject<Cookie_Data>(_cookieService.ReadCookie(Request, "user"));
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
         }
         public bool IsAdmin(HttpRequest Request)
         {
-            return _cookieService.IsAdmin(Request);
+            Cookie_Data a = ReadUserCookie(Request);
+            return a.IsAdmin;
         }
-        public void RemoveCookie(HttpResponse Response)
+        public void RemoveUserCookie(HttpResponse Response)
         {
-            _cookieService.RemoveCookie(Response);
+            _cookieService.RemoveCookie(Response, "user");
         }
-        public HttpResponseMessage Sign_Up(SignUpRequest sr)
+        public async Task<HttpResponseMessage> Sign_Up(SignUpRequest sr)
         {
-            return _userRepo.Sign_Up(sr);
+            return await _userRepo.Sign_Up(sr);
         }
-        public HttpResponseMessage Sign_In(LoginRequest lr)
+        public async Task<HttpResponseMessage> Sign_In(LoginRequest lr)
         {
-            return _userRepo.Sign_In(lr);
+            return await _userRepo.Sign_In(lr);
         }
-        public HttpResponseMessage ResetPass(string email)
+        public async Task<HttpResponseMessage> CheckEmail(string email)
         {
-            return _userRepo.ResetPass(new ResetPassRequest() { Email = email });
+            return await _userRepo.ResetPass(email);
         }
-        public User_Infor Get_User_Infor(HttpRequest Request, HttpResponse Response)
+        public async Task ResetPass(HttpResponse Response, string email, string pass)
         {
-            var cookie = _cookieService.ReadCookie(Request);
+            var result = await _userRepo.ResetPasswordEmail(new ResetPassEmailRequest() { Email = email, NewPass = pass });
+            string a = result.Content.ReadAsStringAsync().Result;
+            User_Infor user = JsonConvert.DeserializeObject<User_Infor>(a);
+            Cookie_Data cookie = new Cookie_Data()
+            {
+                id = user.id,
+                IsAdmin = user.isAdmin,
+                email = user.email,
+                token = user.token,
+            };
+            CreateUserCookie(Response, cookie);
+        }
+        public async Task<User_Infor> Get_User_Infor(HttpRequest Request, HttpResponse Response)
+        {
+            var cookie = ReadUserCookie(Request);
             if (cookie == null) return null;
-            var result = _userRepo.GetUserByID(cookie.id, cookie.token);
+            var result = await _userRepo.GetUserByID(cookie.id, cookie.token);
             string a = result.Content.ReadAsStringAsync().Result;
             if (result.IsSuccessStatusCode)
             {
@@ -72,31 +101,68 @@ namespace Talktif.Service
             }
             else
             {
-                RefreshToken(Response, cookie);
-                cookie = _cookieService.ReadCookie(Request);
-                result = _userRepo.GetUserByID(cookie.id, cookie.token);
+                await RefreshToken(Response, cookie);
+                cookie = ReadUserCookie(Request);
+                result = await _userRepo.GetUserByID(cookie.id, cookie.token);
                 a = result.Content.ReadAsStringAsync().Result;
                 User_Infor userInfo = JsonConvert.DeserializeObject<User_Infor>(a);
                 userInfo.token = cookie.token;
                 return userInfo;
             }
         }
-        public void RefreshToken(HttpResponse Response, Cookie_Data cookie)
+        public async Task RefreshToken(HttpResponse Response, Cookie_Data cookie)
         {
             RefreshTokenRequest r = new RefreshTokenRequest() { Email = cookie.email };
-            var refreshToken = _userRepo.RefreshToken(r, cookie.token);
+            var refreshToken = await _userRepo.RefreshToken(r, cookie.token);
             var result = refreshToken.Content.ReadAsStringAsync().Result;
             Token t = JsonConvert.DeserializeObject<Token>(result);
             cookie.token = t.token;
-            _cookieService.UpdateCookie(Response, cookie);
+            _cookieService.UpdateCookie(Response, JsonConvert.SerializeObject(cookie), "user");
         }
-        public List<City> GetCity()
+        public async Task<List<City>> GetCity()
         {
             List<City> cities = new List<City>();
-            var result = _userRepo.GetAllCityCountry(1);
+            var result = await _userRepo.GetAllCityCountry(1);
             string Result = result.Content.ReadAsStringAsync().Result;
             cities = JsonConvert.DeserializeObject<List<City>>(Result);
             return cities;
+        }
+        public async Task<string> GetNameCity(int cityID)
+        {
+            foreach (var city in await GetCity())
+            {
+                if (cityID == city.id) return city.name;
+            }
+            return "";
+        }
+        public async Task<string> UpdateUserInfor(HttpRequest Request, HttpResponse Response, string name, string email, string pass, string oldpass, int cityID, bool gender)
+        {
+            var cookie = JsonConvert.DeserializeObject<Cookie_Data>(_cookieService.ReadCookie(Request, "user"));
+            UpdateInfoRequest update = new UpdateInfoRequest()
+            {
+                Id = cookie.id,
+                Name = name,
+                Email = email,
+                Password = pass,
+                OldPassword = oldpass,
+                CityId = cityID,
+                Gender = gender,
+            };
+            var result = await _userRepo.UpdateUserInfor(update, cookie.token);
+            string message = result.Content.ReadAsStringAsync().Result;
+            if (result.IsSuccessStatusCode)
+            {
+                return "";
+            }
+            else if ((result.StatusCode.ToString() == "Unauthorized"))
+            {
+                await RefreshToken(Response, cookie);
+                cookie = JsonConvert.DeserializeObject<Cookie_Data>(_cookieService.ReadCookie(Request, "user"));
+                result = await _userRepo.UpdateUserInfor(update, cookie.token);
+                message = result.Content.ReadAsStringAsync().Result;
+                return message;
+            }
+            else return message;
         }
     }
 }

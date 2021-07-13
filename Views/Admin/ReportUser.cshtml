@@ -42,6 +42,7 @@
                         <th>Reason</th>
                         <th>Note</th>
                         <th>Status</th>
+                        @* <th>Create At</th> *@
                     </tr>
                 </thead>
                 <tbody>
@@ -72,6 +73,13 @@
                             <td>
                                 @Html.DisplayFor(modelItem => item.status)
                             </td>
+                            <td>
+                                <a href="/Admin/UpdateReport?id=@item.id" class="edit"><i class="material-icons"
+                                    data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                            </td>
+                            @* <td>
+                                @Html.DisplayFor(modelItem => item.createAt)
+                                </td> *@
                             @* <td>
                                 <a href="#messageModal" class="edit" data-toggle="modal"><i class="fas fa-check"></i></a>
                                 <a href="#deleteModal" class="delete one" data-toggle="modal"><i
@@ -89,7 +97,7 @@
             </table>
             <div class="clearfix">
                 @* <div class="hint-text">Showing <b>8</b> out of <b>100</b> entries</div>
-                <ul class="pagination">
+                    <ul class="pagination">
                     <li class="page-item disabled"><a href="#">Previous</a></li>
                     <li class="page-item active"><a href="#" class="page-link">1</a></li>
                     <li class="page-item"><a href="#" class="page-link">2</a></li>
@@ -97,7 +105,7 @@
                     <li class="page-item"><a href="#" class="page-link">4</a></li>
                     <li class="page-item"><a href="#" class="page-link">5</a></li>
                     <li class="page-item"><a href="#" class="page-link">Next</a></li>
-                </ul> *@
+                    </ul> *@
                 <div class="hint-text">Showing
                     <b>
                         @(reports.Count() < 8 ? reports.Count() : 8)

@@ -107,11 +107,16 @@ button:focus {
     width: 50%;
 } */
 
-.details {
+.details,
+.city-title {
     font-size: 16px;
     font-weight: bold;
     text-transform: uppercase;
     color: var(--main-text);
+}
+
+.city-title{
+    width: 100%;
 }
 
 .user-profile form .user-info input {
@@ -138,7 +143,7 @@ button:focus {
 
 .category {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
 }
 
@@ -202,6 +207,14 @@ label {
     color: #7579ff;
 }
 
+.city-setting {
+    flex-direction: column;
+}
+
+select#format.select-setting {
+    width: 300px;
+}
+
 
 /* Responsive */
 
@@ -216,16 +229,25 @@ label {
     .user-profile form .user-info input {
         width: 250px !important;
     }
+    select#format.select-setting {
+        width: 250px !important;
+    }
 }
 
 @media only screen and (max-width: 350px) {
     .user-profile form .user-info input {
         width: 220px !important;
     }
+    select#format.select-setting {
+        width: 220px !important;
+    }
 }
 
 @media only screen and (max-width: 1023px) {
     .user-profile form .user-info input {
+        width: 400px;
+    }
+    select#format.select-setting {
         width: 400px;
     }
 }

@@ -1,54 +1,131 @@
 @using Talktif.Models;
 @model FriendsViewModel;
 @{
-    ViewData["Title"] = "Friends";
+    ViewData["Title"] = "Friends - Talktif";
+    List<ChatBox> ChatBoxes = new List<ChatBox>();
+    if (ViewBag.ListChatBox != null)
+    {
+        ChatBoxes = ViewBag.ListChatBox;
+    }
+    Layout = "~/Views/Shared/ChatLayout.cshtml";
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lykmapipo/themify-icons@0.1.2/css/themify-icons.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+        rel="stylesheet" />
+    <!-- Latest compiled JavaScript -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
+
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link href="../logo_main.ico" rel="shortcut icon" type="image/x-icon" />
+    <link rel="stylesheet" href="/css/UserMainForm.css" />
+    <link rel="stylesheet" href="/css/Chatting.css" />
+    <title>Friends - Talktif</title>
 }
 
-<head>
-    <link rel="stylesheet" href="~/css/Chat.css" />
-</head>
-
-<body>
-    <div class="row chat-page">
-        <div class="container col-sm-4 mx-auto">
-            @if (Model.RoomList != null)
-            {
-                foreach (Room item in Model.RoomList)
-                {
-                    <a class="btn btn-outline-dark d-block" asp-action="Friends" asp-route-id="@item.id">@item.name</a>
-                }
-            }
-        </div>
-        @if (Model.RoomID > 0)
-        {
-            <div class="container col-sm-8 chat-box">
-                <div id="chatMessages" class="container h-100">
+<div class="chatting_box row">
+    <div class="group-chat col-lg-5 col-xs-5 col-md-5 col-sm-5">
+        <div class="row">
+            <div class="box-secret message-box">
+                <div class="chat-header">
+                    <div class="theme-title">
+                        <p>Người lạ</p>
+                    </div>
+                </div>
+                <div class="message-box-content">
                     @if (Model.Messages != null)
                     {
                         foreach (Message item in Model.Messages)
                         {
-                            <div class="row w-100 m-0">
-                                <span class="@(item.sender != Model.UserID ? "msgtext p-2 mr-auto mb-1" : "msgtext-self p-2 ml-auto mb-1")" title="@item.sentAt.ToLocalTime()">@item.content</span>
+                            <div class="@(item.sender != Model.UserID ? "message-row other-message" : "message-row your-message")"
+                        title="@item.sentAt.ToLocalTime()">
+                                <div class="message-text">@item.content</div>
                             </div>
                         }
                     }
+
+                    @* <div class="message-row your-message">
+                        <div class="message-text">
+                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vitae id totam sint impedit
+                        consequuntur culpa quia, sed corrupti doloremque odio delectus iusto esse alias natus
+                        voluptatibus earum modi
+                        </div>
+                        </div>
+                        <div class="message-row other-message">
+                        <div class="message-text">
+                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vitae id totam sint impedit
+                        consequuntur culpa quia, sed corrupti doloremque odio delectus iusto esse alias natus
+                        voluptatibus earum modi
+                        </div>
+                        </div> *@
                 </div>
-                <div class="container chat-action">
-                    <form class="form-inline p-3">
-                        <input id="messageInput" class="form-control chat-input mr-auto" type="text"
-                        placeholder="Nhập tin nhắn" />
-                        <button id="sendButton" type="submit" class="btn btn-success ml-auto">Gửi</button>
-                    </form>
+                <form class="message-box-action">
+                    <input type="text" id="message" class="message" placeholder="Nhập tin nhắn..." />
+                    <button id="sendButton" class="send_message" type="submit">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </form>
+            </div>
+            @* TODO: Custom scrollbar for chatbox *@
+        </div>
+        <div class="row mt-2">
+            <div class="group-btn-interactive">
+                    <button class="interactive" data-toggle="modal" title="Báo cáo"><i class="fas
+                fa-flag-checkered"></i></button>
+            </div>
+        </div>
+    </div>
+    @* <div class="col-sm-4 p-5">
+        @if (Model.RoomList != null)
+        {
+        foreach (Room item in Model.RoomList)
+        {
+        <a class="btn btn-outline-dark d-block" asp-action="Friends" asp-route-id="@item.id">@item.name</a>
+        }
+        }
+        </div> *@
+    <div class="col-lg-4 col-md-6 col-sm-6 col-xs-6 mt-4 tablet">
+        <div class="list-group-chat">
+            <div class="list-friend">
+                <div class="main-history-user">
+                    <div class="search">
+                        <input type="text" placeholder="Tìm kiếm..." />
+                        <span class="ti-search"></span>
+                    </div>
+                    <div class="user-history-profile">
+                        @if (ChatBoxes != null)
+                        {
+                            @foreach (var item in ChatBoxes)
+                            {
+                                <a asp-action="Friends1" asp-route-id="@item.ID_Room">
+                                    <div class="user-history-item">
+                                        <div class="name-user">
+                                            <p>
+                                                @item.Name_PartNer
+                                            </p>
+                                            <span>
+                                                @((item.Sender == item.ID_User) ? "Bạn " : item.Name_PartNer)
+                                                : @item.LastMessage
+                                            </span>
+                                        </div>
+                                        <div class="time-chat">
+                                            @((item.LastTime).Hour) : @((item.LastTime).Minute)
+                                        </div>
+                                    </div>
+                                </a>
+                            }
+                        }
+                    </div>
                 </div>
             </div>
-        }
+        </div>
     </div>
-    <script src="~/js/signalr/dist/browser/signalr.js"></script>
-    @if (Model.RoomID > 0)
-    {
-        <script type="text/javascript">
-            var roomID = @Model.RoomID, userID = @Model.UserID, token = "@Model.UserToken";
-        </script>
-        <script src="~/js/friendchat.js"></script>
-    }
-</body>
+</div>
+
+<script src="~/js/signalr/dist/browser/signalr.js"></script>
+@if (Model.RoomID > 0)
+{
+    <script type="text/javascript">
+        var roomID = @Model.RoomID, userID = @Model.UserID, token = "@Model.UserToken";
+    </script>
+    <script src="~/js/friendchat1.js"></script>
+}

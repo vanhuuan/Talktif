@@ -11,21 +11,21 @@ connection.on("ReceiveMessage", function (user, message) {
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;");
   // var encodedMsg = user + " says " + msg;
-  var span = document.createElement("span");
-  span.className =
-    user != userCnnID
-      ? "msgtext p-2 mr-auto mb-1"
-      : "msgtext-self p-2 ml-auto mb-1";
-  span.textContent = msg;
   var div = document.createElement("div");
-  div.className = "row w-100 m-0";
-  div.appendChild(span);
-  document.getElementById("chatMessages").appendChild(div);
+  div.className =
+    user != userCnnID
+      ? "message-row other-message"
+      : "message-row your-message";
+var divContent = document.createElement("div");
+divContent.className = "message-text";
+divContent.textContent = msg;
+  div.appendChild(divContent);
+  document.getElementsByClassName("message-box-content")[0].appendChild(div);
   if (user != userCnnID) {
     var messAudio = new Audio('/message.mp3');
     messAudio.play();  
   }
-  document.getElementById("chatMessages").scrollTo(0,document.getElementById("chatMessages").scrollHeight);
+  document.getElementsByClassName("message-box-content")[0].scrollTo(0,document.getElementsByClassName("message-box-content")[0].scrollHeight);
 });
 
 connection.on("BroadcastMessage", function (message) {
@@ -36,8 +36,8 @@ connection.on("BroadcastMessage", function (message) {
   var encodedMsg = msg;
   var li = document.createElement("li");
   li.textContent = encodedMsg;
-  document.getElementById("chatMessages").appendChild(li);
-  document.getElementById("chatMessages").scrollTo(0,document.getElementById("chatMessages").scrollHeight);
+  document.getElementsByClassName("message-box-content")[0].appendChild(li);
+  document.getElementsByClassName("message-box-content")[0].scrollTo(0,document.getElementsByClassName("message-box-content")[0].scrollHeight);
 });
 
 connection
@@ -63,8 +63,8 @@ document
   .getElementsByTagName("form")[0]
   .addEventListener("submit", function (event) {
     event.preventDefault();
-    var message = document.getElementById("messageInput").value;
-    document.getElementById("messageInput").value = "";
+    var message = document.getElementById("message").value;
+    document.getElementById("message").value = "";
     connection.invoke("SendMessage", message).catch(function (err) {
       return console.error(err.toString());
     });

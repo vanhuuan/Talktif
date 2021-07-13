@@ -19,12 +19,14 @@
     <!-- Popper JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lykmapipo/themify-icons@0.1.2/css/themify-icons.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+        rel="stylesheet" />
     <!-- Latest compiled JavaScript -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
 
-    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link href="../logo_main.ico" rel="shortcut icon" type="image/x-icon" />
     <link rel="stylesheet" href="../css/ResetPassword.css" />
     <title>Reset-Password</title>
 </head>
@@ -32,39 +34,42 @@
 <body>
     <section class="all">
         <div class="form_all">
-            <div class="circle_one"></div>
-            <div class="circle_two"></div>
-            <img src="../img/shape.png" class="shape" alt="" />
-            <div class="form_main d-flex">
-                <div class="container sizebox d-flex">
-                    <div class="row">
+            <div class="form_main">
+                <div class="sizebox d-flex">
+                    <div class="row w-100 flex-column">
                         <div class="col-sm-5 col-xs-5 col-md-6 col-lg-5">
                             <img src="../img/reset_img.png" alt="" srcset="" class="img_reset">
                         </div>
                         <div class="col-sm-7 col-xs-7 col-md-7 col-lg-7">
                             <h2 class="title_reset">Reset Your Password</h2>
                             <p class="sub_reset">
-                                The verification email will be sent to the mailbox.@Message
+                                The verification email will be sent to the mailbox.
                                 <br /> Please check it.
                             </p>
                             <h5 class="email_title">Email</h5>
-                            <form action = "/Login/ForgotPass" method = "POST">
-                                <input type="text" name = "Email" class="email_input mt-3" placeholder="Enter your email" />
-                                <button type="submit" id="btnDangNhap" class="submit float-left mt-4">
-                                    Send
-                                </button>
+                            <form action="/Login/ForgotPass" method="POST">
+                                <input type="text" name="Email" class="email_input mt-3"
+                                    placeholder="Enter your email" />
+                                <div class="sendEmail">
+                                    <button type="submit" id="btnDangNhap" class="submit float-left">
+                                        Send
+                                    </button>
+                                </div>
                             </form>
-                            <a asp-controller = "Login" asp-action = "Index">
-                                <h5 class="back_login">
+                            <a asp-controller="Login" asp-action="Index">
+                                <h5 class="back_login mt-2">
                                     Back to Login
                                 </h5>
                             </a>
-                        </Col>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
     </section>
+    <script>
+        if ("@Message" != "") alert("@Message");
+    </script>
+
 </body>
 
 </html>

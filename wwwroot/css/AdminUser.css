@@ -169,6 +169,7 @@ table.table .avatar {
 .hint-text {
     float: left;
     margin-top: 10px;
+    margin-left: 10px;
     font-size: 13px;
 }
 
@@ -316,21 +317,26 @@ label {
     display: none;
 }
 
-.form-group:nth-child(4),
+/* .form-group:nth-child(4),
 .form-group:nth-child(7) {
     display: flex;
     justify-content: space-between;
     align-items: center;
-}
+} */
 
+input[type="radio"]{
+    width: 18px;
+    height: 18px;
+    margin-right: 4px;
+}
 .form-group select#format {
-    /* appearance: none; */
     outline: none !important;
     box-shadow: none !important;
     border: 0 !important;
     background-color: #5c5c5c !important;
     color: #fff !important;
     width: 200px;
+    margin: 0 auto;
     height: 30px;
 }
 

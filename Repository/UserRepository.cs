@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Talktif.Models;
 
@@ -12,31 +13,30 @@ namespace Talktif.Repository
 {
     public interface IUserRepo
     {
-        HttpResponseMessage Sign_Up(SignUpRequest Sr);
-        HttpResponseMessage Sign_In(LoginRequest lr);
-        HttpResponseMessage ResetPass(ResetPassRequest resetPassRequest);
-        HttpResponseMessage ResetPasswordEmail(ResetPassEmailRequest resetPassEmailRequest);
-        HttpResponseMessage GetAllCountry();
-        HttpResponseMessage GetAllCityCountry(int id);
-        HttpResponseMessage GetUserByID(int ID, string token);
-        HttpResponseMessage UpdateUserInfor(UpdateInfoRequest updateInfoRequest, string token);
-        HttpResponseMessage InActiveUser(int id, string token);
-        HttpResponseMessage RefreshToken(RefreshTokenRequest refreshTokenRequest, string token);
-        HttpResponseMessage Report(ReportRequest request,string token);
-    } 
+        Task<HttpResponseMessage> Sign_Up(SignUpRequest Sr);
+        Task<HttpResponseMessage> Sign_In(LoginRequest lr);
+        Task<HttpResponseMessage> ResetPass(string email);
+        Task<HttpResponseMessage> ResetPasswordEmail(ResetPassEmailRequest resetPassEmailRequest);
+        Task<HttpResponseMessage> GetAllCountry();
+        Task<HttpResponseMessage> GetAllCityCountry(int id);
+        Task<HttpResponseMessage> GetUserByID(int ID, string token);
+        Task<HttpResponseMessage> UpdateUserInfor(UpdateInfoRequest updateInfoRequest, string token);
+        Task<HttpResponseMessage> InActiveUser(int id, string token);
+        Task<HttpResponseMessage> RefreshToken(RefreshTokenRequest refreshTokenRequest, string token);
+        Task<HttpResponseMessage> Report(ReportRequest request, string token);
+    }
     public class UserRepo : IUserRepo
     {
         public RefreshToken rtoken { get; set; }
         private const string UriString = "https://talktifapi.azurewebsites.net/api/Users/";
-        public HttpResponseMessage Sign_Up(SignUpRequest Sr)
+        public async Task<HttpResponseMessage> Sign_Up(SignUpRequest Sr)
         {
             CookieContainer cookies = new CookieContainer();
             HttpClientHandler handler = new HttpClientHandler();
             handler.CookieContainer = cookies;
             HttpClient client = new HttpClient(handler);
             client.BaseAddress = new Uri(UriString);
-            var signUp = client.PostAsJsonAsync("SignUp", Sr);
-            signUp.Wait();
+            var signUp = await client.PostAsJsonAsync("SignUp", Sr);
             Uri uri = new Uri(UriString);
             IEnumerable<Cookie> responseCookies = cookies.GetCookies(uri).Cast<Cookie>();
             this.rtoken = new RefreshToken();
@@ -45,17 +45,16 @@ namespace Talktif.Repository
                 if (cookie.Name == "RefreshToken") rtoken.Refreshtoken = cookie.Value;
                 if (cookie.Name == "RefreshTokenId") rtoken.RefreshTokenId = Convert.ToInt32(cookie.Value);
             }
-            return signUp.Result;
+            return signUp;
         }
-        public HttpResponseMessage Sign_In(LoginRequest lr)
+        public async Task<HttpResponseMessage> Sign_In(LoginRequest lr)
         {
             CookieContainer cookies = new CookieContainer();
             HttpClientHandler handler = new HttpClientHandler();
             handler.CookieContainer = cookies;
             HttpClient client = new HttpClient(handler);
             client.BaseAddress = new Uri(UriString);
-            var login = client.PostAsJsonAsync("SignIn", lr);
-            login.Wait();
+            var login = await client.PostAsJsonAsync("SignIn", lr);
             Uri uri = new Uri(UriString);
             IEnumerable<Cookie> responseCookies = cookies.GetCookies(uri).Cast<Cookie>();
             this.rtoken = new RefreshToken();
@@ -64,82 +63,69 @@ namespace Talktif.Repository
                 if (cookie.Name == "RefreshToken") rtoken.Refreshtoken = cookie.Value;
                 if (cookie.Name == "RefreshTokenId") rtoken.RefreshTokenId = Convert.ToInt32(cookie.Value);
             }
-            return login.Result;
+            return login;
         }
-        public HttpResponseMessage ResetPass(ResetPassRequest resetPassRequest)
+        public async Task<HttpResponseMessage> ResetPass(string email)
+        {
+            using (var client = new HttpClient())
+            {
+                ResetPassRequest resetPassRequest = new ResetPassRequest() { Email = email };
+                client.BaseAddress = new Uri(UriString);
+                return await client.PostAsync("ResetPass", new StringContent(JsonConvert.SerializeObject(resetPassRequest), Encoding.UTF8, "application/json"));
+            }
+        }
+        public async Task<HttpResponseMessage> ResetPasswordEmail(ResetPassEmailRequest resetPassEmailRequest)
         {
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(UriString);
-                var resetPass = client.PostAsync("ResetPass", new StringContent(JsonConvert.SerializeObject(resetPassRequest), Encoding.UTF8, "application/json"));
-                resetPass.Wait();
-                return resetPass.Result;
+                return await client.PostAsJsonAsync("ResetPasswordEmail", resetPassEmailRequest);
             }
         }
-        public HttpResponseMessage ResetPasswordEmail(ResetPassEmailRequest resetPassEmailRequest)
+        public async Task<HttpResponseMessage> GetAllCountry()
         {
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(UriString);
-                var resetPasswordEmail = client.PostAsJsonAsync("ResetPasswordEmail", resetPassEmailRequest);
-                resetPasswordEmail.Wait();
-                return resetPasswordEmail.Result;
+                return await client.GetAsync("GetAllCountry");
             }
         }
-        public HttpResponseMessage GetAllCountry()
+        public async Task<HttpResponseMessage> GetAllCityCountry(int id)
         {
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(UriString);
-                var getAllCountry = client.GetAsync("GetAllCountry");
-                getAllCountry.Wait();
-                return getAllCountry.Result;
+                return await client.GetAsync("GetAllCityCountry/" + id);
             }
         }
-        public HttpResponseMessage GetAllCityCountry(int id)
-        {
-            using (var client = new HttpClient())
-            {
-                client.BaseAddress = new Uri(UriString);
-                var getAllCityCountry = client.GetAsync("GetAllCityCountry/" + id);
-                getAllCityCountry.Wait();
-                return getAllCityCountry.Result;
-            }
-        }
-        public HttpResponseMessage GetUserByID(int ID, string token)
+        public async Task<HttpResponseMessage> GetUserByID(int ID, string token)
         {
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(UriString);
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-                var getUserByID = client.GetAsync(ID.ToString());
-                getUserByID.Wait();
-                return getUserByID.Result;
+                return await client.GetAsync(ID.ToString());
             }
         }
-        public HttpResponseMessage UpdateUserInfor(UpdateInfoRequest updateInfoRequest, string token)
+        public async Task<HttpResponseMessage> UpdateUserInfor(UpdateInfoRequest updateInfoRequest, string token)
         {
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(UriString);
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-                var upDateUser = client.PostAsJsonAsync("UpdateInfo", updateInfoRequest);
-                upDateUser.Wait();
-                return upDateUser.Result;
+                return await client.PutAsJsonAsync("UpdateInfo", updateInfoRequest);
             }
         }
-        public HttpResponseMessage InActiveUser(int id, string token)
+        public async Task<HttpResponseMessage> InActiveUser(int id, string token)
         {
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(UriString);
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-                var inActiveUser = client.GetAsync("InActiveUser/" + id);
-                inActiveUser.Wait();
-                return inActiveUser.Result;
+                return await client.GetAsync("InActiveUser/" + id);
             }
         }
-        public HttpResponseMessage RefreshToken(RefreshTokenRequest refreshTokenRequest, string token)
+        public async Task<HttpResponseMessage> RefreshToken(RefreshTokenRequest refreshTokenRequest, string token)
         {
             CookieContainer cookies = new CookieContainer();
             HttpClientHandler handler = new HttpClientHandler();
@@ -149,19 +135,15 @@ namespace Talktif.Repository
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
             cookies.Add(client.BaseAddress, new Cookie("RefreshToken", rtoken.Refreshtoken));
             cookies.Add(client.BaseAddress, new Cookie("RefreshTokenId", rtoken.RefreshTokenId.ToString()));
-            var refreshToken = client.PostAsJsonAsync("RefreshToken", refreshTokenRequest);
-            refreshToken.Wait();
-            return refreshToken.Result;
+            return await client.PostAsJsonAsync("RefreshToken", refreshTokenRequest);
         }
-        public HttpResponseMessage Report(ReportRequest request,string token)
+        public async Task<HttpResponseMessage> Report(ReportRequest request, string token)
         {
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(UriString);
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-                var rePort = client.PostAsJsonAsync("Report", request);
-                rePort.Wait();
-                return rePort.Result;
+                return await client.PostAsJsonAsync("Report", request);
             }
         }
     }

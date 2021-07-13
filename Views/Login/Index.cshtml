@@ -28,7 +28,8 @@
 
     <!-- Latest compiled JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <title>Home</title>
+    <title>Đăng nhập - Talktif</title>
+    <link href="../logo_main.ico" rel="shortcut icon" type="image/x-icon" />
 </head>
 
 <body>
@@ -43,12 +44,12 @@
             <div class="container">
                 <div class="row main-section">
                     <div class="textbox col-lg-7 col-md-7 col-sm-7 col-xs-7">
-                        <h2 class="name">Chat App Community</h2>
+                        <h2 class="name">Talktif</h2>
                         <p>
-                            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vitae id totam sint impedit
-                            consequuntur culpa quia, sed corrupti doloremque odio delectus iusto esse alias natus
-                            voluptatibus earum modi dolorum eligendi.
-                            @Message
+                            Chat web dành cho người lạ
+                        </p>
+                        <p>
+                            Tâm sự với người lạ
                         </p>
                     </div>
                     <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
@@ -57,9 +58,9 @@
                 </div>
             </div>
             <div class="btn-group">
-                <a class="submit mt-4 resize_font mr-1 action_home" href="/chat">Get Started</a>
-                <button id="#dangnnhap" data-toggle="collapse" aria-expanded="false" class="mt-4 ml-3 resize_font submit">
-                    Sign In
+                <a class="submit mt-4 resize_font mr-1 action_home" href="/chat">Bắt đầu</a>
+                <button id="dangnnhap" data-toggle="collapse" aria-expanded="false" class="mt-4 ml-3 resize_font submit">
+                    Đăng nhập
                 </button>
             </div>
             <hr class="mt-3 mb-0" />
@@ -72,22 +73,22 @@
     <div id="wrapper" class="cont">
         <div class="img-mobile">
             <div class="img-text m-up-sign-up">
-                <h5>New here?</h5>
-                <p>Sign up and discover great amount of new opportunities!</p>
+                <h5>Mới dùng?</h5>
+                <p>Hãy đăng kí để dùng nhiều tính năng hơn nhé!</p>
             </div>
             <div class="img-text m-up-sign-in">
-                <h5>One of us?</h5>
+                <h5>Đã từng dùng?</h5>
                 <p>
-                    If you already has an account, just sign in. We've missed you!
+                    Nếu đã có tài khoản thì hãy đăng nhập đi nào!
                 </p>
             </div>
             <div class="img-btn-mobile">
-                <span class="m-up-sign-up">Sign Up</span>
-                <span class="m-in-sign-in">Sign In</span>
+                <span class="m-up-sign-up">Đăng kí</span>
+                <span class="m-in-sign-in">Đăng nhập</span>
             </div>
         </div>
         <div class="form sign-in">
-            <h2>Sign In</h2>
+            <h2>Đăng nhập</h2>
             <form action="/Login/Sign_In" method="POST" class="form_user">
                 <input id="login_email" type="email" name="Email" placeholder="Email Address" value=""
                     oninput="CheckEmail(event)" />
@@ -95,41 +96,32 @@
                 <input id="login_password" type="password" name="password" placeholder="Password" value=""
                     oninput="CheckPassword(event)" />
                 <div id="error_password" class="text-center font-error"></div>
-                <button type="submit" id="btnDangNhap" class="submit" type="button">
-                    Sign In
+                <button type="submit" id="btnDangNhap" class="submit">
+                    Đăng nhập
                 </button>
             </form>
-            <p class="forgot-pass"><a asp-controller="Login" asp-action="ForgotPass">Forgot Password ?</a></p>
-
-            <div class="social-media">
-                <ul>
-                    <li>
-                        <a href="https://www.facebook.com" target="_blank"><img src="../img/facebook.png" /></a>
-                    </li>
-                    <li><img src="../img/search (1).png" /></li>
-                </ul>
-            </div>
+            <p class="forgot-pass"><a asp-controller="Login" asp-action="ForgotPass">Quên mật khẩu</a></p>
         </div>
         <div class="sub-cont">
             <div class="img">
                 <div class="exit"><img src="../img/remove-button.png" alt="" /></div>
                 <div class="img-text m-up">
-                    <h2>New here?</h2>
-                    <p>Sign up and discover great amount of new opportunities!</p>
+                    <h2>Mới dùng?</h2>
+                    <p>Hãy đăng kí để dùng nhiều tính năng hơn nhé!</p>
                 </div>
                 <div class="img-text m-in">
-                    <h2>One of us?</h2>
+                    <h2>Đã từng dùng?</h2>
                     <p>
-                        If you already has an account, just sign in. We've missed you!
+                        Nếu đã có tài khoản thì hãy đăng nhập đi nào!
                     </p>
                 </div>
                 <div class="img-btn">
-                    <span class="m-up">Sign Up</span>
-                    <span class="m-in">Sign In</span>
+                    <span class="m-up">Đăng kí</span>
+                    <span class="m-in">Đăng nhập</span>
                 </div>
             </div>
             <div class="form sign-up">
-                <h2>Sign Up</h2>
+                <h2>Đăng kí</h2>
                 <form action="/Login/Sign_Up" method="post" id="form_login">
                     <input id="name" type="text" name="Name" placeholder="Name" oninput="CheckName(event)" />
 
@@ -145,72 +137,25 @@
                         oninput="CheckConfirmPassword(event)" />
                     <div id="error_password_sign_up" class="text-center font-error"></div>
                     <div id="error_confirm_password" class="text-center font-error"></div>
-
-                    <div class="hobbies-ls">
-                        <div class="hobbies-title">
-                            <span>Hobbies</span>
-                        </div>
-
-                        <div class="hobbies-select">
-
-                            <div class="hobbies">
-                                <input type="checkbox" value="Sport" name="hobbies" />Sport
-                            </div>
-
-
-                            <div class="hobbies">
-                                <input type="checkbox" value="Sport" name="hobbies" /> Travel
-                            </div>
-
-
-                            <div class="hobbies">
-                                <input type="checkbox" value="Sport" name="hobbies" /> Camping
-                            </div>
-
-
-                            <div class="hobbies">
-                                <input type="checkbox" value="Sport" name="hobbies" /> Jogging
-                            </div>
-
-                            <div class="hobbies">
-                                <input type="checkbox" value="Sport" name="hobbies" /> Alone
-                            </div>
-
-                            <div class="hobbies">
-                                <input type="checkbox" value="Sport" name="hobbies" /> Talking
-                            </div>
-
-                            <div class="hobbies">
-                                <input type="checkbox" value="Sport" name="hobbies" /> Swimming
-                            </div>
-
-                            <div class="hobbies">
-                                <input type="checkbox" value="Sport" name="hobbies" /> Learning
-                            </div>
-
-
-                        </div>
-                    </div>
-
-                   <div class="gender-details">
-                        <span class="gender-title">Gender</span>
+                    <div class="gender-details">
+                        <span class="gender-title">Giới tính</span>
                         <div class="category">
                             <label>
-                                @Html.RadioButton("Gender","Male")
+                                @Html.RadioButton("Gender","Male",true)
                                 <td>
-                                    Male
+                                    Nam
                                 </td>
                             </label>
                             <label>
                                 @Html.RadioButton("Gender","Female")
                                 <td>
-                                    Female
+                                    Nữ
                                 </td>
                             </label>
                         </div>
                     </div>
                     <div class="city">
-                        <select name="format" id="format" defaultValue="All">
+                        <select name="format" id="format">
                             @foreach (var city in cities)
                             {
                                 <option value="@city.id">
@@ -221,7 +166,7 @@
                     </div>
                     <button id="Confirm_SignIn" type="submit" class="submit submit_sign_up" data-toggle="collapse"
                         aria-expanded="false">
-                        Sign Up Now
+                        Đăng kí ngay
                     </button>
                 </form>
             </div>
@@ -231,6 +176,7 @@
 
     </div>
     <script>
+        if ("@Message" != "") alert("@Message");
         $(document).ready(function () {
             $("button").click(function () {
                 $("#wrapper").show();
@@ -240,12 +186,12 @@
                 $("#wrapper").hide();
                 $("section").removeClass("blurs");
             });
-            $(".close1").click(function () {
-                $("#Confirm1").hide();
+        @* $(".close1").click(function () {
+            $("#Confirm1").hide();
             });
             $(".close2").click(function () {
-                $("#Confirm2").hide();
-            });
+            $("#Confirm2").hide();
+            }); *@
             var width = $(window).width();
             $("#wrapper").hide();
             $(".img .exit").click(function () {

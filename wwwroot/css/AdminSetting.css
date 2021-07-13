@@ -1,3 +1,5 @@
+
+
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Noto+Serif&display=swap");
 :root {
@@ -107,11 +109,16 @@ button:focus {
     width: 50%;
 } */
 
-.details {
+.details,
+.city-title {
     font-size: 16px;
     font-weight: bold;
     text-transform: uppercase;
     color: var(--main-text);
+}
+
+.city-title{
+    width: 100%;
 }
 
 .user-profile form .user-info input {
@@ -138,7 +145,7 @@ button:focus {
 
 .category {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
 }
 
@@ -202,6 +209,36 @@ label {
     color: #7579ff;
 }
 
+.city-setting {
+    flex-direction: column;
+}
+
+select#format.select-setting {
+    width: 300px;
+}
+select#format {
+    outline: none;
+    box-shadow: none;
+    border: 0 !important;
+    background-color: #5c5c5c;
+    height: 38px;
+    width: 200px;
+    padding-left: 10px;
+    padding-right: 10px;
+    color: #fff;
+}
+
+.select {
+    margin: 23px 0px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+input[type="radio"]{
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+}
 
 /* Responsive */
 
@@ -216,10 +253,16 @@ label {
     .user-profile form .user-info input {
         width: 250px !important;
     }
+    select#format.select-setting {
+        width: 250px !important;
+    }
 }
 
 @media only screen and (max-width: 350px) {
     .user-profile form .user-info input {
+        width: 220px !important;
+    }
+    select#format.select-setting {
         width: 220px !important;
     }
 }
@@ -228,4 +271,11 @@ label {
     .user-profile form .user-info input {
         width: 400px;
     }
+    select#format.select-setting {
+        width: 400px;
+    }
 }
+
+
+
+

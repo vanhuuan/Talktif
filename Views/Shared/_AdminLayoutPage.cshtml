@@ -1,134 +1,133 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Talktif</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lykmapipo/themify-icons@0.1.2/css/themify-icons.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+        rel="stylesheet" />
+    <link href="../favicon.ico" rel="shortcut icon" type="image/x-icon" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="../css/LayoutAdmin.css" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 </head>
+
 <body>
-        <!-- SideBar -->
-        <input type="checkbox" id="sidebar-toggle" />
-        <div class="sidebar">
-            <div class="sidebar-header">
-                <h3 class="brand">
-                    <!-- <span class="ti-unlink"></span> -->
-                    <span>
-                        <a href="#"><img src="../img/logo_main.png" alt="" class="logo" /></a>
-                    </span>
-                    <!-- <span>TalkTif</span> -->
-                </h3>
-                <label for="sidebar-toggle" class="ti-menu-alt"></label>
-            </div>
-            <div class="sidebar-menu">
-                <ul>
-                    <li class="active">
-                        <a asp-controller="Admin" asp-action="Home">
-                            <span class="ti-home icon"></span>
-                            <span>Home</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a asp-controller="Admin" asp-action="Users">
-                            <span class="ti-face-smile icon"></span>
-                            <span> Total of User</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a asp-controller="Admin" asp-action="ReportUser">
-                            <span class="ti-agenda icon"></span>
-                            <span>Report</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a asp-controller="Admin" asp-action="Setting">
-                            <span class="ti-settings icon"></span>
-                            <span>Account</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a asp-controller="User" asp-action="Logout">
-                            <span class="ti-settings icon"></span>
-                            <span>Logout</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
+    <!-- SideBar -->
+    <input type="checkbox" id="sidebar-toggle" />
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h3 class="brand">
+                <!-- <span class="ti-unlink"></span> -->
+                <span>
+                    <a href="#"><img src="../img/logo_main.png" alt="" class="logo" /></a>
+                </span>
+                <!-- <span>TalkTif</span> -->
+            </h3>
+            <label for="sidebar-toggle" class="ti-menu-alt"></label>
         </div>
-        @* Header *@
-        <div class="main-content">
-            <header>
-                <div class="search-wrapper">
-                    <span class="ti-search"></span>
-                    <input type="search" placeholder="Search" />
-                </div>
-
-                <div class="social-icons">
-                    <span class="ti-bell"></span>
-                    <span class="ti-comment"></span>
-                </div>
-            </header>
-            @RenderBody()
+        <div class="sidebar-menu">
+            <ul>
+                <li class="active">
+                    <a asp-controller="Admin" asp-action="Home">
+                        <span class="ti-home icon"></span>
+                        <span>Home</span>
+                    </a>
+                </li>
+                <li>
+                    <a asp-controller="Admin" asp-action="Users">
+                        <span class="ti-face-smile icon"></span>
+                        <span> Total of User</span>
+                    </a>
+                </li>
+                <li>
+                    <a asp-controller="Admin" asp-action="ReportUser">
+                        <span class="ti-agenda icon"></span>
+                        <span>Report</span>
+                    </a>
+                </li>
+                <li>
+                    <a asp-controller="Admin" asp-action="Setting">
+                        <span class="ti-settings icon"></span>
+                        <span>Account</span>
+                    </a>
+                </li>
+                <li>
+                    <a asp-controller="User" asp-action="Logout">
+                        <span class="ti-arrow-left icon"></span>
+                        <span>Logout</span>
+                    </a>
+                </li>
+            </ul>
         </div>
-        <script src = "~/js/sortTable.js" asp-append-version="true"></script>
-        <script src="~/lib/jquery/dist/jquery.min.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-        @RenderSection("Scripts", required: false)
-    </body>
-    <script>
-        $(document).ready(function(){
-            $(".user-info i.username").click(function() {
-                $("#username").addClass("active-field");  
-                $("#username").removeAttr("disabled").focus();
-            })
-            $(".user-info i.password").click(function() {
-                $("#password").addClass("active-field");  
-                $("#password").removeAttr("disabled").focus();
-                $("#confirmpassword").addClass("active-field");  
-                $("#confirmpassword").removeAttr("disabled");
-            })
-        
-            // Activate tooltip
-            $('[data-toggle="tooltip"]').tooltip();
+    </div>
+    @* Header *@
+    <div class="main-content">
+        <header>
+            <div class="search-wrapper">
+                <span class="ti-search"></span>
+                <input type="search" placeholder="Search" />
+            </div>
 
-            // Change status
-            $('.edit.one').click(function(){
-                console.log("add")
-                $('.sending-message').click(function(){
-                    $(".delete.one").attr("style","display : none");
-                })
-            })
-
-            // Select/Deselect checkboxes
-            var checkbox = $('table tbody input[type="checkbox"]');
-            $("#selectAll").click(function()
-            { 
-                if(this.checked){
-                    checkbox.each(function()
-                    {
-                        this.checked = true;                        
-                    });
-                }
-                else
-                {
-                    checkbox.each(function()
-                    {
-                        this.checked = false;                        
-                    });
-                } 
-            });
-            checkbox.click(function()
-            {
-                if(!this.checked)
-                {
-                    $("#selectAll").prop("checked", false);
-                }
-            });
+            <div class="social-icons">
+                <span class="ti-bell"></span>
+                <span class="ti-comment"></span>
+            </div>
+        </header>
+        @RenderBody()
+    </div>
+    <script src="~/js/sortTable.js" asp-append-version="true"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+<script>
+    $(document).ready(function () {
+        $(".user-info i.username").click(function () {
+            $("#username").addClass("active-field");
+            $("#username").removeAttr("disabled").focus();
         })
-    </script>
+        $(".user-info i.password").click(function () {
+            $("#password").addClass("active-field");
+            $("#password").removeAttr("disabled").focus();
+            $("#confirmpassword").addClass("active-field");
+            $("#confirmpassword").removeAttr("disabled");
+        })
+
+        // Activate tooltip
+        $('[data-toggle="tooltip"]').tooltip();
+
+        // Change status
+        $('.edit.one').click(function () {
+            console.log("add")
+            $('.sending-message').click(function () {
+                $(".delete.one").attr("style", "display : none");
+            })
+        })
+
+        // Select/Deselect checkboxes
+        var checkbox = $('table tbody input[type="checkbox"]');
+        $("#selectAll").click(function () {
+            if (this.checked) {
+                checkbox.each(function () {
+                    this.checked = true;
+                });
+            }
+            else {
+                checkbox.each(function () {
+                    this.checked = false;
+                });
+            }
+        });
+        checkbox.click(function () {
+            if (!this.checked) {
+                $("#selectAll").prop("checked", false);
+            }
+        });
+    })
+</script>
+
 </html>

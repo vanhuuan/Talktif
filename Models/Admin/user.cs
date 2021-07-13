@@ -8,7 +8,6 @@ namespace Talktif.Models
         public bool gender { get; set;}
         public bool isAdmin { get; set; }
         public bool isActive { get; set; }
-        public string hobbies { get; set; }
         public string cityID { get; set; }
     }
 }

@@ -16,24 +16,56 @@ namespace Talktif.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private IUserService _userService;
-        private IChatRepo _chatRepo;
+        private IChatService _chatService;
 
-        public ChatController(ILogger<HomeController> logger, IUserService userService, IChatRepo chatRepo)
+        public ChatController(ILogger<HomeController> logger, IUserService userService, IChatService chatService)
         {
             _logger = logger;
             _userService = userService;
-            _chatRepo = chatRepo;
+            _chatService = chatService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            User_Infor usr = _userService.Get_User_Infor(Request, Response);
+            User_Infor usr = await _userService.Get_User_Infor(Request, Response);
             return View(usr);
         }
-        public IActionResult Friends(int? id)
+        // public async Task<IActionResult> Friends_Beta(int? id)
+        // {
+        //     // Get user info and pre-setup
+        //     User_Infor usr = await _userService.Get_User_Infor(Request, Response);
+        //     if (usr == null)
+        //     {
+        //         return RedirectToAction("Index", "Login");
+        //     };
+
+        //     FriendsViewModel vm = new FriendsViewModel
+        //     {
+        //         UserID = usr.id,
+        //         UserToken = usr.token,
+        //         RoomID = id != null ? (int)id : 0
+        //     };
+
+        //     // Fetch all chat rooms
+        //     vm.RoomList = await _chatService.FetchAllChatRoom(Request, Response);
+
+        //     // Fetch all messages
+        //     if (vm.RoomID > 0)
+        //     {
+        //         vm.Messages = await _chatService.FetchMessage(Request, Response, vm.RoomID, 20);
+        //     }
+        //     return View(vm);
+        // }
+        // public async Task<IActionResult> Chat_Beta()
+        // {
+        //     User_Infor usr = await _userService.Get_User_Infor(Request, Response);
+        //     return View(usr);
+        // }
+
+        public async Task<IActionResult> Friends(int? id)
         {
             // Get user info and pre-setup
-            User_Infor usr = _userService.Get_User_Infor(Request, Response);
+            User_Infor usr = await _userService.Get_User_Infor(Request, Response);
             if (usr == null)
             {
                 return RedirectToAction("Index", "Login");
@@ -47,26 +79,18 @@ namespace Talktif.Controllers
             };
 
             // Fetch all chat rooms
-            var chatroomResult = _chatRepo.FetchAllChatRoom(usr.id, usr.token);
-            string crstring = chatroomResult.Content.ReadAsStringAsync().Result;
-            if (chatroomResult.IsSuccessStatusCode)
-            {
-                vm.RoomList = JsonConvert.DeserializeObject<List<Room>>(crstring);
-            }
+            List<ChatBox> list = await _chatService.GetListChatBox(Request,Response,usr.id);
+            ViewBag.ListChatBox = list;
+
+            vm.RoomList = await _chatService.FetchAllChatRoom(Request, Response);
 
             // Fetch all messages
             if (vm.RoomID > 0)
             {
-                var messagesResult = _chatRepo.FetchMessage(usr.id, vm.RoomID, 20, usr.token);
-                string mrstring = messagesResult.Content.ReadAsStringAsync().Result;
-                if (messagesResult.IsSuccessStatusCode)
-                {
-                    vm.Messages = JsonConvert.DeserializeObject<List<Message>>(mrstring).OrderBy(m => m.sentAt).ToList();
-                }
+                vm.Messages = await _chatService.FetchMessage(Request, Response, vm.RoomID, 20);
             }
             return View(vm);
         }
-
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

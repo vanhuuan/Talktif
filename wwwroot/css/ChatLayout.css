@@ -1,0 +1,71 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Noto+Serif&display=swap");
+:root {
+    --main-color: #027581;
+    --color-dark: #1d2231;
+    --text-grey: #8390a2;
+}
+
+p {
+    margin-bottom: 0px !important;
+}
+
+h4,
+h5 {
+    color: orange;
+    font-weight: 600;
+    /* font-size: 1.4rem; */
+    margin-bottom: 20px;
+    line-height: 1.4em;
+    text-align: left;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+}
+
+* {
+    font-family: "Noto Serif", serif;
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    list-style-type: none;
+    box-sizing: border-box;
+    list-style: none;
+    text-decoration: none !important;
+}
+
+
+/* Navbar */
+
+a.img-logo {
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+
+a.img-logo img {
+    width: 80px;
+    height: 100%;
+}
+
+a.btn-exit,
+a.btn-exit:hover {
+    background-color: #00dd99;
+    color: white;
+    width: 95px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+a.btn-exit i {
+    filter: sepia(1);
+    margin-left: 5px;
+}
+
+.nav-icons {
+    margin: 1rem;
+    color: #00dd99;
+    font-size: 1.65rem;
+}

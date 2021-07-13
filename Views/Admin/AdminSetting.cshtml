@@ -1,0 +1,93 @@
+@using Talktif.Models
+@{
+    List<City> cities = new List<City>();
+    if (ViewBag.Cities != null)
+    {
+        cities = ViewBag.Cities;
+    }
+    User_Infor user = new User_Infor();
+    user = ViewBag.Data;
+    ViewData["Name"] = user.name;
+    string a = "";
+    foreach (var i in cities)
+    {
+        if (i.id == user.cityId) a = i.name;
+    }
+    string name = (user != null) ? user.name : "";
+    ViewData["city"] = a;
+    @* <link rel="stylesheet" href="../css/Setting.css" /> *@
+    Layout = "~/Views/Shared/_AdminLayoutPage.cshtml";
+    ViewData["Title"] = "Setting";
+    <link rel="stylesheet" href="../css/AdminSetting.css" />
+}
+<div class="container-fluid">
+    <div class="row row-wrapper">
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 tablet">
+            <div class="user-profile">
+                <h2 class="title">User Profile</h2>
+                <form action="/Admin/Setting" class="form" method="POST">
+                    <div class="user-info">
+                        <span class="details">UserName :</span>
+                        <div class="name">
+                            <input id="username" name="name" type="text" value="@name" placeholder="Username" required
+                                disabled />
+                            <i class="fas fa-edit username"></i>
+                        </div>
+                    </div>
+                    <div class="user-info">
+                        <span class="details">Email :</span>
+                        <input id="email" name="email" type="email" value=@((user == null) ? "" : user.email)
+                            placeholder="Email" required disabled />
+                    </div>
+                    <div class="user-info">
+                        <span class="details">Old Password (required) :</span>
+                        <div class="password">
+                            <input id="password" name="pass" type="password" placeholder="Password" />
+                            <i class="fas fa-edit password"></i>
+                        </div>
+                    </div>
+                    <div class="user-info">
+                        <span class="details">New Password :</span>
+                        <input id="newpassword" name="newpass" type="password" placeholder="NewPassword" />
+                    </div>
+                    <div class="user-info">
+                        <span class="details">Confirm New Password :</span>
+                        <input id="confirmpassword" name="confirmpassword" type="password"
+                            placeholder="Confirm Password" />
+                    </div>
+                    <div class="gender-details">
+                        <span class="gender-title">Gender :</span>
+                        <div class="category">
+                            <label>
+                                @Html.RadioButton("Gender","Male",user.gender)
+                                <td>
+                                    Male
+                                </td>
+                            </label>
+                            <label>
+                                @Html.RadioButton("Gender","Female",!user.gender)
+                                <td>
+                                    Female
+                                </td>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="city-setting d-flex align-items-center mb-3 mt-3 ">
+                        <div class="city-title">
+                            <span>City:</span>
+                        </div>
+                        <select name="format" id="format" class="select-setting">
+                            @foreach (var city in cities)
+                            {
+                                <option value="@city.id" selected="@((user != null) && (user.cityId == city.id))">
+                                    @city.name
+                                </option>
+                            }
+                        </select>
+                    </div>
+                    <div class="submit"><input type="submit" value="Change" class="Update-Profile" /></div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

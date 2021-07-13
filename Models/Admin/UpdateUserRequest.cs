@@ -1,3 +1,5 @@
+using System;
+
 namespace Talktif.Models
 {
     public class UpdateUserRequest
@@ -6,6 +8,8 @@ namespace Talktif.Models
         public string Name { get; set; }
         public string Email { get; set; }
         public bool Gender { get; set; }
-        public string Hobbies { get; set; }
+        public int CityId { get; set; }
+        public bool IsActive { get; set; }
+        public DateTime createdAt { get; set; }
     }
 }

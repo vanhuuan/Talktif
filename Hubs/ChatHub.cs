@@ -9,7 +9,8 @@ namespace Talktif.Hubs
 {
     public class ChatHub : Hub<IChatClient>
     {
-        private void Debug(){
+        private void Debug()
+        {
             // DEBUG
             System.Console.WriteLine("\nRoom");
             foreach (RandomRoom item in RoomManager.Instance.RoomList)
@@ -166,20 +167,20 @@ namespace Talktif.Hubs
                 if (room.Members.Length >= 2 && room.Members[0].FriendRequest && room.Members[1].FriendRequest)
                 {
                     IChatRepo chatRepo = new ChatRepo();
-                    chatRepo.CreateChatRoom(new CreateChatRoomRequest
-                    {
-                        User1Id = room.Members[0].UserID,
-                        User2Id = room.Members[1].UserID,
-                        User1NickName = room.Members[0].UserName,
-                        User2NickName = room.Members[1].UserName
-                    }, token);
+                    await chatRepo.CreateChatRoom(
+                        room.Members[0].UserID,
+                        room.Members[1].UserID,
+                        room.Members[0].UserName,
+                        room.Members[1].UserName,
+                        token);
                 }
             }
 
             Debug();
         }
 
-        public async Task SaveFilter(int userID, string username, string filter){
+        public async Task SaveFilter(int userID, string username, string filter)
+        {
             await LeaveChat(userID, username);
             await AddToQueue(userID, username, filter);
         }

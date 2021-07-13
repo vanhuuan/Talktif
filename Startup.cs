@@ -28,11 +28,12 @@ namespace Talktif
         public void ConfigureServices(IServiceCollection services)
         {
             services
-                .AddSingleton<IAdminRepo,AdminRepo>()
-                .AddSingleton<IChatRepo,ChatRepo>()
-                .AddSingleton<IUserRepo,UserRepo>(); 
+                .AddSingleton<IAdminRepo, AdminRepo>()
+                .AddSingleton<IChatRepo, ChatRepo>()
+                .AddSingleton<IUserRepo, UserRepo>();
             services
                 .AddScoped<ICookieService, CookieService>()
+                .AddScoped<IChatService, ChatService>()
                 .AddScoped<IUserService, UserService>()
                 .AddScoped<IAdminService, AdminService>();
             services.AddControllersWithViews();

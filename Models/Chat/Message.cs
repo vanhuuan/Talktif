@@ -1,4 +1,5 @@
 using System;
+
 namespace Talktif.Models
 {
     public class Message
