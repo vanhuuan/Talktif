@@ -63,50 +63,48 @@
                     <!-- Button report modal -->
                     <button type="button" class="interactive" data-toggle="modal" title="Báo cáo"><i class="fas
                 fa-flag-checkered"></i></button>
+                 <!-- Modal -->
+                    <div class="modal fade" id="reportModal" tabindex="-1" role="dialog" aria-labelledby="filterTitle"
+                    aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="reportTitle">Tùy chon nội dung report</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input filter-option"
+                                        id="languageOptions">
+                                        <label class="custom-control-label" for="languageOptions">Ngôn ngữ phản cảm</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input filter-option"
+                                        id="sellOption">
+                                        <label class="custom-control-label" for="sellOption">Bán hàng cấm</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input filter-option" id="anotherOption">
+                                        <label class="custom-control-label" for="anotherOption">Khác- Ghi trong phần ghi chú</label>
+                                    </div>
+                                    <i>Chúng tôi sẽ xử lí báo cáo nhanh nhất có thể</i>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                                    <button type="button" class="btn btn-danger" id="saveFilter"
+                                    title="Hành động này sẽ gửi báo cáo người ban đang nhắn tin">Gửi</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>     
                 }
                 @if (Model != null)
                 {
                     <!-- Button trigger modal -->
                     <button type="button" class="interactive" data-toggle="modal" data-target="#filterModal">
-                        <i class="fas fa-wrench"></i>
-                         <!-- Modal -->
-                        <div class="modal fade" id="reportModal" tabindex="-1" role="dialog" aria-labelledby="filterTitle"
-                        aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="reportTitle">Tùy chon nội dung report</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input filter-option"
-                                            id="languageOptions">
-                                            <label class="custom-control-label" for="languageOptions">Ngôn ngữ phản cảm</label>
-                                        </div>
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input filter-option"
-                                            id="sellOption">
-                                            <label class="custom-control-label" for="sellOption">Bán hàng cấm</label>
-                                        </div>
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input filter-option" id="anotherOption">
-                                            <label class="custom-control-label" for="anotherOption">Khác- Ghi trong phần ghi chú</label>
-                                        </div>
-                                        <i>Chúng tôi sẽ xử lí báo cáo nhanh nhất có thể</i>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                                        <button type="button" class="btn btn-danger" id="saveFilter"
-                                        title="Hành động này sẽ thoát khỏi phòng chat hiện tại và tiến hành đợi ghép phòng mới">Lưu
-                                            tùy chọn</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </button>
+                        <i class="fas fa-wrench"></i> </button>
                     <!-- Modal -->
                     <div class="modal fade" id="filterModal" tabindex="-1" role="dialog" aria-labelledby="filterTitle"
                     aria-hidden="true">
