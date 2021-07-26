@@ -11,7 +11,8 @@ function CheckEmail(event) {
     //  document.getElementById("login_email").style.backgroundColor = "yellow";
     error_email.innerHTML = "Not Invalid Email";
   } else {
-    if (email.slice(-10) !== "@gmail" + "." + "com") {
+      if(email.slice(-10)==""){
+    // if (email.slice(-10) !== "@gmail" + "." + "com") {
       document.getElementById("login_email").style.borderColor = "red";
       //    document.getElementById("login_email").style.backgroundColor = "yellow";
       error_email.innerHTML = "Email Error";
@@ -63,7 +64,8 @@ function CheckEmail_SignUp(event) {
     //   document.getElementById("email").style.backgroundColor = "yellow";
     document.getElementById("email").style.borderColor = "red";
   } else {
-    if (email.slice(-10) !== "@gmail" + "." + "com") {
+    if(email.slice(-10)==""){
+    //if (email.slice(-10) !== "@gmail" + "." + "com") {
       error_email.innerHTML = "Email not correct";
       //       document.getElementById("email").style.backgroundColor = "yellow";
       document.getElementById("email").style.borderColor = "red";

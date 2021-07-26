@@ -19,9 +19,6 @@ document.getElementById("sendButton").disabled = true;
 
 connection.on("ReceiveMessage", function (user, message) {
   var msg = message
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;");
   // var encodedMsg = user + " says " + msg;
   var div = document.createElement("div");
   div.className =
