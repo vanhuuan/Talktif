@@ -73,20 +73,6 @@ if (userID) {
         return console.error(err.toString());
       });
     });
-
-  document
-    .getElementById("saveFilter")
-    .addEventListener("click", function (event) {
-      event.preventDefault();
-      var filterString = "";
-      var filterInputs = document.getElementsByClassName("filter-option");
-      if (filterInputs[0].checked) filterString += (filterString == "" ? "" : ",") + userHobbies;
-      if (filterInputs[1].checked) filterString += (filterString == "" ? "" : ",") + userAddress;
-      if (filterInputs[2].checked) filterString += (filterString == "" ? "" : ",") + (userGender ? "female" : "male");
-      connection.invoke("SaveFilter", userID, username, filterString).catch((err) => {
-        return console.error(err.toString());
-      });
-    });
 }
 
 document
