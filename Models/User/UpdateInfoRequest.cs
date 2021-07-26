@@ -9,5 +9,6 @@ namespace Talktif.Models
         public string OldPassword { get; set; }
         public int CityId { get; set; }
         public bool Gender { get; set; }
+        public string Hobbies { get; set; }
     }
 }

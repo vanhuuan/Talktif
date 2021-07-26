@@ -9,6 +9,7 @@ using Newtonsoft.Json;
 using Talktif.Models;
 using Talktif.Service;
 using Talktif.Repository;
+using Microsoft.AspNetCore.Http;
 
 namespace Talktif.Controllers
 {
@@ -17,12 +18,14 @@ namespace Talktif.Controllers
         private readonly ILogger<HomeController> _logger;
         private IUserService _userService;
         private IChatService _chatService;
+        private IChatRepo _chatRepo;
 
-        public ChatController(ILogger<HomeController> logger, IUserService userService, IChatService chatService)
+        public ChatController(ILogger<HomeController> logger, IUserService userService, IChatService chatService, IChatRepo chatRepo)
         {
             _logger = logger;
             _userService = userService;
             _chatService = chatService;
+            _chatRepo = chatRepo;
         }
 
         public async Task<IActionResult> Index()
@@ -96,6 +99,13 @@ namespace Talktif.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        // Delete Chat Room
+        public async Task<IActionResult> Unfriend(int uid, int roomid, string token)
+        {
+            await _chatRepo.DeleteChatRoom(uid, roomid, token);
+            return RedirectToAction("Friends");
         }
     }
 }

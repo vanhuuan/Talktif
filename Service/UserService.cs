@@ -23,7 +23,7 @@ namespace Talktif.Service
         Task RefreshToken(HttpResponse Response, Cookie_Data cookie);
         Task<List<City>> GetCity();
         Task<string> GetNameCity(int cityID);
-        Task<string> UpdateUserInfor(HttpRequest Request, HttpResponse Response, string name, string email, string pass, string oldpass, int cityID, bool gender);
+        Task<string> UpdateUserInfor(HttpRequest Request, HttpResponse Response, string name, string email, string pass, string oldpass, int cityID, bool gender, string hobbies);
     }
     public class UserService : IUserService
     {
@@ -135,7 +135,7 @@ namespace Talktif.Service
             }
             return "";
         }
-        public async Task<string> UpdateUserInfor(HttpRequest Request, HttpResponse Response, string name, string email, string pass, string oldpass, int cityID, bool gender)
+        public async Task<string> UpdateUserInfor(HttpRequest Request, HttpResponse Response, string name, string email, string pass, string oldpass, int cityID, bool gender, string hobbies)
         {
             var cookie = JsonConvert.DeserializeObject<Cookie_Data>(_cookieService.ReadCookie(Request, "user"));
             UpdateInfoRequest update = new UpdateInfoRequest()
@@ -147,6 +147,7 @@ namespace Talktif.Service
                 OldPassword = oldpass,
                 CityId = cityID,
                 Gender = gender,
+                Hobbies = hobbies
             };
             var result = await _userRepo.UpdateUserInfor(update, cookie.token);
             string message = result.Content.ReadAsStringAsync().Result;

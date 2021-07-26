@@ -35,14 +35,21 @@
 
 <body>
     <nav class="navbar navbar-expand-md navbar-light bg-light border-bottom" style="height: 76px;z-index: 1;">
-        <a href="/User" class="nav-icons" title="Thông tin cá nhân"><i class="fas fa-user-circle"></i></a>
-        <a href="/Chat" class="nav-icons" title="Chat"><i class="fas fa-comment"></i></a>
-        <a href="/Chat/Friends" class="nav-icons" title="Bạn bè"><i class="fas fa-users"></i></a>
+        @if ((bool)ViewData["LoggedIn"])
+        {
+            <a href="/User" class="nav-icons" title="Thông tin cá nhân"><i class="fas fa-user-circle"></i></a>
+            <a href="/Chat" class="nav-icons" title="Chat"><i class="fas fa-comment"></i></a>
+            <a href="/Chat/Friends" class="nav-icons" title="Bạn bè"><i class="fas fa-users"></i></a>
+        }
         @* <label for="toggle-menu" class="icon-menu"></label> *@
         <a href="/" class="navbar-brand text-center img-logo">
             <img src="/img/logo_main.png" alt="" srcset="" />
         </a>
-        <a asp-controller="User" asp-action="Logout" class="nav-icons" title="Đăng xuất"><i class="fas fa-sign-out-alt"></i></a>
+        @if ((bool)ViewData["LoggedIn"])
+        {
+            <a asp-controller="User" asp-action="Logout" class="nav-icons" title="Đăng xuất"><i
+                class="fas fa-sign-out-alt"></i></a>
+        }
     </nav>
     @RenderBody()
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

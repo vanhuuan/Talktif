@@ -2,6 +2,8 @@
 @model User_Infor;
 @{
     ViewData["Title"] = "Chat - Talktif";
+    @if (Model != null) ViewData["LoggedIn"] = true;
+    else ViewData["LoggedIn"] = false;
     Layout = "~/Views/Shared/ChatLayout.cshtml";
     String[] arr = new String[]{
 "red","green","blue","dark-mode"
@@ -32,18 +34,18 @@
                 <div class="message-box-content">
                     @* <div class="message-row your-message">
                         <div class="message-text">
-                            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vitae id totam sint impedit
-                            consequuntur culpa quia, sed corrupti doloremque odio delectus iusto esse alias natus
-                            voluptatibus earum modi
+                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vitae id totam sint impedit
+                        consequuntur culpa quia, sed corrupti doloremque odio delectus iusto esse alias natus
+                        voluptatibus earum modi
                         </div>
-                    </div>
-                    <div class="message-row other-message">
+                        </div>
+                        <div class="message-row other-message">
                         <div class="message-text">
-                            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vitae id totam sint impedit
-                            consequuntur culpa quia, sed corrupti doloremque odio delectus iusto esse alias natus
-                            voluptatibus earum modi
+                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vitae id totam sint impedit
+                        consequuntur culpa quia, sed corrupti doloremque odio delectus iusto esse alias natus
+                        voluptatibus earum modi
                         </div>
-                    </div> *@
+                        </div> *@
                 </div>
                 <form class="message-box-action">
                     <input type="text" id="message" class="message" placeholder="Nhập tin nhắn..." />
@@ -107,9 +109,11 @@
                 }
                 @if (Model != null)
                 {
-                    <button id="addFriendButton" class="interactive" title="Kết bạn"><i class="fas fa-user-plus"></i></button>
+                    <button id="addFriendButton" class="interactive" title="Kết bạn"><i
+                        class="fas fa-user-plus"></i></button>
                 }
-                <button id="skipButton" class="btn-next-person d-flex justify-content-center align-items-center" type="submit">
+                <button id="skipButton" class="btn-next-person d-flex justify-content-center align-items-center"
+                    type="submit">
                     <p class="text mr-2 mb-0">Bỏ qua</p><img class="icon_next" src="/img/right-arrow.png" alt=""
                         srcset="">
                 </button>

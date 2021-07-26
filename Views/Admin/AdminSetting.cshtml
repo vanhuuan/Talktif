@@ -18,6 +18,16 @@
     @* <link rel="stylesheet" href="../css/Setting.css" /> *@
     Layout = "~/Views/Shared/_AdminLayoutPage.cshtml";
     ViewData["Title"] = "Setting";
+
+    bool sport = user.hobbies.IndexOf("Sport") >= 0;
+    bool study = user.hobbies.IndexOf("Study") >= 0;
+    bool movie = user.hobbies.IndexOf("Movie") >= 0;
+    bool music = user.hobbies.IndexOf("Music") >= 0;
+    bool game = user.hobbies.IndexOf("Game") >= 0;
+    bool reading = user.hobbies.IndexOf("Reading") >= 0;
+    bool shopping = user.hobbies.IndexOf("Shopping") >= 0;
+    bool travel = user.hobbies.IndexOf("Travel") >= 0;
+
     <link rel="stylesheet" href="../css/AdminSetting.css" />
 }
 <div class="container-fluid">
@@ -84,6 +94,55 @@
                                 </option>
                             }
                         </select>
+                    </div>
+                    <div class="hobbies-checkboxes row">
+                        <span class="gender-title d-block w-100 my-2">Sở thích</span>
+                        <div class="custom-control custom-checkbox m-auto">
+                            <input type="checkbox" class="custom-control-input" id="Sport" name="Sport" value="Sport"
+                                checked="@sport">
+                            <label class="custom-control-label" for="Sport">Thể thao</label>
+                        </div>
+                        <div class="custom-control custom-checkbox m-auto">
+                            <input type="checkbox" class="custom-control-input" id="Study" name="Study" value="Study"
+                                checked="@study">
+                            <label class="custom-control-label" for="Study">Học tập</label>
+                        </div>
+
+                        <div class="custom-control custom-checkbox m-auto">
+                            <input type="checkbox" class="custom-control-input" id="Movie" name="Movie" value="Movie"
+                                checked="@movie">
+                            <label class="custom-control-label" for="Movie">Xem phim</label>
+                        </div>
+
+                        <div class="custom-control custom-checkbox m-auto">
+                            <input type="checkbox" class="custom-control-input" id="Game" name="Game" value="Game"
+                                checked="@game">
+                            <label class="custom-control-label" for="Game">Game</label>
+                        </div>
+
+                        <div class="custom-control custom-checkbox m-auto">
+                            <input type="checkbox" class="custom-control-input" id="Music" name="Music" value="Music"
+                                checked="@music">
+                            <label class="custom-control-label" for="Music">Nghe nhạc</label>
+                        </div>
+
+                        <div class="custom-control custom-checkbox m-auto">
+                            <input type="checkbox" class="custom-control-input" id="Reading" name="Reading"
+                                value="Reading" checked="@reading">
+                            <label class="custom-control-label" for="Reading">Đọc sách</label>
+                        </div>
+
+                        <div class="custom-control custom-checkbox m-auto">
+                            <input type="checkbox" class="custom-control-input" id="Shopping" name="Shopping"
+                                value="Shopping" checked="@shopping">
+                            <label class="custom-control-label" for="Shopping">Mua sắm</label>
+                        </div>
+
+                        <div class="custom-control custom-checkbox m-auto">
+                            <input type="checkbox" class="custom-control-input" id="Travel" name="Travel" value="Travel"
+                                checked="@travel">
+                            <label class="custom-control-label" for="Travel">Du lịch</label>
+                        </div>
                     </div>
                     <div class="submit"><input type="submit" value="Change" class="Update-Profile" /></div>
                 </form>

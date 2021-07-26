@@ -64,7 +64,17 @@ namespace Talktif.Controllers
             {
                 ViewBag.Message = "An error had occur !";
                 return View("Index");
-            }
+            };
+
+            string hobbies = form["Sport"].ToString()
+                + (form["Sport"].ToString() != "" ? "," : "") + form["Study"].ToString()
+                + (form["Study"].ToString() != "" ? "," : "") + form["Movie"].ToString()
+                + (form["Movie"].ToString() != "" ? "," : "") + form["Game"].ToString()
+                + (form["Game"].ToString() != "" ? "," : "") + form["Music"].ToString()
+                + (form["Music"].ToString() != "" ? "," : "") + form["Reading"].ToString()
+                + (form["Reading"].ToString() != "" ? "," : "") + form["Shopping"].ToString()
+                + (form["Shopping"].ToString() != "" ? "," : "") + form["Travel"].ToString();
+
             SignUpRequest sr = new SignUpRequest()
             {
                 Name = form["Name"].ToString(),
@@ -72,6 +82,7 @@ namespace Talktif.Controllers
                 Password = form["Password"].ToString(),
                 Gender = (form["Gender"].ToString() == "Male") ? true : false,
                 CityId = Convert.ToInt32(form["format"].ToString()),
+                Hobbies = hobbies,
                 Device = System.Environment.MachineName,
             };
             var signUpResult =await _userService.Sign_Up(sr);

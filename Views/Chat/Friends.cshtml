@@ -2,6 +2,9 @@
 @model FriendsViewModel;
 @{
     ViewData["Title"] = "Friends - Talktif";
+    @if (Model != null) ViewData["LoggedIn"] = true;
+    else ViewData["LoggedIn"] = false;
+
     List<ChatBox> ChatBoxes = new List<ChatBox>();
     if (ViewBag.ListChatBox != null)
     {
@@ -23,57 +26,60 @@
 }
 
 <div class="chatting_box row">
-    <div class="group-chat col-lg-5 col-xs-5 col-md-5 col-sm-5">
-        <div class="row">
-            <div class="box-secret message-box">
-                <div class="chat-header">
-                    <div class="theme-title">
-                        <p>Người lạ</p>
+    @if (Model.RoomID > 0)
+    {
+        <div class="group-chat col-lg-5 col-xs-5 col-md-5 col-sm-5">
+            <div class="row">
+                <div class="box-secret message-box">
+                    <div class="chat-header">
+                        <div class="theme-title">
+                            <p>Người lạ</p>
+                        </div>
                     </div>
-                </div>
-                <div class="message-box-content">
-                    @if (Model.Messages != null)
-                    {
-                        foreach (Message item in Model.Messages)
+                    <div class="message-box-content">
+                        @for (int i=Model.Messages.Count-1;i>=0;i--)
                         {
-                            <div class="@(item.sender != Model.UserID ? "message-row other-message" : "message-row your-message")"
-                        title="@item.sentAt.ToLocalTime()">
-                                <div class="message-text">@item.content</div>
-                            </div>
+                        <div class="@(Model.Messages[i].sender != Model.UserID ? "message-row other-message" : "message-row your-message")"
+                        title="@Model.Messages[i].sentAt.ToLocalTime()">
+                            <div class="message-text">@Model.Messages[i].content</div>
+                        </div>
                         }
-                    }
 
-                    @* <div class="message-row your-message">
-                        <div class="message-text">
-                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vitae id totam sint impedit
-                        consequuntur culpa quia, sed corrupti doloremque odio delectus iusto esse alias natus
-                        voluptatibus earum modi
-                        </div>
-                        </div>
-                        <div class="message-row other-message">
-                        <div class="message-text">
-                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vitae id totam sint impedit
-                        consequuntur culpa quia, sed corrupti doloremque odio delectus iusto esse alias natus
-                        voluptatibus earum modi
-                        </div>
-                        </div> *@
+                        @* <div class="message-row your-message">
+                            <div class="message-text">
+                            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vitae id totam sint impedit
+                            consequuntur culpa quia, sed corrupti doloremque odio delectus iusto esse alias natus
+                            voluptatibus earum modi
+                            </div>
+                            </div>
+                            <div class="message-row other-message">
+                            <div class="message-text">
+                            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vitae id totam sint impedit
+                            consequuntur culpa quia, sed corrupti doloremque odio delectus iusto esse alias natus
+                            voluptatibus earum modi
+                            </div>
+                            </div> *@
+                    </div>
+                    <form class="message-box-action">
+                        <input type="text" id="message" class="message" name="Message" placeholder="Nhập tin nhắn..." />
+                        <button id="sendButton" class="send_message" type="submit">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </form>
                 </div>
-                <form class="message-box-action">
-                    <input type="text" id="message" class="message" placeholder="Nhập tin nhắn..." />
-                    <button id="sendButton" class="send_message" type="submit">
-                        <i class="fas fa-paper-plane"></i>
-                    </button>
-                </form>
+                @* TODO: Custom scrollbar for chatbox *@
             </div>
-            @* TODO: Custom scrollbar for chatbox *@
-        </div>
-        <div class="row mt-2">
-            <div class="group-btn-interactive">
+            <div class="row mt-2">
+                <div class="group-btn-interactive">
                     <button class="interactive" data-toggle="modal" title="Báo cáo"><i class="fas
                 fa-flag-checkered"></i></button>
+                    <a asp-action="Unfriend" asp-route-uid="@Model.UserID" asp-route-roomid="@Model.RoomID"
+                    asp-route-token='@Model.UserToken'><button class="interactive" title="Hủy kết bạn"><i
+                            class="fas fa-user-times"></i></button></a>
+                </div>
             </div>
         </div>
-    </div>
+    }
     @* <div class="col-sm-4 p-5">
         @if (Model.RoomList != null)
         {
@@ -96,7 +102,7 @@
                         {
                             @foreach (var item in ChatBoxes)
                             {
-                                <a asp-action="Friends1" asp-route-id="@item.ID_Room">
+                                <a asp-action="Friends" asp-route-id="@item.ID_Room">
                                     <div class="user-history-item">
                                         <div class="name-user">
                                             <p>

@@ -57,7 +57,7 @@ namespace Talktif.Controllers
             ViewBag.Cities = await _userService.GetCity();
             return View();
         }
-        [HttpPost,ActionName("Users")]
+        [HttpPost, ActionName("Users")]
         public async Task<IActionResult> CreateNewAdmin(IFormCollection form)
         {
             SignUpRequest data = new SignUpRequest()
@@ -69,13 +69,13 @@ namespace Talktif.Controllers
                 CityId = Convert.ToInt32(form["format"].ToString()),
                 Device = System.Environment.MachineName
             };
-            string a = await _adminService.CreateNewAdmin(Request,Response,data);
-            if(String.IsNullOrEmpty(a))  return RedirectToAction("Users");
+            string a = await _adminService.CreateNewAdmin(Request, Response, data);
+            if (String.IsNullOrEmpty(a)) return RedirectToAction("Users");
             else
             {
                 ViewBag.Message = a;
                 long numOfUser = await _adminService.GetNumberofUser(Request, Response);
-                ViewBag.Users =await _adminService.GetAllUser(Request, Response, (numOfUser > 8) ? 8 : numOfUser, 0);
+                ViewBag.Users = await _adminService.GetAllUser(Request, Response, (numOfUser > 8) ? 8 : numOfUser, 0);
                 ViewBag.NumberofUser = numOfUser;
                 ViewBag.Cities = await _userService.GetCity();
                 return View();
@@ -102,7 +102,7 @@ namespace Talktif.Controllers
             {
                 ViewBag.Message = "The field name is requied !";
                 return await UpdateUser(user.id);
-            }
+            };
             UpdateUserRequest updateRequest = new UpdateUserRequest()
             {
                 Id = user.id,
@@ -127,8 +127,8 @@ namespace Talktif.Controllers
         public async Task<IActionResult> DeleteUser(int ID)
         {
             if (_userService.IsAdmin(Request) != true) return NotFound();
-            var result =await _adminService.DeleteUser(Request,Response,ID);
-            if(result == false) Console.WriteLine("An error has occur !");
+            var result = await _adminService.DeleteUser(Request, Response, ID);
+            if (result == false) Console.WriteLine("An error has occur !");
             return RedirectToAction("Users");
         }
         public async Task<IActionResult> ReportUser(string PageNum)
@@ -204,6 +204,14 @@ namespace Talktif.Controllers
             string confirmpass = form["confirmpassword"].ToString();
             string name = (String.IsNullOrEmpty(form["name"].ToString())) ? user.name : form["name"].ToString();
             string email = (String.IsNullOrEmpty(form["email"].ToString())) ? user.email : form["email"].ToString();
+            string hobbies = form["Sport"].ToString()
+                + (form["Sport"].ToString() != "" ? "," : "") + form["Study"].ToString()
+                + (form["Study"].ToString() != "" ? "," : "") + form["Movie"].ToString()
+                + (form["Movie"].ToString() != "" ? "," : "") + form["Game"].ToString()
+                + (form["Game"].ToString() != "" ? "," : "") + form["Music"].ToString()
+                + (form["Music"].ToString() != "" ? "," : "") + form["Reading"].ToString()
+                + (form["Reading"].ToString() != "" ? "," : "") + form["Shopping"].ToString()
+                + (form["Shopping"].ToString() != "" ? "," : "") + form["Travel"].ToString();
             bool gender = (form["Gender"].ToString() == "Male") ? true : false;
             int CityId = Convert.ToInt32(form["format"].ToString());
 
@@ -211,23 +219,30 @@ namespace Talktif.Controllers
             {
                 ViewBag.message = "Confirm new password does not match";
 
+                ViewBag.Data = await _userService.Get_User_Infor(Request, Response);
+                ViewBag.Cities = await _userService.GetCity();
                 return View("AdminSetting");
             }
             else if (oldpass == "")
             {
                 ViewBag.message = "The password field is requied";
+
+                ViewBag.Data = await _userService.Get_User_Infor(Request, Response);
+                ViewBag.Cities = await _userService.GetCity();
                 return View("AdminSetting");
             }
             else if (newpass == "")
             {
                 newpass = oldpass;
             }
-            string message = await _userService.UpdateUserInfor(Request, Response, name, email, newpass, oldpass, CityId, gender);
+            string message = await _userService.UpdateUserInfor(Request, Response, name, email, newpass, oldpass, CityId, gender, hobbies);
             if (message == null) return RedirectToAction("Home");
             else
             {
                 ViewBag.message = message;
-                return View("Setting");
+                ViewBag.Data = await _userService.Get_User_Infor(Request, Response);
+                ViewBag.Cities = await _userService.GetCity();
+                return View("AdminSetting");
             }
         }
     }

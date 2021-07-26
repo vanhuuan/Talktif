@@ -251,3 +251,7 @@ select#format.select-setting {
         width: 400px;
     }
 }
+
+.hobbies-checkboxes {
+    margin: 0;
+}

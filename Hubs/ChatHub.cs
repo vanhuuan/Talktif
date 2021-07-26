@@ -19,6 +19,7 @@ namespace Talktif.Hubs
                 foreach (WaitUser usr in item.Members)
                 {
                     System.Console.WriteLine(usr.ConnectionID);
+                    System.Console.WriteLine(usr.FriendRequest);
                 }
             }
             System.Console.WriteLine("Queue");
@@ -166,6 +167,11 @@ namespace Talktif.Hubs
                 // Call API create chat room
                 if (room.Members.Length >= 2 && room.Members[0].FriendRequest && room.Members[1].FriendRequest)
                 {
+                    System.Console.WriteLine("Call API");
+                    System.Console.WriteLine(room.Members[0].UserID);
+                    System.Console.WriteLine(room.Members[1].UserID);
+                    System.Console.WriteLine(room.Members[0].FriendRequest);
+                    System.Console.WriteLine(room.Members[1].FriendRequest);
                     IChatRepo chatRepo = new ChatRepo();
                     await chatRepo.CreateChatRoom(
                         room.Members[0].UserID,

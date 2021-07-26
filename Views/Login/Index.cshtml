@@ -58,8 +58,9 @@
                 </div>
             </div>
             <div class="btn-group">
-                <a class="submit mt-4 resize_font mr-1 action_home" href="/chat">Bắt đầu</a>
-                <button id="dangnnhap" data-toggle="collapse" aria-expanded="false" class="mt-4 ml-3 resize_font submit">
+                <a class="submit mt-4 resize_font mr-1 action_home" href="/Chat">Bắt đầu</a>
+                <button id="dangnnhap" data-toggle="collapse" aria-expanded="false"
+                    class="mt-4 ml-3 resize_font submit">
                     Đăng nhập
                 </button>
             </div>
@@ -154,7 +155,8 @@
                             </label>
                         </div>
                     </div>
-                    <div class="city">
+                    <div class="city row">
+                        <span class="gender-title d-block w-100 mt-3">Nơi ở</span><br/>
                         <select name="format" id="format">
                             @foreach (var city in cities)
                             {
@@ -163,6 +165,47 @@
                                 </option>
                             }
                         </select>
+                    </div>
+                    <div class="hobbies-checkboxes row">
+                        <span class="gender-title d-block w-100 mt-3">Sở thích</span>
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="Sport" name="Sport" value="Sport">
+                            <label class="custom-control-label" for="Sport">Thể thao</label>
+                        </div>
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="Study" name="Study" value="Study">
+                            <label class="custom-control-label" for="Study">Học tập</label>
+                        </div>
+
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="Movie" name="Movie" value="Movie">
+                            <label class="custom-control-label" for="Movie">Xem phim</label>
+                        </div>
+
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="Game" name="Game" value="Game">
+                            <label class="custom-control-label" for="Game">Game</label>
+                        </div>
+
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="Music" name="Music" value="Music">
+                            <label class="custom-control-label" for="Music">Nghe nhạc</label>
+                        </div>
+
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="Reading" name="Reading" value="Reading">
+                            <label class="custom-control-label" for="Reading">Đọc sách</label>
+                        </div>
+
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="Shopping" name="Shopping" value="Shopping">
+                            <label class="custom-control-label" for="Shopping">Mua sắm</label>
+                        </div>
+
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="Travel" name="Travel" value="Travel">
+                            <label class="custom-control-label" for="Travel">Du lịch</label>
+                        </div>
                     </div>
                     <button id="Confirm_SignIn" type="submit" class="submit submit_sign_up" data-toggle="collapse"
                         aria-expanded="false">
