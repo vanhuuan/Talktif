@@ -100,6 +100,10 @@ h2.name {
     color: #fff;
 }
 
+.instruction_app {
+    font-size: 16px;
+}
+
 .resize_font {
     width: 237.5px;
     height: 55px;
@@ -251,27 +255,6 @@ button {
 
 .forgot-pass a:hover {
     color: red;
-}
-
-.social-media {
-    width: 100%;
-    text-align: center;
-    margin-top: 20px;
-}
-
-.social-media ul {
-    list-style: none;
-}
-
-.social-media ul li {
-    display: inline-block;
-    cursor: pointer;
-    margin: 25px 15px;
-}
-
-.social-media img {
-    width: 40px;
-    height: 40px;
 }
 
 .sub-cont {
@@ -487,19 +470,12 @@ button {
     height: 18px !important;
 }
 
-.hobbies-title,
 .gender-title {
     font-size: 16px;
     font-weight: 500;
     text-transform: uppercase;
     text-align: center;
     color: orange !important;
-}
-
-.hobbies-ls {
-    grid-row: 5;
-    grid-column: 1/3;
-    margin-top: 10px;
 }
 
 .gender-details {
@@ -509,48 +485,26 @@ button {
     margin-top: 10px;
 }
 
-.hobbies-select {
-    display: flex;
-    justify-content: center;
+.hobbies {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
     align-items: center;
+    font-size: 16px;
 }
 
-.hobbies {
-    display: grid;
-    grid-template-columns: 20% 80%;
-    column-gap: 6px;
-    align-items: center;
-    margin: 10px 0;
-    font-size: 14px;
-    font-weight: 600;
-    color: #505f75;
-    text-transform: uppercase;
+.hobbies label {
+    width: 120px !important;
 }
 
 input[type="checkbox"] {
     height: 18px;
 }
 
-#dot-1:checked~.category label .one,
-#dot-2:checked~.category label .two,
-#dot-3:checked~.category label .three {
-    border-color: #d9d9d9 !important;
-    background: #8e49e8;
-}
-
-#dot-1,
-#dot-2,
-#dot-3 {
-    display: none;
-}
-
 .category {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    /* display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    width: 100%; */
 }
 
 .category .dot {
@@ -565,7 +519,6 @@ input[type="checkbox"] {
 .category label {
     display: flex;
     align-items: center;
-    /* justify-content: flex-start; */
     justify-content: center;
     margin: 10px 0;
     width: 100%;
@@ -580,7 +533,6 @@ input[type="checkbox"] {
 }
 
 select#format {
-    /* appearance: none; */
     outline: none !important;
     box-shadow: none !important;
     border: 0 !important;
@@ -611,41 +563,56 @@ button.submit_sign_up {
     grid-column: 1/3;
 }
 
-
-/* Check Validation */
-
-#Confirm1,
-#Confirm2 {
-    position: absolute;
-    width: 450px;
-    height: 50px;
-    top: 50px;
-    right: 30px;
-    animation: confirm 1s ease forwards;
-    /* transition-duration: 2s; */
-    overflow: hidden;
+.back_home {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #2ecc71;
+    color: white;
+    border-radius: 50%;
 }
 
-#Confirm1 button.close1,
-#Confirm2 button.close2 {
-    right: -36px !important;
+.back_home span {
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.password {
+    position: relative;
+}
+
+.password span {
     position: absolute;
-    top: 1px;
-    font-size: 2rem;
-    outline: none;
+    top: 17px;
+    right: 175px;
+    color: grey;
+    font-size: 20px;
+    cursor: pointer;
 }
 
 @media only screen and (min-width: 901px) and (max-width: 995px) {
+    .back_home {
+        display: none;
+    }
     .img-mobile {
         display: none;
     }
     section {
-        width: 104% !important;
+        width: 100% !important;
+        height: 100%;
+    }
+    .container {
+        margin: 0px;
     }
 }
 
 @media only screen and (min-width: 996px) {
     .img-mobile {
+        display: none;
+    }
+    .back_home {
         display: none;
     }
 }
@@ -657,8 +624,6 @@ button.submit_sign_up {
         background-color: #fff;
         min-height: 800px;
         overflow: hidden;
-        /* z-index: -1; */
-        /* display: none !important; */
     }
     #wrapper:before {
         background-image: url("../img/bg-login.jpg");
@@ -696,9 +661,6 @@ button.submit_sign_up {
         width: 100%;
         top: 25px;
     }
-    /* .form_1 {
-        background: none;
-    } */
     .form.sign-in .form_user {
         /* display: flex; */
         display: block;
@@ -726,8 +688,6 @@ button.submit_sign_up {
         display: none;
     }
     section {
-        /* background: none; */
-        /* display: none; */
         position: relative;
     }
     .square {
@@ -763,25 +723,9 @@ button.submit_sign_up {
         -webkit-transform: translateX(0);
         transform: translateX(0);
     }
-    /* .cont .img-text.m-up-sign-in{
-        -webkit-transform: translateX(520px);
-        transform: translateX(520px);
-    } */
-    /* .cont.sign-up .img-text.m-up-sign-in {
-        -webkit-transform: translateX(520px);
-        transform: translateX(520px);
-    }
-    .img-text.m-in-sign-up {
-        -webkit-transform: translateX(-520px);
-        transform: translateX(-520px);
-    } */
     .img-text h5 {
         text-transform: uppercase;
     }
-    /* .cont.sign-up .img-text.m-in-sign-up {
-        -webkit-transform: translateX(0);
-        transform: translateX(0);
-    } */
     .img-btn-mobile span {
         position: absolute;
         left: 0;
@@ -809,7 +753,7 @@ button.submit_sign_up {
         background: transparent;
         color: #fff;
         text-transform: uppercase;
-        font-size: 15px;
+        font-size: 13px;
         cursor: pointer;
     }
     .img-btn-mobile span.m-in-sign-in {
@@ -860,18 +804,22 @@ button.submit_sign_up {
     #Gender {
         width: 10% !important;
         height: 18px !important;
+        margin-right: 5px;
     }
     .gender-details {
         width: 100%;
     }
-    .hobbies-select {
-        grid-template-columns: repeat(3, 1fr);
+    .hobbies {
+        grid-template-columns: repeat(2, 1fr);
     }
 }
 
 @media only screen and (min-width: 451px) and (max-width: 800px) {
     #wrapper:before {
         clip-path: circle(42% at top) !important;
+    }
+    .hobbies {
+        grid-template-columns: repeat(2, 1fr);
     }
 }
 
@@ -881,10 +829,57 @@ button.submit_sign_up {
     }
 }
 
+@media only screen and (min-width: 381px) and (max-width: 576px) {
+    .form input[type="text"],
+    .form input[type="password"],
+    .form input[type="email"] {
+        width: 80%;
+    }
+    .password span {
+        right: 55px;
+    }
+    .form input[type="text"]:focus,
+    .form input[type="password"]:focus,
+    .form input[type="email"]:focus {
+        width: 90%;
+    }
+}
+
+@media only screen and (min-width: 577px) and (max-width: 768px) {
+    .form input[type="text"],
+    .form input[type="password"],
+    .form input[type="email"] {
+        width: 70%;
+    }
+    .password span {
+        right: 110px;
+    }
+    .form input[type="text"]:focus,
+    .form input[type="password"]:focus,
+    .form input[type="email"]:focus {
+        width: 80%;
+    }
+}
+
+@media only screen and (min-width: 769px) and (max-width: 900px) {
+    .form input[type="text"],
+    .form input[type="password"],
+    .form input[type="email"] {
+        width: 60%;
+    }
+    .password span {
+        right: 180px;
+    }
+    .form input[type="text"]:focus,
+    .form input[type="password"]:focus,
+    .form input[type="email"]:focus {
+        width: 70%;
+    }
+}
+
 @media only screen and (max-width: 880px) {
     /* Section Form */
     section {
-        /* background: none; */
         padding: 0px;
         opacity: 1 !important;
     }
@@ -899,7 +894,6 @@ button.submit_sign_up {
         justify-content: flex-end;
     }
     section header .logo img {
-        /* background: black; */
         width: 60px;
         height: 60px;
         border-radius: 50%;
@@ -951,14 +945,27 @@ button.submit_sign_up {
         width: 10% !important;
         height: 18px !important;
     }
+    .form input[type="text"],
+    .form input[type="password"],
+    .form input[type="email"] {
+        width: 90%;
+    }
+    .password span {
+        right: 30px;
+    }
+    .form input[type="text"]:focus,
+    .form input[type="password"]:focus,
+    .form input[type="email"]:focus {
+        width: 100%;
+    }
 }
 
-/*  */
 .hobbies-checkboxes {
-    margin-left: 0;
     grid-column-start: 1;
     grid-column-end: 3;
+    margin: 0px;
 }
+
 .sign-up {
     overflow-y: auto;
 }

@@ -33,38 +33,6 @@ namespace Talktif.Controllers
             User_Infor usr = await _userService.Get_User_Infor(Request, Response);
             return View(usr);
         }
-        // public async Task<IActionResult> Friends_Beta(int? id)
-        // {
-        //     // Get user info and pre-setup
-        //     User_Infor usr = await _userService.Get_User_Infor(Request, Response);
-        //     if (usr == null)
-        //     {
-        //         return RedirectToAction("Index", "Login");
-        //     };
-
-        //     FriendsViewModel vm = new FriendsViewModel
-        //     {
-        //         UserID = usr.id,
-        //         UserToken = usr.token,
-        //         RoomID = id != null ? (int)id : 0
-        //     };
-
-        //     // Fetch all chat rooms
-        //     vm.RoomList = await _chatService.FetchAllChatRoom(Request, Response);
-
-        //     // Fetch all messages
-        //     if (vm.RoomID > 0)
-        //     {
-        //         vm.Messages = await _chatService.FetchMessage(Request, Response, vm.RoomID, 20);
-        //     }
-        //     return View(vm);
-        // }
-        // public async Task<IActionResult> Chat_Beta()
-        // {
-        //     User_Infor usr = await _userService.Get_User_Infor(Request, Response);
-        //     return View(usr);
-        // }
-
         public async Task<IActionResult> Friends(int? id)
         {
             // Get user info and pre-setup
@@ -78,7 +46,7 @@ namespace Talktif.Controllers
             {
                 UserID = usr.id,
                 UserToken = usr.token,
-                RoomID = id != null ? (int)id : 0
+                RoomID = id != null ? (int)id : 0,
             };
 
             // Fetch all chat rooms
@@ -91,6 +59,7 @@ namespace Talktif.Controllers
             if (vm.RoomID > 0)
             {
                 vm.Messages = await _chatService.FetchMessage(Request, Response, vm.RoomID, 20);
+                vm.RoomInfo = await _chatService.GetChatRoomInfo(Request, Response, vm.RoomID);
             }
             return View(vm);
         }

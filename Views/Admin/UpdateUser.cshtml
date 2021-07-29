@@ -20,7 +20,6 @@
             <span class="details">UserName :</span>
             <div class="name">
                 <input id="username" name="name" type="text" value="@user.name" required />
-                @* <i class="fas fa-edit username"></i> *@
             </div>
         </div>
         <div class="user-info">
@@ -75,7 +74,7 @@
             </div>
         </div>
         <div class="group-btn-update">
-            <a asp-controller="Admin" asp-action="Users"
+            <a asp-controller="Admin" asp-action="Home"
                 class="btn-back d-flex justify-content-center align-items-center">
                 <p class="text mb-0">
                     Back to Home
@@ -92,7 +91,7 @@
 </div>
 <script>
     function HandleUser(event) {
-        var success = window.confirm("Do you want to update user?");
+        var success = window.confirm("Are you want to update user?");
         if (success == true) {
             alert("Update successfully");
         }

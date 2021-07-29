@@ -17,19 +17,6 @@ section {
     background: #dbd1c0;
 }
 
-
-/* .container{
-	position: relative;
-	width: 100%;
-	min-height: 100vh;
-	padding: 2rem;
-	background-color:#9a68a9;
-	overflow: hidden;
-	align-items: center;
-	display: flex;
-	justify-content: center;
-} */
-
 .form_1 {
     width: 100%;
     max-width: 900px;
@@ -69,48 +56,7 @@ footer {
 .logo_main {
     width: 152px;
     height: 102px;
-    /* position: absolute;
-    top: 20px;
-    left: 30px; */
 }
-
-
-/* .small-circle-1 {
-    position: absolute;
-    width: 25px;
-    height: 25px;
-    border-radius: 50%;
-    top: 39px;
-    left: 45px;
-    background-color: red;
-}
-
-.small-circle-2 {
-    position: absolute;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    top: 64px;
-    left: 31px;
-    background-color: green;
-}
-
-.small-circle-3 {
-    position: absolute;
-    width: 17px;
-    height: 17px;
-    border-radius: 50%;
-    top: 71px;
-    left: 60px;
-    background-color: yellow;
-} */
-
-
-/* .textbox {
-    position: relative;
-    max-width: 400px;
-    margin-left: 20px;
-} */
 
 h2.name {
     color: orange;

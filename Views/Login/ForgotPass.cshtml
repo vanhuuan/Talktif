@@ -37,28 +37,28 @@
             <div class="form_main">
                 <div class="sizebox d-flex">
                     <div class="row w-100 flex-column">
-                        <div class="col-sm-5 col-xs-5 col-md-6 col-lg-5">
+                        <div class="col col-sm-5 col-xs-5 col-md-5 col-lg-5">
                             <img src="../img/reset_img.png" alt="" srcset="" class="img_reset">
                         </div>
-                        <div class="col-sm-7 col-xs-7 col-md-7 col-lg-7">
-                            <h2 class="title_reset">Reset Your Password</h2>
+                        <div class="col col-sm-7 col-xs-7 col-md-7 col-lg-7">
+                            <h2 class="title_reset">Lấy Lại Mật Khẩu</h2>
                             <p class="sub_reset">
-                                The verification email will be sent to the mailbox.
-                                <br /> Please check it.
+                                Muốn thay đổi mật khẩu
+                                <br /> Vui lòng nhập email của bạn (bắt buộc).
                             </p>
                             <h5 class="email_title">Email</h5>
                             <form action="/Login/ForgotPass" method="POST">
                                 <input type="text" name="Email" class="email_input mt-3"
-                                    placeholder="Enter your email" />
+                                    placeholder="Email của bạn" required />
                                 <div class="sendEmail">
                                     <button type="submit" id="btnDangNhap" class="submit float-left">
-                                        Send
+                                        Gửi
                                     </button>
                                 </div>
                             </form>
                             <a asp-controller="Login" asp-action="Index">
                                 <h5 class="back_login mt-2">
-                                    Back to Login
+                                    Quay lại
                                 </h5>
                             </a>
                         </div>

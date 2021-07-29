@@ -33,32 +33,17 @@
                 <div class="box-secret message-box">
                     <div class="chat-header">
                         <div class="theme-title">
-                            <p>Người lạ</p>
+                            <p>@(Model.RoomInfo.user1Id != Model.UserID ? Model.RoomInfo.nickName1 : Model.RoomInfo.nickName2)</p>
                         </div>
                     </div>
                     <div class="message-box-content">
-                        @for (int i=Model.Messages.Count-1;i>=0;i--)
+                        @for (int i = Model.Messages.Count - 1; i >= 0; i--)
                         {
-                        <div class="@(Model.Messages[i].sender != Model.UserID ? "message-row other-message" : "message-row your-message")"
+                            <div class="@(Model.Messages[i].sender != Model.UserID ? "message-row other-message" : "message-row your-message")"
                         title="@Model.Messages[i].sentAt.ToLocalTime()">
-                            <div class="message-text">@Model.Messages[i].content</div>
-                        </div>
+                                <div class="message-text">@Model.Messages[i].content</div>
+                            </div>
                         }
-
-                        @* <div class="message-row your-message">
-                            <div class="message-text">
-                            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vitae id totam sint impedit
-                            consequuntur culpa quia, sed corrupti doloremque odio delectus iusto esse alias natus
-                            voluptatibus earum modi
-                            </div>
-                            </div>
-                            <div class="message-row other-message">
-                            <div class="message-text">
-                            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vitae id totam sint impedit
-                            consequuntur culpa quia, sed corrupti doloremque odio delectus iusto esse alias natus
-                            voluptatibus earum modi
-                            </div>
-                            </div> *@
                     </div>
                     <form class="message-box-action">
                         <input type="text" id="message" class="message" name="Message" placeholder="Nhập tin nhắn..." />
@@ -71,8 +56,42 @@
             </div>
             <div class="row mt-2">
                 <div class="group-btn-interactive">
-                    <button class="interactive" data-toggle="modal" title="Báo cáo"><i class="fas
+                    @if (Model != null)
+                    {
+                        <button class="interactive" data-toggle="modal" data-target="#reportModal" title="Báo cáo"><i class="fas
                 fa-flag-checkered"></i></button>
+                        <!-- Report Modal -->
+                        <div class="modal fade" id="reportModal" tabindex="-1" role="dialog" aria-labelledby="reportTitle"
+                    aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="reportTitle">Báo cáo người dùng</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="input-group">
+                                            <label class="d-block w-100" for="reportReason">Lí do</label><br />
+                                            <input type="text" class="form-control w-100"
+                                        placeholder="Lỗi mà người dùng vi phạm" id="reportReason" />
+                                        </div>
+                                        <div class="input-group mt-3">
+                                            <label class="d-block w-100" for="reportNote">Ghi chú</label><br />
+                                            <textarea class="w-100 p-2" placeholder="Ghi chú thêm chi tiết vi phạm (nếu có)"
+                                        id="reportNote"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                                        <button type="button" class="btn btn-success" id="reportBtn"
+                                    data-dismiss="modal">Gửi</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
                     <a asp-action="Unfriend" asp-route-uid="@Model.UserID" asp-route-roomid="@Model.RoomID"
                     asp-route-token='@Model.UserToken'><button class="interactive" title="Hủy kết bạn"><i
                             class="fas fa-user-times"></i></button></a>
@@ -80,15 +99,6 @@
             </div>
         </div>
     }
-    @* <div class="col-sm-4 p-5">
-        @if (Model.RoomList != null)
-        {
-        foreach (Room item in Model.RoomList)
-        {
-        <a class="btn btn-outline-dark d-block" asp-action="Friends" asp-route-id="@item.id">@item.name</a>
-        }
-        }
-        </div> *@
     <div class="col-lg-4 col-md-6 col-sm-6 col-xs-6 mt-4 tablet">
         <div class="list-group-chat">
             <div class="list-friend">
@@ -131,7 +141,7 @@
 @if (Model.RoomID > 0)
 {
     <script type="text/javascript">
-        var roomID = @Model.RoomID, userID = @Model.UserID, token = "@Model.UserToken";
+        var roomID = @Model.RoomID, userID = @Model.UserID, token = "@Model.UserToken", friendID = @(Model.RoomInfo.user1Id != Model.UserID ? Model.RoomInfo.user1Id : Model.RoomInfo.user2Id);
     </script>
     <script src="~/js/friendchat1.js"></script>
 }

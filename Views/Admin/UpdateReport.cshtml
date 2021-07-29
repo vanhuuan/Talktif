@@ -14,9 +14,7 @@
         <div class="user-info">
             <span class="details">Reporter :</span>
             <div class="name">
-                <input id="Reporter" name="Reporter" type="text" value=@((infor != null) ? infor.reporter.ToString() :
-                    "") required disabled />
-                @* <i class="fas fa-edit reporter"></i> *@
+                <input id="Reporter" name="Reporter" type="text" value=@((infor != null) ? infor.reporter.ToString() : "") required disabled />
             </div>
         </div>
         <div class="user-info">
@@ -50,7 +48,7 @@
             </div>
         </div>
         <div class="group-btn-update">
-            <a asp-controller="Admin" asp-action="Users"
+            <a asp-controller="Admin" asp-action="Home"
                 class="btn-back d-flex justify-content-center align-items-center">
                 <p class="text ml-2 mb-0">
                     Back to Home
@@ -67,7 +65,7 @@
 </div>
 <script>
     function HandleReport(event) {
-        var success = window.confirm("Do you want to update report?");
+        var success = window.confirm("Are you want to update report?");
         if (success == true) {
             alert("Update successfully");
         }

@@ -13,10 +13,22 @@
     {
         cities = ViewBag.Cities;
     }
-    long NumberofUser = ViewBag.NumberofUser;
     string Message = (String.IsNullOrEmpty(ViewBag.Message)) ? "" : ViewBag.Message;
 }
 <div class="container admin-user">
+     <header>
+            <div class="search-wrapper">
+                <span class="ti-search"></span>
+                <input id="search" type="search" placeholder="Search" oninput="FilterSearch()" />
+            </div>
+            <div class="filter">
+                <select name="filter" id="filter" onchange="Filter()">
+                   <option value="ID">ID</option>
+                   <option value="Name">Name</option>
+                   <option value="Email">Email</option>
+                </select>
+            </div>
+    </header>
     <div class="table-wrapper">
         <div class="table-title">
             <div class="row">
@@ -34,12 +46,6 @@
         <table class="table table-striped table-hover">
             <thead>
                 <tr>
-                    @* <th>
-                        <span class="custom-checkbox">
-                        <input type="checkbox" id="selectAll">
-                        <label for="selectAll"></label>
-                        </span>
-                        </th> *@
                     <th>ID</th>
                     <th>Name</th>
                     <th>Email</th>
@@ -50,15 +56,9 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var item in users)
+                @* @foreach (var item in users)
                 {
                     <tr>
-                        @* <td>
-                            <span class="custom-checkbox">
-                            <input type="checkbox" id="checkbox1" name="options[]" value="1">
-                            <label for="checkbox1"></label>
-                            </span>
-                            </td> *@
                         <td>
                             @Html.DisplayFor(modelItem => item.id)
                         </td>
@@ -87,32 +87,13 @@
                                 data-toggle="tooltip" title="Delete" onclick="HandleDelete(event)">&#xE872;</i></a>
                         </td>
                     </tr>
-                }
+                } *@
             </tbody>
         </table>
         <div class="clearfix">
-            <div class="hint-text">Showing
-                <b>
-                    @(users.Count() < 8 ? users.Count() : 8)
-                </b>
-                out of
-                <b>
-                    @NumberofUser
-                </b>
-                entries
+            <div class="hint-text">
             </div>
             <ul class="pagination">
-                @{
-                    long a = NumberofUser;
-                    long x = (a < 8) ? 1 : (a / (8) + (((a % (8)) != 0) ? 1 : 0));
-                    long i = 1;
-                    <li class="page-item"><a href="/Admin/Users" class="page-link">1</a></li>
-                    while (i < x)
-                    {
-                        <li class="page-item"><a href="/Admin/Users?PageNum=@(i+1)" class="page-link">@(i+1)</a></li>
-                        i++;
-                    }
-                }
             </ul>
         </div>
     </div>
@@ -179,157 +160,209 @@
         </div>
     </div>
 </div>
-<!-- Edit Modal HTML -->
-<div id="editUserModal" class="modal fade">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <form>
-                <div class="modal-header">
-                    <h4 class="modal-title">Edit User</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label>Name :</label>
-                        <input id="name" type="text" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Email :</label>
-                        <input id="email" type="email" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Password :</label>
-                        <input id="password" type="password" class="form-control" required>
-                    </div>
-                    @* <div class="form-group">
-                        <label>Is Admin :</label>
-                        <select name="format" id="format" defaultValue="False">
-                        <option value="True">True</option>
-                        <option value="False">False</option>
-                        </select>
-                        </div>
-                        <div class="form-group">
-                        <label>Hobbies :</label>
-                        <div class="hobbies-select">
-                        <div class="row">
-                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-                        <div class="hobbies">
-                        <input type="checkbox" value="Sport" name="hobbies" /> Sport
-                        </div>
-                        </div>
-                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-                        <div class="hobbies">
-                        <input type="checkbox" value="Sport" name="hobbies" /> Travel
-                        </div>
-                        </div>
-                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-                        <div class="hobbies">
-                        <input type="checkbox" value="Sport" name="hobbies" /> Camping
-                        </div>
-                        </div>
-                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-                        <div class="hobbies">
-                        <input type="checkbox" value="Sport" name="hobbies" /> Jogging
-                        </div>
-                        </div>
-                        </div>
-                        <div class="row">
-                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-                        <div class="hobbies">
-                        <input type="checkbox" value="Sport" name="hobbies" /> Alone
-                        </div>
-                        </div>
-                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-                        <div class="hobbies">
-                        <input type="checkbox" value="Sport" name="hobbies" /> Talking
-                        </div>
-                        </div>
-                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-                        <div class="hobbies">
-                        <input type="checkbox" value="Sport" name="hobbies" /> Swimming
-                        </div>
-                        </div>
-                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-                        <div class="hobbies">
-                        <input type="checkbox" value="Sport" name="hobbies" /> Learning
-                        </div>
-                        </div>
-                        </div>
-                        </div>
-                        </div> *@
-                    @* <div class="form-group">
-                        <label>Gender :</label>
-                        <div class="gender-details">
-                        <input type="radio" name="gender" id="dot-1" />
-                        <input type="radio" name="gender" id="dot-2" />
-                        <div class="category">
-                        <label for="dot-1">
-                        <span class="dot one"></span>
-                        <span class="gender">Female</span>
-                        </label>
-                        <label for="dot-2">
-                        <span class="dot two"></span>
-                        <span class="gender">Male</span>
-                        </label>
-                        </div>
-                        </div>
-                        </div> *@
-                    <div class="form-group">
-                        <label>Gender:</label>
-                        <div class="gender-details">
-                            @* <span class="gender-title">Gender :</span> *@
-                            <div class="category d-flex justify-content-around">
-                                <label>
-                                    @Html.RadioButton("Gender","Male")
-                                    <td>
-                                        Male
-                                    </td>
-                                </label>
-                                <label>
-                                    @Html.RadioButton("Gender","Female")
-                                    <td>
-                                        Female
-                                    </td>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label>City :</label>
-                        <div class="city-box w-100">
-                            <select name="format" id="format" class="select-setting d-flex">
-                                <option value="All">All</option>
-                                <option value="HN">HN</option>
-                                <option value="TPHCM">TPHCM</option>
-                                <option value="DN">DN</option>
-                            </select>
-                            @* <select name="format" id="format" defaultValue="All">
-                                <option value="All">All</option>
-                                <option value="HN">HN</option>
-                                <option value="TPHCM">TPHCM</option>
-                                <option value="DN">DN</option>
-                                </select> *@
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                    <input type="submit" class="btn btn-success" value="Add">
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
 
 <script>
     if ("@Message" != "") alert("@Message");
     const HandleDelete = (event) => {
-        var success = window.confirm("Do you want to delete user?\nThis action can\'t be undone?");
+        var success = window.confirm("Bạn có muốn xóa tài khoản này?");
         if (success == true) {
-            alert("Delete successfully");
+            alert("Xóa thành công");
         }
         else {
             event.preventDefault();
         }
     }
+
+    var arrayTr = @Html.Raw(Json.Serialize(users));
+    var arrayToString = JSON.stringify(Object.assign([], arrayTr));  // convert array to string
+    var stringToJsonObject = JSON.parse(arrayToString);  // convert string to json object
+    var filter = 'ID';
+
+     function buildTable(data) {
+        tbody.innerHTML = "";
+        for (let i = 0; i < data.length; i++) {
+            var id = data[i].id;
+            var cityID = data[i].cityID;
+            var gender = data[i].gender;
+            var email = data[i].email;
+            var isActive = data[i].isActive;
+            var isAdmin = data[i].isAdmin;
+            var name = data[i].name;
+            tbody.innerHTML +=
+             `<tr>
+                <td>${id}</td>
+                <td>${name}</td>
+                <td>${email}</td>
+                <td>${gender ? `<input checked="checked" class="check-box" disabled="disabled" type="checkbox">` : `<input class="check-box" disabled="disabled" type="checkbox">`}</td>
+                <td>${isAdmin ? `<input checked="checked" class="check-box" disabled="disabled" type="checkbox">` : `<input class="check-box" disabled="disabled" type="checkbox">`}</td>
+                <td>${isActive ? `<input checked="checked" class="check-box" disabled="disabled" type="checkbox">` : `<input class="check-box" disabled="disabled" type="checkbox">`}</td>
+                <td>${cityID}</td>
+                <td>
+                    <a href="/Admin/UpdateUser?id=${id}" class="edit"><i class="material-icons"
+                        data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                    <a href="/Admin/DeleteUser?id=${id}" class="delete"><i class="material-icons"
+                        data-toggle="tooltip" title="Delete" onclick="HandleDelete(event)">&#xE872;</i></a>
+                </td>
+              </tr>`;
+        }
+    }
+
+    const Filter = () =>{
+        filter = document.getElementById("filter").value;
+    }
+
+       const searchUserByName = (value,data) =>{
+        var filteredData = [];
+        for(let i =0;i<data.length;i++){
+            value = value.toLowerCase();
+            var name = data[i].name.toLowerCase();
+            if(name.includes(value)){
+                filteredData.push(data[i]);
+            }
+        }
+        return filteredData;
+
+    }
+     const searchUserByID = (value,data) =>{
+        var filteredData = [];
+        for(let i =0;i<data.length;i++){
+            var id = data[i].id;
+            if(id.toString().includes(value)){
+                filteredData.push(data[i]);
+            }
+        }
+        return filteredData;
+
+    }
+     const searchUserByEmail = (value,data) =>{
+        var filteredData = [];
+        for(let i =0;i<data.length;i++){
+            value = value.toLowerCase();
+            var email = data[i].email.toLowerCase();
+            if(email.includes(value)){
+                filteredData.push(data[i]);
+            }
+        }
+        return filteredData;
+
+    }
+
+    const FilterSearch = () =>{
+        var valueSearch = document.getElementById("search").value;
+        if(filter === 'Name')
+        {
+            var data = searchUserByName(valueSearch,stringToJsonObject);
+            buildTable(data);
+        }
+        else if(filter === 'ID'){
+            var data = searchUserByID(valueSearch,stringToJsonObject);
+            buildTable(data);
+        }
+        else{
+            var data = searchUserByEmail(valueSearch,stringToJsonObject);
+            buildTable(data);
+        }
+    }
+
+
+    let tbody = document.querySelector("tbody");
+    let tr = tbody.getElementsByTagName("tr");
+    let ul = document.querySelector(".pagination");
+    var text_user = document.querySelector('.hint-text');
+    var totalUser = 0;
+
+    function displayPage(limit) {
+        tbody.innerHTML = "";
+        for (let i = 0; i < limit; i++) {
+            var id = stringToJsonObject[i].id;
+            var cityID = stringToJsonObject[i].cityID;
+            var gender = stringToJsonObject[i].gender;
+            var email = stringToJsonObject[i].email;
+            var isActive = stringToJsonObject[i].isActive;
+            var isAdmin = stringToJsonObject[i].isAdmin;
+            var name = stringToJsonObject[i].name;
+            tbody.innerHTML +=
+             `<tr>
+                <td>${id}</td>
+                <td>${name}</td>
+                <td>${email}</td>
+                <td>${gender ? `<input checked="checked" class="check-box" disabled="disabled" type="checkbox">` : `<input class="check-box" disabled="disabled" type="checkbox">`}</td>
+                <td>${isAdmin ? `<input checked="checked" class="check-box" disabled="disabled" type="checkbox">` : `<input class="check-box" disabled="disabled" type="checkbox">`}</td>
+                <td>${isActive ? `<input checked="checked" class="check-box" disabled="disabled" type="checkbox">` : `<input class="check-box" disabled="disabled" type="checkbox">`}</td>
+                <td>${cityID}</td>
+                <td>
+                    <a href="/Admin/UpdateUser?id=${id}" class="edit"><i class="material-icons"
+                        data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                    <a href="/Admin/DeleteUser?id=${id}" class="delete"><i class="material-icons"
+                        data-toggle="tooltip" title="Delete" onclick="HandleDelete(event)">&#xE872;</i></a>
+                </td>
+              </tr>`;
+        }
+        buttonGenerator(limit);
+    }
+    displayPage(8);
+    text_user.innerHTML = `Showing <b>${totalUser}`+"</b> out of " + `<b>${stringToJsonObject.length}</b> entries.` 
+
+    function buttonGenerator(limit) {
+        const nofTr = stringToJsonObject.length;
+        if (nofTr <= limit) {
+            ul.style.display = "none";
+            totalUser = nofTr;
+            text_user.innerHTML = `Showing <b>${totalUser}`+"</b> out of " + `<b>${stringToJsonObject.length}</b> entries.` 
+        } else {
+            ul.style.display = "flex";
+            const nofPage = Math.ceil(nofTr / limit);
+            for (i = 1; i <= nofPage; i++) {
+                let li = document.createElement("li");
+                li.className = "page-item";
+                let a = document.createElement("a");
+                a.className = "page-link";
+                a.href = "#";
+                a.setAttribute("data-page", i);
+                li.appendChild(a);
+                a.innerText = i;
+                ul.appendChild(li);
+                totalUser = limit;
+                a.onclick = (e) => {
+                    let x = e.target.getAttribute("data-page");
+                    tbody.innerHTML = "";
+                    x--;
+                    let start = limit * x;
+                    let end = start + limit;
+                    let page = stringToJsonObject.slice(start, end);
+                    totalUser = page.length;
+                    text_user.innerHTML = `Showing <b>${totalUser}`+"</b> out of " + `<b>${stringToJsonObject.length}</b> entries.`
+                    for (let i = 0; i < page.length; i++) {
+                        let item = page[i];
+                        var id = item.id;
+                        var cityID = item.cityID;
+                        var gender = item.gender;
+                        var email = item.email;
+                        var isActive = item.isActive;
+                        var isAdmin = item.isAdmin;
+                        var name = item.name;
+                        tbody.innerHTML +=
+                        `<tr>
+                            <td>${id}</td>
+                            <td>${name}</td>
+                            <td>${email}</td>
+                            <td>${gender ? `<input checked="checked" class="check-box" disabled="disabled" type="checkbox">` : `<input class="check-box" disabled="disabled" type="checkbox">`}</td>
+                            <td>${isAdmin ? `<input checked="checked" class="check-box" disabled="disabled" type="checkbox">` : `<input class="check-box" disabled="disabled" type="checkbox">`}</td>
+                            <td>${isActive ? `<input checked="checked" class="check-box" disabled="disabled" type="checkbox">` : `<input class="check-box" disabled="disabled" type="checkbox">`}</td>
+                            <td>${cityID}</td>
+                            <td>
+                                <a href="/Admin/UpdateUser?id=${id}" class="edit"><i class="material-icons"
+                                    data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                                <a href="/Admin/DeleteUser?id=${id}" class="delete"><i class="material-icons"
+                                    data-toggle="tooltip" title="Delete" onclick="HandleDelete(event)">&#xE872;</i></a>
+                            </td>
+                        </tr>`;
+                    }
+                };
+            }
+        }
+    }
+
+
+
 </script>

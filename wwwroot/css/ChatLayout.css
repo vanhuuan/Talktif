@@ -69,3 +69,10 @@ a.btn-exit i {
     color: #00dd99;
     font-size: 1.65rem;
 }
+
+@media only screen and (max-width: 375px) {
+    a.img-logo img {
+        width: 66px !important;
+        height: 100%;
+    }
+}

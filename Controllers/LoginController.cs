@@ -35,6 +35,7 @@ namespace Talktif.Controllers
             if (String.IsNullOrEmpty(form["Email"].ToString()) || String.IsNullOrEmpty(form["Password"].ToString()))
             {
                 ViewBag.Message = "An error had occur !";
+                ViewBag.Cities = await _userService.GetCity();
                 return View("Index");
             }
             LoginRequest lr = new LoginRequest() { Email = form["Email"].ToString(), Password = form["Password"].ToString(), Device = (System.Environment.MachineName).ToString() };
@@ -63,6 +64,7 @@ namespace Talktif.Controllers
             )
             {
                 ViewBag.Message = "An error had occur !";
+                ViewBag.Cities = await _userService.GetCity();
                 return View("Index");
             };
 

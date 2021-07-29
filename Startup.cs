@@ -9,7 +9,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Talktif.Hubs;
-using Talktif.Data;
 using Talktif.Repository;
 using Talktif.Service;
 

@@ -5,12 +5,10 @@
     @if (Model != null) ViewData["LoggedIn"] = true;
     else ViewData["LoggedIn"] = false;
     Layout = "~/Views/Shared/ChatLayout.cshtml";
-    String[] arr = new String[]{
-"red","green","blue","dark-mode"
-};
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lykmapipo/themify-icons@0.1.2/css/themify-icons.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
         rel="stylesheet" />
+     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <!-- Latest compiled JavaScript -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
 
@@ -23,7 +21,16 @@
 
 
 <div class="chatting_box">
-    <div class="group-chat col-lg-5 col-xs-5 col-md-5 col-sm-5">
+    <div class="theme" title="Màu nền">
+        <span class="material-icons">
+            add
+        </span>
+    </div>
+    <div class='box_theme'>
+        <div class='item item1 light'><img src="../img/sunny.png" alt=""></div>
+        <div class='item item2 dark'><img src="../img/moon.png" alt=""></div>
+    </div>
+    <div class="group-chat col-lg-6 col-xs-8 col-md-8 col-sm-8">
         <div class="row">
             <div class="box-secret message-box">
                 <div class="chat-header">
@@ -56,19 +63,50 @@
             </div>
             @* TODO: Custom scrollbar for chatbox *@
         </div>
-        <div class="row mt-2">
+        <div class="row mt-2 w-100">
             <div class="group-btn-interactive">
                 @if (Model != null)
                 {
-                    <button type="button" class="interactive" data-toggle="modal" title="Báo cáo"><i class="fas
-                fa-flag-checkered"></i></button>   
+                    <button class="interactive" data-toggle="modal" data-target="#reportModal" title="Báo cáo"><i class="fas
+                fa-flag-checkered"></i></button>
+                    <!-- Report Modal -->
+                    <div class="modal fade" id="reportModal" tabindex="-1" role="dialog" aria-labelledby="reportTitle"
+                    aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="reportTitle">Báo cáo người dùng</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="input-group">
+                                        <label class="d-block w-100" for="reportReason">Lí do</label><br/>
+                                        <input type="text" class="form-control w-100" placeholder="Lỗi mà người dùng vi phạm"
+                                        id="reportReason"/>
+                                    </div>
+                                    <div class="input-group mt-3">
+                                        <label class="d-block w-100" for="reportNote">Ghi chú</label><br/>
+                                        <textarea class="w-100 p-2" placeholder="Ghi chú thêm chi tiết vi phạm (nếu có)"
+                                        id="reportNote"></textarea>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                                    <button type="button" class="btn btn-success" id="reportBtn" data-dismiss="modal">Gửi</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 }
                 @if (Model != null)
                 {
                     <!-- Button trigger modal -->
-                    <button type="button" class="interactive" data-toggle="modal" data-target="#filterModal">
-                        <i class="fas fa-wrench"></i> </button>
-                    <!-- Modal -->
+                    <button type="button" class="interactive" data-toggle="modal" data-target="#filterModal" title="Tùy chọn ghép đôi">
+                        <i class="fas fa-wrench"></i>
+                    </button>
+                    <!-- Setting Modal -->
                     <div class="modal fade" id="filterModal" tabindex="-1" role="dialog" aria-labelledby="filterTitle"
                     aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -98,7 +136,7 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                                    <button type="button" class="btn btn-danger" id="saveFilter"
+                                    <button type="button" class="btn btn-danger" id="saveFilter" data-dismiss="modal"
                                     title="Hành động này sẽ thoát khỏi phòng chat hiện tại và tiến hành đợi ghép phòng mới">Lưu
                                         tùy chọn</button>
                                 </div>
@@ -116,7 +154,6 @@
                     <p class="text mr-2 mb-0">Bỏ qua</p><img class="icon_next" src="/img/right-arrow.png" alt=""
                         srcset="">
                 </button>
-
             </div>
         </div>
     </div>
@@ -136,3 +173,32 @@ else
     </script>
 }
 <script src="~/js/chat1.js"></script>
+<script src="~/js/valid.js"></script>
+<script>
+  $(document).ready(function (){
+     $('.dark').click(function () {
+            $('nav').addClass('bg-dark');
+            $('.chatting_box').addClass('bg-dark');
+            $('.message-title span').attr("style", "color:white !important");
+            $('.message-box-content').attr("style", "background : #242526");
+            $('.message-box-action').attr("style", "background : #242526");
+             $('.group-btn-interactive').attr("style", "background : #343A40");
+            $('.message-box-action input').addClass('dark-message');
+            $('.other-message .message-text').addClass('dark-message');
+        });
+        $('.light').click(function () {
+            $('nav').removeClass('bg-dark');
+            $('.chatting_box').removeClass('bg-dark');
+            $('.message-title span').removeAttr("style", "color:white !important");
+            $('.message-box-content').removeAttr("style", "background : #242526");
+            $('.message-box-action').removeAttr("style", "background : #242526");
+            $('.group-btn-interactive').removeAttr("style", "background : #343A40");
+            $('.message-box-action input').removeClass('dark-message');
+            $('.other-message .message-text').removeClass('dark-message');
+        }); 
+  })
+  document.querySelector(".theme").addEventListener("click", function (e) {
+  document.querySelector(".box_theme").classList.toggle("box-active");
+  document.querySelector(".theme").classList.toggle("theme-active");
+});
+</script>

@@ -32,81 +32,16 @@
 
 <body>
 
-    <!-- SideBar -->
-    @* <input type="checkbox" id="sidebar-toggle" />
-        <div class="sidebar">
-        <div class="sidebar-header">
-        <label for="sidebar-toggle" class="ti-menu-alt icon-toggle"></label>
-        </div>
-
-        <div class="sidebar-menu ">
-        <h5 class="text-center font-weight-bold mt-2 mb-2">
-        @ViewData["Name"]
-        </h5>
-        <div class="nation">
-        <img class="country mr-2" src="/img/VietNam.png" alt="" srcSet="" />
-        <a href="# ">Việt Nam</a>
-        </div>
-        <div class="city text-center mt-2 mb-5">
-        <a href="# ">@ViewData["city"]</a>
-        </div>
-        <ul class="mt-4 ml-2">
-        <li class="active">
-        <a asp-controller="User" asp-action="Home">
-        <i class="fab fa-discourse"></i>
-        <span>Home</span>
-        </a>
-        </li>
-        <li>
-        <a asp-controller="Chat" asp-action="Index">
-        <i class="fas fa-envelope"></i>
-        <span>Nhắn tin</span>
-        </a>
-        </li>
-        <li>
-        <a asp-controller="Chat" asp-action="Friends">
-        <i class="fas fa-user-friends"></i>
-        <span>Bạn Bè</span>
-        </a>
-        </li>
-        </ul>
-        <div class="talktif_copy_right text-center">
-        <div class="copy-right">
-        <div class="copyright">&copy;TalkTif-2021</div>
-        </div>
-        </div>
-        </div>
-        </div>
-        </div> *@
-
     <!-- Navbar -->
     <nav class="navbar navbar-expand-md navbar-light bg-light border-bottom" style="height: 76px;z-index: 1;">
         <a href="/User" class="nav-icons" title="Thông tin cá nhân"><i class="fas fa-user-circle"></i></a>
         <a href="/Chat" class="nav-icons" title="Chat"><i class="fas fa-comment"></i></a>
         <a href="/Chat/Friends" class="nav-icons" title="Bạn bè"><i class="fas fa-users"></i></a>
-
-        @* <label for="toggle-menu" class="icon-menu"></label> *@
-        @* <div class="overlay">
-            </div>
-            <div class="menu">
-            <ul>
-            <li>
-            <a asp-controller = "User" asp-action= "Setting">
-            <!-- <span class="ti-settings icon"></span> -->
-            <i class="fas fa-cogs"></i>
-            <span>Cài Đặt</span>
-            </a>
-            </li>
-            </ul>
-            </div> *@
         <a href="/" class="navbar-brand text-center img-logo">
             <img src="/img/logo_main.png" alt="" srcset="" />
         </a>
         <a asp-controller="User" asp-action="Logout" class="nav-icons" title="Đăng xuất"><i
                 class="fas fa-sign-out-alt"></i></a>
-        @* <a class="btn-exit" asp-controller="Login" asp-action="Index">
-            Exit <i class="fas fa-chevron-circle-right"></i>
-            </a> *@
     </nav>
     @RenderBody()
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
@@ -126,107 +61,11 @@
                 $("#username").addClass("active-field");
                 $("#username").removeAttr("disabled").focus();
             })
-            $(".user-info i.password").click(function () {
-                $("#password").addClass("active-field");
-                $("#password").removeAttr("disabled").focus();
-                $("#confirmpassword").addClass("active-field");
-                $("#confirmpassword").removeAttr("disabled");
-            })
 
-            $(".sidebar li").hover(
-                function () {
-                    $(this).addClass("active");
-                },
-                function () {
-                    $(this).removeClass("active");
-                }
-            );
-            $(".icon-menu").click(function () {
-                $(".icon-menu").toggleClass("active-menu")
-                $(".overlay").toggleClass("active-menu")
-                $(".menu").toggleClass("active-menu")
-            })
-        });
-        $('.dark').click(function () {
-            $('nav').addClass('bg-dark');
-            $('.container-fluid').addClass('bg-dark');
-            $('.type-actor').addClass('bg-dark');
-            $('.type-actor').attr("style", "color:white !important");
-            $('.message-title span').attr("style", "color:white !important");
-            $('.message-box-content').attr("style", "background : #242526");
-            $('.group-btn-interactive').attr("style", "background : #242526");
-            $('.group-btn-interactive button').attr("style", "background : #242526");
-            $('.group-btn-interactive button i').attr("style", "filter : invert(1)");
-            $('.message-box-action').attr("style", "background : #242526");
-            $('.message-box-action input').addClass('dark-message');
-            $('.other-message .message-text').addClass('dark-message');
-            $('.fa-times-circle').attr("style", "filter:invert(1)");
-            $('.navbar-toggler-icon').attr("style", "filter:invert(1)");
-            $('i.fa-chevron-down').attr("style", "filter:invert(1)");
-            $('.effect').attr('style', 'border-bottom : 3px solid white !important');
-            $('.float-left').attr("style", "color:white !important");
-            $(".user-history-item").addClass("dark-mode");
-        });
-        $('.light').click(function () {
-            $('nav').removeClass('bg-dark');
-            $('.container-fluid').removeClass('bg-dark');
-            $('.type-actor').removeClass('bg-dark');
-            $('.type-actor').removeAttr("style", "color:white !important");
-            $('.message-title span').removeAttr("style", "color:white !important");
-            $('.message-box-content').removeAttr("style", "background : #242526");
-            $('.message-box-action').removeAttr("style", "background : #242526");
-            $('.group-btn-interactive').removeAttr("style", "background : #242526");
-            $('.group-btn-interactive button').removeAttr("style", "background : #242526");
-            $('.group-btn-interactive button i').removeAttr("style", "filter : invert(1)");
-            $('.message-box-action input').removeClass('dark-message');
-            $('.other-message .message-text').removeClass('dark-message');
-            $('.fa-times-circle').removeAttr("style", "filter:invert(1)");
-            $('.navbar-toggler-icon').removeAttr("style", "filter:invert(1)");
-            $('i.fa-chevron-down').removeAttr("style", "filter:invert(1)");
-            $('.effect').removeAttr('style', 'border-bottom : 3px solid white !important');
-            $('.float-left').removeAttr("style", "color:white !important");
-            $(".user-history-item").removeClass("dark-mode");
         });
         $(window).scroll(function () {
             $('nav').toggleClass('sticky-top', window.scrollY > 0);
-        });
-        $('.btn-next-person').click(function () {
-            $('.text').html('Next');
-            $('.Text-Meeting').remove();
-            $('.avt-couple').remove();
-            $('.rounded-circle').remove();
-            $('.your-video-mobile').attr("style", "display : block !important")
-            if ($(window).width() < 768) {
-                MobileStream();
-            } else {
-                $('.your-video-mobile').attr("style", "display : none !important")
-                TabletStream();
-            }
-        });
-        $("button.one").click(function () {
-            $('.type-actor.one').toggleClass("choose-type");
-        })
-        $("button.two").click(function () {
-            $('.type-actor.two').toggleClass("choose-type");
-        })
-        $("button.three").click(function () {
-            $('.type-actor.three').toggleClass("choose-type");
-        })
-        $("button.type-actor.one.bg-dark").click(function () {
-            $('.type-actor.one').toggleClass("choose-type");
-        })
-        $("button.type-actor.two.bg-dark").click(function () {
-            $('.type-actor.two').toggleClass("choose-type");
-        })
-        $("button.type-actor.three.bg-dark").click(function () {
-            $('.type-actor.three').toggleClass("choose-type");
-        })
-
-        @* var height = $(window).height()
-                var width = $(window).width()
-                if($(window).width() <= 1023){
-                $('.form_1').attr("style",`height:${height}px !important");width : ${width}px !important`);
-                } *@
+        });     
 
     </script>
 </body>

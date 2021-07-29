@@ -15,7 +15,6 @@
     }
     string name = (user != null) ? user.name : "";
     ViewData["city"] = a;
-    @* <link rel="stylesheet" href="../css/Setting.css" /> *@
     Layout = "~/Views/Shared/_AdminLayoutPage.cshtml";
     ViewData["Title"] = "Setting";
 
@@ -29,10 +28,11 @@
     bool travel = user.hobbies.IndexOf("Travel") >= 0;
 
     <link rel="stylesheet" href="../css/AdminSetting.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 }
 <div class="container-fluid">
     <div class="row row-wrapper">
-        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 tablet">
+        <div class="col-lg-6 col-md-8 col-sm-8 col-xs-6 tablet">
             <div class="user-profile">
                 <h2 class="title">User Profile</h2>
                 <form action="/Admin/Setting" class="form" method="POST">
@@ -53,12 +53,14 @@
                         <span class="details">Old Password (required) :</span>
                         <div class="password">
                             <input id="password" name="pass" type="password" placeholder="Password" />
-                            <i class="fas fa-edit password"></i>
+                              <span class="material-icons visibility" onclick="toggle()">
+                                visibility_off
+                            </span>
                         </div>
                     </div>
                     <div class="user-info">
                         <span class="details">New Password :</span>
-                        <input id="newpassword" name="newpass" type="password" placeholder="NewPassword" />
+                        <input id="newpassword" name="newpass" type="password" placeholder="New Password" />
                     </div>
                     <div class="user-info">
                         <span class="details">Confirm New Password :</span>
@@ -84,7 +86,7 @@
                     </div>
                     <div class="city-setting d-flex align-items-center mb-3 mt-3 ">
                         <div class="city-title">
-                            <span>City:</span>
+                            <span>City :</span>
                         </div>
                         <select name="format" id="format" class="select-setting">
                             @foreach (var city in cities)
@@ -96,57 +98,81 @@
                         </select>
                     </div>
                     <div class="hobbies-checkboxes row">
-                        <span class="gender-title d-block w-100 my-2">Sở thích</span>
-                        <div class="custom-control custom-checkbox m-auto">
+                        <span class="gender-title d-block w-100">Hobbies :</span>
+                        <div class='hobbies'>
+                            <div class="custom-control custom-checkbox">
                             <input type="checkbox" class="custom-control-input" id="Sport" name="Sport" value="Sport"
                                 checked="@sport">
                             <label class="custom-control-label" for="Sport">Thể thao</label>
                         </div>
-                        <div class="custom-control custom-checkbox m-auto">
+                        <div class="custom-control custom-checkbox">
                             <input type="checkbox" class="custom-control-input" id="Study" name="Study" value="Study"
                                 checked="@study">
                             <label class="custom-control-label" for="Study">Học tập</label>
                         </div>
 
-                        <div class="custom-control custom-checkbox m-auto">
+                        <div class="custom-control custom-checkbox">
                             <input type="checkbox" class="custom-control-input" id="Movie" name="Movie" value="Movie"
                                 checked="@movie">
                             <label class="custom-control-label" for="Movie">Xem phim</label>
                         </div>
 
-                        <div class="custom-control custom-checkbox m-auto">
+                        <div class="custom-control custom-checkbox">
                             <input type="checkbox" class="custom-control-input" id="Game" name="Game" value="Game"
                                 checked="@game">
                             <label class="custom-control-label" for="Game">Game</label>
                         </div>
 
-                        <div class="custom-control custom-checkbox m-auto">
+                        <div class="custom-control custom-checkbox">
                             <input type="checkbox" class="custom-control-input" id="Music" name="Music" value="Music"
                                 checked="@music">
                             <label class="custom-control-label" for="Music">Nghe nhạc</label>
                         </div>
 
-                        <div class="custom-control custom-checkbox m-auto">
+                        <div class="custom-control custom-checkbox">
                             <input type="checkbox" class="custom-control-input" id="Reading" name="Reading"
                                 value="Reading" checked="@reading">
                             <label class="custom-control-label" for="Reading">Đọc sách</label>
                         </div>
 
-                        <div class="custom-control custom-checkbox m-auto">
+                        <div class="custom-control custom-checkbox">
                             <input type="checkbox" class="custom-control-input" id="Shopping" name="Shopping"
                                 value="Shopping" checked="@shopping">
                             <label class="custom-control-label" for="Shopping">Mua sắm</label>
                         </div>
 
-                        <div class="custom-control custom-checkbox m-auto">
+                        <div class="custom-control custom-checkbox">
                             <input type="checkbox" class="custom-control-input" id="Travel" name="Travel" value="Travel"
                                 checked="@travel">
                             <label class="custom-control-label" for="Travel">Du lịch</label>
                         </div>
+                        </div>
                     </div>
-                    <div class="submit"><input type="submit" value="Change" class="Update-Profile" /></div>
+                    <div class="submit mt-2"><input type="submit" value="Change" class="Update-Profile" /></div>
                 </form>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+     var state = false;
+    function toggle() {
+        if(state){
+            document.querySelector('#password').setAttribute("type", "password");
+            document.querySelector('#newpassword').setAttribute("type", "password");
+            document.querySelector('#confirmpassword').setAttribute("type", "password");
+            @* document.querySelector('#eye').style.color = "#5887ef"; *@
+            document.querySelector('.visibility').innerHTML = 'visibility_off';
+            state = false;
+        }
+        else{
+            document.querySelector('#password').setAttribute("type", "text");
+            document.querySelector('#newpassword').setAttribute("type", "text");
+            document.querySelector('#confirmpassword').setAttribute("type", "text");
+            @* document.querySelector('#eye').style.color = "black"; *@
+            document.querySelector('.visibility').innerHTML = 'visibility';
+            state = true;
+        }
+    }
+</script>

@@ -52,7 +52,7 @@ namespace Talktif.Hubs
                 foreach (WaitUser usr in room.Members)
                 {
                     await Groups.AddToGroupAsync(usr.ConnectionID, room.ID);
-                    await Clients.Group(room.ID).BroadcastMessage($"Người dùng {usr.ConnectionID} đã tham gia phòng chat {room.ID}.");
+                    await Clients.Group(room.ID).BroadcastMessage($"Người dùng đã tham gia phòng chat.");
                 }
             }
 
@@ -75,7 +75,7 @@ namespace Talktif.Hubs
                 {
                     foreach (WaitUser usr in room.Members)
                     {
-                        await Clients.Group(room.ID).BroadcastMessage($"Người dùng {usr.ConnectionID} đã rời khỏi phòng chat {room.ID}.");
+                        await Clients.Group(room.ID).BroadcastMessage($"Người dùng đã rời khỏi phòng chat.");
                         await Groups.RemoveFromGroupAsync(usr.ConnectionID, room.ID);
 
                         // Join possible room after leave old room
@@ -85,7 +85,7 @@ namespace Talktif.Hubs
                             foreach (WaitUser usr1 in newroom.Members)
                             {
                                 await Groups.AddToGroupAsync(usr1.ConnectionID, newroom.ID);
-                                await Clients.Group(newroom.ID).BroadcastMessage($"Người dùng {usr1.ConnectionID} đã tham gia phòng chat {newroom.ID}.");
+                                await Clients.Group(newroom.ID).BroadcastMessage($"Người dùng đã tham gia phòng chat.");
                             }
                         }
                     }
@@ -127,7 +127,7 @@ namespace Talktif.Hubs
             {
                 foreach (WaitUser usr in room.Members)
                 {
-                    await Clients.Group(room.ID).BroadcastMessage($"Người dùng {usr.ConnectionID} đã rời khỏi phòng chat {room.ID}.");
+                    await Clients.Group(room.ID).BroadcastMessage($"Người dùng đã rời khỏi phòng chat.");
                     await Groups.RemoveFromGroupAsync(usr.ConnectionID, room.ID);
 
                     // Join possible room after leave old room
@@ -137,7 +137,7 @@ namespace Talktif.Hubs
                         foreach (WaitUser usr1 in newroom.Members)
                         {
                             await Groups.AddToGroupAsync(usr1.ConnectionID, newroom.ID);
-                            await Clients.Group(newroom.ID).BroadcastMessage($"Người dùng {usr1.ConnectionID} đã tham gia phòng chat {newroom.ID}.");
+                            await Clients.Group(newroom.ID).BroadcastMessage($"Người dùng đã tham gia phòng chat.");
                         }
                     }
                 }
@@ -156,22 +156,17 @@ namespace Talktif.Hubs
                 {
                     if (usr.UserID <= 0)
                     {
-                        await Clients.Group(room.ID).BroadcastMessage($"Người dùng {Context.ConnectionId} đề xuất kết bạn thất bại vì ít nhất 1 trong 2 người chưa đăng nhập!");
+                        await Clients.Group(room.ID).BroadcastMessage($"Người dùng đề xuất kết bạn thất bại vì ít nhất 1 trong 2 người chưa đăng nhập!");
                         return;
                     }
                     if (usr.ConnectionID == Context.ConnectionId) usr.FriendRequest = true;
                 }
 
-                await Clients.Group(room.ID).BroadcastMessage($"Người dùng {Context.ConnectionId} đã đề xuất kết bạn!");
+                await Clients.Group(room.ID).BroadcastMessage($"Người dùng đã đề xuất kết bạn!");
 
                 // Call API create chat room
                 if (room.Members.Length >= 2 && room.Members[0].FriendRequest && room.Members[1].FriendRequest)
                 {
-                    System.Console.WriteLine("Call API");
-                    System.Console.WriteLine(room.Members[0].UserID);
-                    System.Console.WriteLine(room.Members[1].UserID);
-                    System.Console.WriteLine(room.Members[0].FriendRequest);
-                    System.Console.WriteLine(room.Members[1].FriendRequest);
                     IChatRepo chatRepo = new ChatRepo();
                     await chatRepo.CreateChatRoom(
                         room.Members[0].UserID,
@@ -195,16 +190,47 @@ namespace Talktif.Hubs
         public async Task JoinFriendChat(string roomID)
         {
             await Groups.AddToGroupAsync(Context.ConnectionId, roomID);
-            await Clients.Group(roomID).BroadcastMessage($"Người dùng {Context.ConnectionId} đã tham gia phòng chat {roomID}.");
+            await Clients.Group(roomID).BroadcastMessage($"Người dùng đã tham gia phòng chat.");
         }
         public async Task LeaveFriendChat(string roomID)
         {
             await Groups.RemoveFromGroupAsync(Context.ConnectionId, roomID);
-            await Clients.Group(roomID).BroadcastMessage($"Người dùng {Context.ConnectionId} đã tham gia phòng chat {roomID}.");
+            await Clients.Group(roomID).BroadcastMessage($"Người dùng đã tham gia phòng chat.");
         }
         public async Task SendFriendMessage(string roomID, string message)
         {
             await Clients.Group(roomID).ReceiveMessage(Context.ConnectionId, message);
+        }
+
+        public async Task ReportUser(string userID, string reason, string note, string token)
+        {
+            RandomRoom room = RoomManager.Instance.GetRoom(Context.ConnectionId);
+            if (room != null)
+            {
+                foreach (WaitUser usr in room.Members)
+                {
+                    if (usr.UserID <= 0)
+                    {
+                        await Clients.Group(room.ID).BroadcastMessage($"Báo cáo người dùng thất bại vì người dùng chưa đăng nhập!");
+                        return;
+                    }
+                    if (usr.ConnectionID != Context.ConnectionId) {
+                        UserRepo userRepo = new UserRepo();
+                        ReportRequest report = new ReportRequest
+                        {
+                            Reporter = userID,
+                            Suspect = usr.UserID.ToString(),
+                            Reason = reason,
+                            Note = note
+                        };
+                        await userRepo.Report(report, token);
+                        await Clients.Group(room.ID).BroadcastMessage($"Đã gửi báo cáo thành công!");
+                    };
+                }
+            }
+
+            Debug();
+
         }
     }
 }

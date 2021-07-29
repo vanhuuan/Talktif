@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Talktif.Models;
-using Talktif.Data;
 using Talktif.Repository;
 using Talktif.Service;
 

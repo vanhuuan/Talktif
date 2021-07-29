@@ -12,11 +12,11 @@ namespace Talktif.Service
     public interface IAdminService
     {
         Task<Statistic> GetStatisticData(HttpRequest Request, HttpResponse Response);
-        Task<List<user>> GetAllUser(HttpRequest Request, HttpResponse Response, long first, long last);
+        Task<List<user>> GetAllUser(HttpRequest Request, HttpResponse Response);
         Task<User_Infor> GetUserInfo(HttpRequest Request, HttpResponse Response, int ID_User);
         Task<bool> UpdateUser(HttpRequest Request, HttpResponse Response, UpdateUserRequest updateRequest);
         Task<bool> DeleteUser(HttpRequest Request, HttpResponse Response, int ID);
-        Task<List<Report_Infor>> GetAllReport(HttpRequest Request, HttpResponse Response, long first, long last);
+        Task<List<Report_Infor>> GetAllReport(HttpRequest Request, HttpResponse Response);
         Task<Report_Infor> GetReportInfo(HttpRequest Request, HttpResponse Response, int ID_Report);
         Task<bool> UpdateReport(HttpRequest Request, HttpResponse Response, UpdateReportRequest updateRequest);
         Task<long> GetNumberofUser(HttpRequest Request, HttpResponse Response);
@@ -61,10 +61,12 @@ namespace Talktif.Service
                 return new Statistic();
             }
         }
-        public async Task<List<user>> GetAllUser(HttpRequest Request, HttpResponse Response, long first, long last)
+        public async Task<List<user>> GetAllUser(HttpRequest Request, HttpResponse Response)
         {
             try
             {
+                long first = await GetNumberofUser(Request,Response);
+                long last = 0;
                 List<user> users = new List<user>();
                 Cookie_Data cookie_Data = _userService.ReadUserCookie(Request);
                 var result = await _adminRepo.GetAllUser(first, last, cookie_Data.token);
@@ -167,10 +169,12 @@ namespace Talktif.Service
                 return false;
             }
         }
-        public async Task<List<Report_Infor>> GetAllReport(HttpRequest Request, HttpResponse Response, long first, long last)
+        public async Task<List<Report_Infor>> GetAllReport(HttpRequest Request, HttpResponse Response)
         {
             try
             {
+                long first = await GetNumberofReport(Request,Response);
+                long last = 0;
                 List<Report_Infor> reports = new List<Report_Infor>();
                 Cookie_Data cookie_Data = _userService.ReadUserCookie(Request);
                 var result = await _adminRepo.GetAllReport(first, last, cookie_Data.token);

@@ -14,40 +14,46 @@ function AddMessage(user, room, msg, token) {
   xhr.send(`{"Message":"${msg}","IdSender":"${user}","idChatRoom":"${room}"}`);
 }
 
+function ReportUser(user, sus, reason, note, token) {
+  var xhr = new XMLHttpRequest();
+  xhr.open(
+    "POST",
+    "https://talktifapi.azurewebsites.net/api/Users/Report",
+    true
+  );
+  xhr.setRequestHeader("Content-Type", "application/json");
+  xhr.setRequestHeader("Authorization", "Bearer " + token);
+  xhr.send(
+    `{"Reporter":"${user}","Suspect":"${sus}","Reason":"${reason}","Note":"${note}"}`
+  );
+}
+
 //Disable send button until connection is established
 document.getElementById("sendButton").disabled = true;
 
 connection.on("ReceiveMessage", function (user, message) {
-  var msg = message
-  // var encodedMsg = user + " says " + msg;
+  var msg = message;
   var div = document.createElement("div");
   div.className =
     user != userCnnID
       ? "message-row other-message"
       : "message-row your-message";
-var divContent = document.createElement("div");
-divContent.className = "message-text";
-divContent.textContent = msg;
+  var divContent = document.createElement("div");
+  divContent.className = "message-text";
+  divContent.textContent = msg;
   div.appendChild(divContent);
   document.getElementsByClassName("message-box-content")[0].appendChild(div);
   if (user != userCnnID) {
-    var messAudio = new Audio('/message.mp3');
-    messAudio.play();  
+    var messAudio = new Audio("/message.mp3");
+    messAudio.play();
   }
-  document.getElementsByClassName("message-box-content")[0].scrollTo(0,document.getElementsByClassName("message-box-content")[0].scrollHeight);
+  document
+    .getElementsByClassName("message-box-content")[0]
+    .scrollTo(
+      0,
+      document.getElementsByClassName("message-box-content")[0].scrollHeight
+    );
 });
-
-// connection.on("BroadcastMessage", function (message) {
-//   var msg = message
-//     .replace(/&/g, "&amp;")
-//     .replace(/</g, "&lt;")
-//     .replace(/>/g, "&gt;");
-//   var encodedMsg = msg;
-//   var li = document.createElement("li");
-//   li.textContent = encodedMsg;
-//   document.getElementsByClassName("message-box-content")[0].appendChild(li);
-//   document.getElementsByClassName("message-box-content")[0].scrollTo(0,document.getElementsByClassName("message-box-content")[0].scrollHeight);
-// });
 
 connection
   .start()
@@ -84,4 +90,14 @@ document
 
     // Call API add message
     AddMessage(String(userID), String(roomID), message, token);
+  });
+
+document
+  .getElementById("reportBtn")
+  .addEventListener("click", function (event) {
+
+    var reason = document.getElementById("reportReason").value;
+    var note = document.getElementById("reportNote").value;
+    
+    ReportUser(String(userID), String(friendID), reason, note, token)
   });

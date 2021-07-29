@@ -92,20 +92,15 @@ button:focus {
     width: 100% !important;
 }
 
-
-/* .user-profile form .user-info:nth-child(1) input {
-    width: 50%;
-} */
+.user-info .visibility {
+    font-size: 20px;
+    color: grey;
+    cursor: pointer;
+}
 
 .user-profile form .user-info:nth-child(3) {
     width: 100% !important;
 }
-
-
-/* 
-.user-profile form .user-info:nth-child(3) input {
-    width: 50%;
-} */
 
 .details,
 .city-title {
@@ -115,7 +110,7 @@ button:focus {
     color: var(--main-text);
 }
 
-.city-title{
+.city-title {
     width: 100%;
 }
 
@@ -197,8 +192,6 @@ label {
 
 .user-info i {
     cursor: pointer;
-    margin-top: 5px;
-    margin-right: 15px;
 }
 
 .active-field {
@@ -219,9 +212,12 @@ select#format.select-setting {
 /* Responsive */
 
 @media only screen and (max-width: 576px) {
-    .hobbies-select {
+    .hobbies {
+        width: 100%;
+        height: 100%;
         display: grid;
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(2, 1fr) !important;
+        column-gap: 5px;
     }
 }
 
@@ -232,6 +228,13 @@ select#format.select-setting {
     select#format.select-setting {
         width: 250px !important;
     }
+    .hobbies {
+        width: 100%;
+        height: 100%;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr) !important;
+        column-gap: 5px;
+    }
 }
 
 @media only screen and (max-width: 350px) {
@@ -240,6 +243,13 @@ select#format.select-setting {
     }
     select#format.select-setting {
         width: 220px !important;
+    }
+    .hobbies {
+        width: 100%;
+        height: 100%;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr) !important;
+        column-gap: 5px;
     }
 }
 
@@ -250,8 +260,23 @@ select#format.select-setting {
     select#format.select-setting {
         width: 400px;
     }
+    .hobbies {
+        width: 100%;
+        height: 100%;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        column-gap: 5px;
+    }
 }
 
 .hobbies-checkboxes {
     margin: 0;
+}
+
+.hobbies {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    column-gap: 5px;
 }

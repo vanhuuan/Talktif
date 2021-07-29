@@ -18,7 +18,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="../css/Login.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lykmapipo/themify-icons@0.1.2/css/themify-icons.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
     <!-- jQuery library -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -28,6 +30,7 @@
 
     <!-- Latest compiled JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="../css/Login.css" />
     <title>Đăng nhập - Talktif</title>
     <link href="../logo_main.ico" rel="shortcut icon" type="image/x-icon" />
 </head>
@@ -44,13 +47,12 @@
             <div class="container">
                 <div class="row main-section">
                     <div class="textbox col-lg-7 col-md-7 col-sm-7 col-xs-7">
-                        <h2 class="name">Talktif</h2>
-                        <p>
-                            Chat web dành cho người lạ
-                        </p>
-                        <p>
-                            Tâm sự với người lạ
-                        </p>
+                        <div class="instruction_app">
+                             <strong>Talktif</strong> là web app cho phép tìm bạn bè, kết bạn, nhắn tin với
+                        những người lạ, giúp bạn dễ dàng tìm thấy những bạn bè hoặc một nửa của mình.
+                        Trang web cho phép bạn nhắn tin kết nối với người lạ thông qua các tính năng tìm kiếm đa dạng,
+                        hứa hẹn sẽ đem lại cho bạn trải nghiệm đáng nhớ.
+                         </div>
                     </div>
                     <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
                         <img src="../img/background-removebg-preview.png" class="img-background" alt="" />
@@ -89,13 +91,21 @@
             </div>
         </div>
         <div class="form sign-in">
+            <div class="back_home">
+                <span class="ti-arrow-left icon"></span>
+            </div>
             <h2>Đăng nhập</h2>
             <form action="/Login/Sign_In" method="POST" class="form_user">
                 <input id="login_email" type="email" name="Email" placeholder="Email Address" value=""
                     oninput="CheckEmail(event)" />
                 <div id="error_email" class="text-center font-error"></div>
-                <input id="login_password" type="password" name="password" placeholder="Password" value=""
+                <div class="password">
+                     <input id="login_password" type="password" name="password" placeholder="Password" value=""
                     oninput="CheckPassword(event)" />
+                <span class="material-icons visibility" onclick="toggle()">
+                    visibility_off
+                </span>
+                </div>
                 <div id="error_password" class="text-center font-error"></div>
                 <button type="submit" id="btnDangNhap" class="submit">
                     Đăng nhập
@@ -156,7 +166,7 @@
                         </div>
                     </div>
                     <div class="city row">
-                        <span class="gender-title d-block w-100 mt-3">Nơi ở</span><br/>
+                        <span class="gender-title d-block w-100 mb-3">Nơi ở</span><br/>
                         <select name="format" id="format">
                             @foreach (var city in cities)
                             {
@@ -168,44 +178,46 @@
                     </div>
                     <div class="hobbies-checkboxes row">
                         <span class="gender-title d-block w-100 mt-3">Sở thích</span>
-                        <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="Sport" name="Sport" value="Sport">
-                            <label class="custom-control-label" for="Sport">Thể thao</label>
-                        </div>
-                        <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="Study" name="Study" value="Study">
-                            <label class="custom-control-label" for="Study">Học tập</label>
-                        </div>
+                      <div class="hobbies">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="Sport" name="Sport" value="Sport">
+                                <label class="custom-control-label" for="Sport">Thể thao</label>
+                            </div>
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="Study" name="Study" value="Study">
+                                <label class="custom-control-label" for="Study">Học tập</label>
+                            </div>
 
-                        <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="Movie" name="Movie" value="Movie">
-                            <label class="custom-control-label" for="Movie">Xem phim</label>
-                        </div>
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="Movie" name="Movie" value="Movie">
+                                <label class="custom-control-label" for="Movie">Xem phim</label>
+                            </div>
 
-                        <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="Game" name="Game" value="Game">
-                            <label class="custom-control-label" for="Game">Game</label>
-                        </div>
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="Game" name="Game" value="Game">
+                                <label class="custom-control-label" for="Game">Game</label>
+                            </div>
 
-                        <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="Music" name="Music" value="Music">
-                            <label class="custom-control-label" for="Music">Nghe nhạc</label>
-                        </div>
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="Music" name="Music" value="Music">
+                                <label class="custom-control-label" for="Music">Nghe nhạc</label>
+                            </div>
 
-                        <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="Reading" name="Reading" value="Reading">
-                            <label class="custom-control-label" for="Reading">Đọc sách</label>
-                        </div>
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="Reading" name="Reading" value="Reading">
+                                <label class="custom-control-label" for="Reading">Đọc sách</label>
+                            </div>
 
-                        <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="Shopping" name="Shopping" value="Shopping">
-                            <label class="custom-control-label" for="Shopping">Mua sắm</label>
-                        </div>
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="Shopping" name="Shopping" value="Shopping">
+                                <label class="custom-control-label" for="Shopping">Mua sắm</label>
+                            </div>
 
-                        <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="Travel" name="Travel" value="Travel">
-                            <label class="custom-control-label" for="Travel">Du lịch</label>
-                        </div>
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="Travel" name="Travel" value="Travel">
+                                <label class="custom-control-label" for="Travel">Du lịch</label>
+                            </div>
+                      </div>
                     </div>
                     <button id="Confirm_SignIn" type="submit" class="submit submit_sign_up" data-toggle="collapse"
                         aria-expanded="false">
@@ -215,8 +227,6 @@
             </div>
         </div>
     </div>
-
-
     </div>
     <script>
         if ("@Message" != "") alert("@Message");
@@ -229,12 +239,6 @@
                 $("#wrapper").hide();
                 $("section").removeClass("blurs");
             });
-        @* $(".close1").click(function () {
-            $("#Confirm1").hide();
-            });
-            $(".close2").click(function () {
-            $("#Confirm2").hide();
-            }); *@
             var width = $(window).width();
             $("#wrapper").hide();
             $(".img .exit").click(function () {
@@ -245,7 +249,7 @@
                 $(".form_1").hide();
                 $("#wrapper").show();
                 if (width <= 880) {
-                    console.log(width);
+                    $("section").hide();
                     $("section").attr("style", "display: none !important");
                 }
                 else {
@@ -253,37 +257,33 @@
                 }
             })
 
-            $("#login_password").keypress(function (event) {
-                var keycode = event.keyCode ? event.keyCode : event.which;
-                var email_value = document.getElementById("login_email").value;
-                var password_value = document.getElementById("login_password").value;
-                if (
-                    validate(email_value) &&
-                    password_value != "" &&
-                    keycode == "13"
-                ) {
-                    Home();
-                }
-            });
-            $("#login_email").keypress(function (event) {
-                var keycode = event.keyCode ? event.keyCode : event.which;
-                var email_value = document.getElementById("login_email").value;
-                var password_value = document.getElementById("login_password").value;
-                if (
-                    validate(email_value) &&
-                    password_value != "" &&
-                    keycode == "13"
-                ) {
-                    Home();
-                }
-            });
             $(".img-btn-mobile").click(function () {
                 $(".cont").toggleClass("sign-up");
             })
+            $('.back_home').click(function () {
+                  $(".form_1").show();
+                $("#wrapper").hide();
+                 $("section").removeAttr("style", "display:  none");
+            })
         });
+
+
+        var state = false;
+
+        function toggle() {
+            if (state) {
+                document.querySelector('#login_password').setAttribute("type", "password");
+                document.querySelector('.visibility').innerHTML = 'visibility_off';
+                state = false;
+            } else {
+                document.querySelector('#login_password').setAttribute("type", "text");
+                 document.querySelector('.visibility').innerHTML = 'visibility';
+                state = true;
+            }
+        }
+
     </script>
-    <script type="text/javascript" src="../js/script.js"></script>
-    <script type="text/javascript" src="../js/main.js"></script>
+    <script type="text/javascript" src="../js/valid.js"></script>
 </body>
 
 </html>
