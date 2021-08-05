@@ -11,125 +11,149 @@
         ChatBoxes = ViewBag.ListChatBox;
     }
     Layout = "~/Views/Shared/ChatLayout.cshtml";
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lykmapipo/themify-icons@0.1.2/css/themify-icons.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
-        rel="stylesheet" />
-    <!-- Latest compiled JavaScript -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
-
-    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <link href="../logo_main.ico" rel="shortcut icon" type="image/x-icon" />
-    <link rel="stylesheet" href="/css/UserMainForm.css" />
+    <link rel="stylesheet" href="/css/ChatFriend.css" />
     <link rel="stylesheet" href="/css/Chatting.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <title>Friends - Talktif</title>
 }
 
-<div class="chatting_box row">
-    @if (Model.RoomID > 0)
-    {
-        <div class="group-chat col-lg-5 col-xs-5 col-md-5 col-sm-5">
-            <div class="row">
-                <div class="box-secret message-box">
-                    <div class="chat-header">
-                        <div class="theme-title">
-                            <p>@(Model.RoomInfo.user1Id != Model.UserID ? Model.RoomInfo.nickName1 : Model.RoomInfo.nickName2)</p>
-                        </div>
-                    </div>
-                    <div class="message-box-content">
-                        @for (int i = Model.Messages.Count - 1; i >= 0; i--)
-                        {
-                            <div class="@(Model.Messages[i].sender != Model.UserID ? "message-row other-message" : "message-row your-message")"
-                        title="@Model.Messages[i].sentAt.ToLocalTime()">
-                                <div class="message-text">@Model.Messages[i].content</div>
+<div class="friend_box w-100 d-flex justify-content-center align-items-center" style="min-height : 90vh">
+    <div class="row d-flex justify-content-end w-100 mobile_friend m-0">
+        @if (Model.RoomID > 0)
+        {
+            <div class="friend-chat col-lg-5 col-xs-5 col-md-6 col-sm-6 mt-3">
+                <div class="row">
+                    <div class="box-secret message-box">
+                        <div class="chat-header">
+                            <div class="theme-title">
+                                <p>@(Model.RoomInfo.user1Id != Model.UserID ? Model.RoomInfo.nickName1 : Model.RoomInfo.nickName2)</p>
                             </div>
-                        }
+                        </div>
+                        <div class="message-box-content">
+                            @for (int i = Model.Messages.Count - 1; i >= 0; i--)
+                            {
+                                <div class="@(Model.Messages[i].sender != Model.UserID ? "message-row other-message" : "message-row your-message")"
+                            title="@Model.Messages[i].sentAt.ToLocalTime()">
+                                    <div class="message-text">@Model.Messages[i].content</div>
+                                </div>
+                            }
+                        </div>
+                        <form class="message-box-action">
+                            <input type="text" id="message" class="message" name="Message" placeholder="Nhập tin nhắn..." />
+                             <div class="dropdown" style= "opacity: 1; position: absolute; right: 60px;">
+                                <span class="position-relative px-1" id="navbarDropdown" 
+                                role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <span style="opacity : 0.4">😄</span>
+                                </span>
+
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <div class="reactions dropdown-item" style="display: grid;grid-template-columns: repeat(4,1fr);text-align: center;cursor: pointer;">
+                                        <span>❤️</span> 
+                                        <span>😆</span>
+                                        <span>😯</span>
+                                        <span>😢</span>
+                                        <span>😡</span> 
+                                        <span>👍</span>
+                                        <span>👎</span>
+                                        <span>😄</span>
+                                        <span>😂</span> 
+                                        <span>😍</span>
+                                        <span>😘</span>
+                                        <span>😭</span>
+                                        <span>😤</span> 
+                                        <span>🤤</span>
+                                        <span>👻</span>
+                                        <span>💀</span>
+                                    </div>
+                                </div>           
+                            </div>
+                            <button id="sendButton" class="send_message" type="submit">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </form>
                     </div>
-                    <form class="message-box-action">
-                        <input type="text" id="message" class="message" name="Message" placeholder="Nhập tin nhắn..." />
-                        <button id="sendButton" class="send_message" type="submit">
-                            <i class="fas fa-paper-plane"></i>
-                        </button>
-                    </form>
+                    @* TODO: Custom scrollbar for chatbox *@
                 </div>
-                @* TODO: Custom scrollbar for chatbox *@
-            </div>
-            <div class="row mt-2">
-                <div class="group-btn-interactive">
-                    @if (Model != null)
-                    {
-                        <button class="interactive" data-toggle="modal" data-target="#reportModal" title="Báo cáo"><i class="fas
-                fa-flag-checkered"></i></button>
-                        <!-- Report Modal -->
-                        <div class="modal fade" id="reportModal" tabindex="-1" role="dialog" aria-labelledby="reportTitle"
-                    aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="reportTitle">Báo cáo người dùng</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div class="input-group">
-                                            <label class="d-block w-100" for="reportReason">Lí do</label><br />
-                                            <input type="text" class="form-control w-100"
-                                        placeholder="Lỗi mà người dùng vi phạm" id="reportReason" />
+                <div class="row mt-2">
+                    <div class="group-btn-interactive">
+                        @if (Model != null)
+                        {
+                            <button class="interactive" data-toggle="modal" data-target="#reportModal" title="Báo cáo"><i class="fas
+                    fa-flag-checkered"></i></button>
+                            <!-- Report Modal -->
+                            <div class="modal fade" id="reportModal" tabindex="-1" role="dialog" aria-labelledby="reportTitle"
+                        aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="reportTitle">Báo cáo người dùng</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
                                         </div>
-                                        <div class="input-group mt-3">
-                                            <label class="d-block w-100" for="reportNote">Ghi chú</label><br />
-                                            <textarea class="w-100 p-2" placeholder="Ghi chú thêm chi tiết vi phạm (nếu có)"
-                                        id="reportNote"></textarea>
+                                        <div class="modal-body">
+                                            <div class="input-group">
+                                                <label class="d-block w-100" for="reportReason">Lí do</label><br />
+                                                <input type="text" class="form-control w-100"
+                                            placeholder="Lỗi mà người dùng vi phạm" id="reportReason" />
+                                            </div>
+                                            <div class="input-group mt-3">
+                                                <label class="d-block w-100" for="reportNote">Ghi chú</label><br />
+                                                <textarea class="w-100 p-2" placeholder="Ghi chú thêm chi tiết vi phạm (nếu có)"
+                                            id="reportNote"></textarea>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                                        <button type="button" class="btn btn-success" id="reportBtn"
-                                    data-dismiss="modal">Gửi</button>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                                            <button type="button" class="btn btn-success" id="reportBtn"
+                                        data-dismiss="modal">Gửi</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    }
-                    <a asp-action="Unfriend" asp-route-uid="@Model.UserID" asp-route-roomid="@Model.RoomID"
-                    asp-route-token='@Model.UserToken'><button class="interactive" title="Hủy kết bạn"><i
-                            class="fas fa-user-times"></i></button></a>
+                        }
+                        <a asp-action="Unfriend" asp-route-uid="@Model.UserID" asp-route-roomid="@Model.RoomID"
+                        asp-route-token='@Model.UserToken'><button class="interactive" title="Hủy kết bạn"><i
+                                class="fas fa-user-times"></i></button></a>
+                    </div>
                 </div>
             </div>
-        </div>
-    }
-    <div class="col-lg-4 col-md-6 col-sm-6 col-xs-6 mt-4 tablet">
-        <div class="list-group-chat">
-            <div class="list-friend">
-                <div class="main-history-user">
-                    <div class="search">
-                        <input type="text" placeholder="Tìm kiếm..." />
-                        <span class="ti-search"></span>
-                    </div>
-                    <div class="user-history-profile">
-                        @if (ChatBoxes != null)
-                        {
-                            @foreach (var item in ChatBoxes)
+        }
+        <div class="col-lg-4 col-md-5 col-sm-5 col-xs-6 mt-3 all_user">
+            <div class="list-group-chat">
+                <div class="list-friend">
+                    <div class="main-history-user">
+                        <div class="search">
+                            <input id="search-user" type="text" placeholder="Tìm kiếm..." oninput = "findUser()" />
+                            <span class="ti-search"></span>
+                        </div>
+                        <div class="user-history-profile">
+                            @if (ChatBoxes != null)
                             {
-                                <a asp-action="Friends" asp-route-id="@item.ID_Room">
-                                    <div class="user-history-item">
-                                        <div class="name-user">
-                                            <p>
-                                                @item.Name_PartNer
-                                            </p>
-                                            <span>
-                                                @((item.Sender == item.ID_User) ? "Bạn " : item.Name_PartNer)
-                                                : @item.LastMessage
-                                            </span>
+                                @foreach (var item in ChatBoxes)
+                                {
+                                    @* <a asp-action="Friends" asp-route-id="@item.ID_Room">
+                                        <div class="user-history-item">
+                                            <div class="name-user">
+                                                <p>
+                                                    @item.Name_PartNer
+                                                </p>
+                                                <span>
+                                                    @((item.Sender == item.ID_User) ? "Bạn " : item.Name_PartNer)
+                                                    : @item.LastMessage
+                                                </span>
+                                            </div>
+                                            <div class="time-chat">
+                                                @((item.LastTime).Hour) : @((item.LastTime).Minute)
+                                            </div>
                                         </div>
-                                        <div class="time-chat">
-                                            @((item.LastTime).Hour) : @((item.LastTime).Minute)
-                                        </div>
-                                    </div>
-                                </a>
+                                    </a> *@
+                                }
                             }
-                        }
+                        </div>
                     </div>
                 </div>
             </div>
@@ -142,6 +166,81 @@
 {
     <script type="text/javascript">
         var roomID = @Model.RoomID, userID = @Model.UserID, token = "@Model.UserToken", friendID = @(Model.RoomInfo.user1Id != Model.UserID ? Model.RoomInfo.user1Id : Model.RoomInfo.user2Id);
+        var width = window.innerWidth;
+        var height = window.innerHeight;
+        var host = window.location.protocol + "//" + window.location.host;
+        var baseUrl = host + `/Chat/Friends/${roomID}`;
+        if(width <=576 && window.location.href === baseUrl){
+            console.log(roomID);
+            document.querySelector('.all_user').setAttribute('style', 'display : none');
+        }
+        else
+        {
+            document.querySelector('.all_user').setAttribute('style', 'display : block');
+        }
     </script>
     <script src="~/js/friendchat1.js"></script>
 }
+<script>
+        var arrayTr = @Html.Raw(Json.Serialize(@ChatBoxes));
+        var arrayToString = JSON.stringify(Object.assign([], arrayTr));  // convert array to string
+        var stringToJsonObject = JSON.parse(arrayToString);  // convert string to json object
+
+        const searchUser = (value,data) =>{
+        var filteredData = [];
+        for(let i =0;i<data.length;i++){
+            value = value.toLowerCase();
+            var name = data[i].name_PartNer.toLowerCase();
+            if(name.includes(value)){
+                filteredData.push(data[i]);
+            }
+        }
+           return filteredData;
+        }
+        const findUser = () =>{
+            var search = document.getElementById("search-user").value;
+            buildUser(searchUser(search, stringToJsonObject));
+        }
+
+
+        const buildUser = (data) =>{
+            var allUser = document.querySelector('.user-history-profile');
+            allUser.innerHTML = '';
+            var host = window.location.protocol + "//" + window.location.host;
+            for(let i = 0;i<data.length;i++){
+                var route = document.createElement("a");
+                route.setAttribute("href", host + `/Chat/Friends/${data[i].iD_Room}`)
+                var user = document.createElement("div");
+                user.className = 'user-history-item';
+                var nameUser = document.createElement("div");
+                nameUser.className = "name-user";
+                var name = document.createElement("p");
+                var message = document.createElement("span");
+                var time = document.createElement("div");
+                name.innerHTML += data[i].name_PartNer;
+                message.innerHTML += (data[i].Sender === data[i].ID_User ? "Bạn" : data[i].name_PartNer) + " : " + data[i].lastMessage;
+                nameUser.appendChild(name);
+                nameUser.appendChild(message);
+                time.className = "time-chat";
+                let hour = data[i].lastTime.split('T')[1].substr(0,2);
+                let minute = data[i].lastTime.split('T')[1].substr(3,2);
+                time.innerHTML += hour + " : "+ minute;
+                user.appendChild(nameUser);
+                user.appendChild(time);
+                route.appendChild(user);
+                allUser.appendChild(route);              
+            }
+            return allUser;
+        }
+        buildUser(stringToJsonObject);
+       $(document).ready(function (){
+            $('.reactions span').click(function (){
+            var icon = $(this).text();
+            var text = $('#message').val();
+            $('#message').val(function(i,val){
+                return val + icon;
+            })
+        }) 
+       })
+
+</script>

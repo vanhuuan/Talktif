@@ -30,10 +30,7 @@ connection.on("ReceiveMessage", function (user, message) {
 });
 
 connection.on("BroadcastMessage", function (message) {
-  var msg = message
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;");
+  var msg = message;
   var encodedMsg = msg;
   var li = document.createElement("li");
   li.textContent = encodedMsg;

@@ -11,9 +11,12 @@
      <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <!-- Latest compiled JavaScript -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    @* <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> *@
     <link href="../logo_main.ico" rel="shortcut icon" type="image/x-icon" />
     <link rel="stylesheet" href="../css/Chatting.css" />
     <title>Chatting - Talktif</title>
@@ -37,6 +40,17 @@
                     <div class="theme-title">
                         <p>Người lạ</p>
                     </div>
+                    <div class="theme-content">
+                        <div class="theme-mobile" title="Màu nền">
+                            <span class="material-icons">
+                                add
+                            </span>
+                        </div>
+                        <div class='box_theme_mobile'>
+                            <div class='item item1 light'><img src="../img/sunny.png" alt=""></div>
+                            <div class='item item2 dark'><img src="../img/moon.png" alt=""></div>
+                        </div>
+                    </div>
                 </div>
                 <div class="message-box-content">
                     @* <div class="message-row your-message">
@@ -56,6 +70,33 @@
                 </div>
                 <form class="message-box-action">
                     <input type="text" id="message" class="message" placeholder="Nhập tin nhắn..." />
+                     <div class="dropdown" style= "opacity: 1; position: absolute; right: 60px;">
+                            <span class="position-relative px-1" id="navbarDropdown" 
+                            role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span style="opacity : 0.4">😄</span>
+                            </span>
+
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <div class="reactions dropdown-item" style="display: grid;grid-template-columns: repeat(4,1fr);text-align: center;cursor: pointer;">
+                                    <span>❤️</span> 
+                                    <span>😆</span>
+                                    <span>😯</span>
+                                    <span>😢</span>
+                                    <span>😡</span> 
+                                    <span>👍</span>
+                                    <span>👎</span>
+                                    <span>😄</span>
+                                    <span>😂</span> 
+                                    <span>😍</span>
+                                    <span>😘</span>
+                                    <span>😭</span>
+                                    <span>😤</span> 
+                                    <span>🤤</span>
+                                    <span>👻</span>
+                                    <span>💀</span>
+                                 </div>
+                            </div>           
+                    </div>
                     <button id="sendButton" class="send_message" type="submit">
                         <i class="fas fa-paper-plane"></i>
                     </button>
@@ -195,10 +236,23 @@ else
             $('.group-btn-interactive').removeAttr("style", "background : #343A40");
             $('.message-box-action input').removeClass('dark-message');
             $('.other-message .message-text').removeClass('dark-message');
-        }); 
+        });
+
+        $('.reactions span').click(function (){
+            var icon = $(this).text();
+            var text = $('#message').val();
+            $('#message').val(function(i,val){
+                return val + icon;
+            })
+        }) 
+
   })
   document.querySelector(".theme").addEventListener("click", function (e) {
   document.querySelector(".box_theme").classList.toggle("box-active");
   document.querySelector(".theme").classList.toggle("theme-active");
 });
+ document.querySelector(".theme-mobile").addEventListener("click", function (e) {
+  document.querySelector(".box_theme_mobile").classList.toggle("box-active");
+  document.querySelector(".theme-mobile").classList.toggle("theme-active");
+ });
 </script>

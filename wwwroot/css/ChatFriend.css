@@ -279,66 +279,6 @@ button.interactive:hover {
     height: 25px;
 }
 
-
-/* Modal styles */
-
-.modal .modal-dialog {
-    max-width: 400px;
-}
-
-.modal .modal-header,
-.modal .modal-body,
-.modal .modal-footer {
-    padding: 20px 30px;
-}
-
-.modal .modal-content {
-    border-radius: 1px;
-}
-
-.modal .modal-footer {
-    background: #ecf0f1;
-    border-radius: 0 0 1px 1px;
-}
-
-.modal .modal-title {
-    display: inline-block;
-}
-
-.modal .form-control {
-    border-radius: 1px;
-    box-shadow: none;
-    border-color: #dddddd;
-}
-
-.modal textarea.form-control {
-    resize: vertical;
-}
-
-.modal .btn {
-    border-radius: 1px;
-    min-width: 100px;
-}
-
-.modal form label {
-    font-weight: normal;
-}
-
-
-/* Chatting */
-
-.chat-header {
-    max-height: 50px;
-    height: 50px;
-    overflow: hidden;
-    background-color: #0084ff;
-    color: white;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    /* border-bottom: 1px solid #0d3575; */
-}
-
 .chat-header .logo-chatting {
     display: flex;
     align-items: center;
@@ -567,5 +507,18 @@ hr.new-hr {
     .message-box {
         margin-left: 0px;
         margin-right: 0px;
+    }
+}
+
+@media only screen and (max-width: 576px) {
+    .mobile_friend {
+        flex-direction: column-reverse;
+        margin: 0 !important;
+    }
+    .list-group-chat {
+        border: none !important;
+    }
+    .friend_box {
+        overflow-y: auto;
     }
 }

@@ -382,6 +382,14 @@ button.btn-next-person p {
     transition: 0.5s;
 }
 
+div.friend_box {
+    width: 100%;
+    min-height: 90vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 @media only screen and (min-width: 768px) {
     .group-chat {
         display: flex;
@@ -394,7 +402,7 @@ button.btn-next-person p {
     }
 }
 
-@media only screen and (max-width: 576px) {
+@media only screen and (max-width: 575px) {
     .theme {
         top: 122px;
         right: 10px;
@@ -409,4 +417,52 @@ button.btn-next-person p {
         right: 0px;
         align-items: center;
     }
+    .theme {
+        display: none;
+    }
+    .theme-content {
+        display: block !important;
+    }
+    .mobile_friend {
+        flex-direction: column-reverse;
+        margin: 0 !important;
+    }
+}
+
+.theme-content {
+    display: none;
+}
+
+.theme-mobile {
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    background: #00dd99;
+    color: white;
+    cursor: pointer !important;
+    border: 2px solid #fff;
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    float: right;
+}
+
+.box_theme_mobile {
+    position: fixed;
+    top: 140px;
+    right: 5px;
+    height: 0px;
+    transition-delay: 0.3s;
+    width: 60px;
+    height: 0px;
+    transition: 0.5s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+}
+
+.box_theme_mobile.box-active {
+    height: 120px;
 }
