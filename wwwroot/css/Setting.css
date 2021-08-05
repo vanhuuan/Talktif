@@ -1,0 +1,282 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Noto+Serif&display=swap");
+:root {
+    --text-grey: #8390a2;
+    --main-text: orange;
+}
+
+.row-wrapper {
+    display: flex;
+    min-height: 100vh;
+    width: 100%;
+    justify-content: center;
+}
+
+button,
+input {
+    outline: none !important;
+}
+
+button {
+    border: none !important;
+}
+
+button:focus {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+::-webkit-scrollbar {
+    width: 0px;
+}
+
+
+/* Tablet */
+
+.tablet {
+    margin-top: 40px;
+    width: 100%;
+    height: 650px;
+    border: 1px solid #bdbecd;
+    padding: 20px;
+    background-color: #fff;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    overflow: auto;
+}
+
+.user-profile .title {
+    font-size: 25px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    position: relative;
+    padding-bottom: 4px;
+    color: var(--main-text);
+}
+
+.user-profile .title::before {
+    content: "";
+    position: absolute;
+    width: 40px;
+    height: 4px;
+    bottom: 0;
+    left: 0;
+    /* transform: scale(0); */
+    background-color: yellow;
+}
+
+.user-profile form {
+    display: flex;
+    flex-direction: column;
+}
+
+.user-profile form .user-info {
+    margin: 10px;
+    display: grid;
+    align-items: center;
+    width: 50%;
+    margin-left: 0px;
+}
+
+.user-profile form .user-info .name,
+.user-profile form .user-info .password {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.user-profile form .user-info:nth-child(1) {
+    width: 100% !important;
+}
+
+.user-info .visibility {
+    font-size: 20px;
+    color: grey;
+    cursor: pointer;
+}
+
+.user-profile form .user-info:nth-child(3) {
+    width: 100% !important;
+}
+
+.details,
+.city-title {
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: var(--main-text);
+}
+
+.city-title {
+    width: 100%;
+}
+
+.user-profile form .user-info input {
+    height: 40px;
+    padding: 10px;
+    border-radius: 3px;
+    border: none;
+    width: 300px;
+}
+
+.hobbies-title,
+.gender-title {
+    font-size: 16px;
+    font-weight: bold !important;
+    text-transform: uppercase;
+    color: var(--main-text);
+}
+
+.hobbies-ls,
+.gender-details {
+    margin-top: 10px;
+    width: 100%;
+}
+
+.category {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.category .dot {
+    height: 18px;
+    width: 18px;
+    background: #d9d9d9;
+    border-radius: 50%;
+    margin-right: 10px;
+    border: 5px solid transparent;
+}
+
+label {
+    display: flex;
+    align-items: center;
+}
+
+#dot-1:checked~.category label .one,
+#dot-2:checked~.category label .two,
+#dot-3:checked~.category label .three {
+    border-color: #d9d9d9 !important;
+    background: #8e49e8;
+}
+
+#dot-1,
+#dot-2,
+#dot-3 {
+    display: none;
+}
+
+.submit {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.submit input {
+    text-transform: uppercase;
+    font-weight: bold;
+    padding: 10px;
+    background: -webkit-linear-gradient(left, #7579ff, #b224ef);
+    border: none;
+    color: white;
+    border-radius: 30px;
+    width: 120px !important;
+}
+
+.submit input:hover {
+    background: -webkit-linear-gradient(left, #b224ef, #7579ff);
+}
+
+.user-info i {
+    cursor: pointer;
+}
+
+.active-field {
+    border: 2px solid #7579ff !important;
+    transition: 0.5s;
+    color: #7579ff;
+}
+
+.city-setting {
+    flex-direction: column;
+}
+
+select#format.select-setting {
+    width: 300px;
+}
+
+
+/* Responsive */
+
+@media only screen and (max-width: 576px) {
+    .hobbies {
+        width: 100%;
+        height: 100%;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr) !important;
+        column-gap: 5px;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    .user-profile form .user-info input {
+        width: 250px !important;
+    }
+    select#format.select-setting {
+        width: 250px !important;
+    }
+    .hobbies {
+        width: 100%;
+        height: 100%;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr) !important;
+        column-gap: 5px;
+    }
+}
+
+@media only screen and (max-width: 350px) {
+    .user-profile form .user-info input {
+        width: 220px !important;
+    }
+    select#format.select-setting {
+        width: 220px !important;
+    }
+    .hobbies {
+        width: 100%;
+        height: 100%;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr) !important;
+        column-gap: 5px;
+    }
+}
+
+@media only screen and (max-width: 1023px) {
+    .user-profile form .user-info input {
+        width: 400px;
+    }
+    select#format.select-setting {
+        width: 400px;
+    }
+    .hobbies {
+        width: 100%;
+        height: 100%;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        column-gap: 5px;
+    }
+}
+
+.hobbies-checkboxes {
+    margin: 0;
+}
+
+.hobbies {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    column-gap: 5px;
+}

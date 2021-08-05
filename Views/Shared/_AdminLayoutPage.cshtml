@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Talktif</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lykmapipo/themify-icons@0.1.2/css/themify-icons.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+        rel="stylesheet" />
+    <link href="../favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../css/LayoutAdmin.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+</head>
+
+<body>
+    <!-- SideBar -->
+    <input type="checkbox" id="sidebar-toggle" />
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h3 class="brand">
+                <span>
+                    <a href="#"><img src="../img/logo_main.png" alt="" class="logo" /></a>
+                </span>
+            </h3>
+            <label for="sidebar-toggle" class="ti-menu-alt"></label>
+        </div>
+        <div class="sidebar-menu">
+            <ul>
+                <li>
+                    <a class="nav-link" asp-controller="Admin" asp-action="Home">
+                        <span class="ti-home icon"></span>
+                        <span>Home</span>
+                    </a>
+                </li>
+                <li>
+                    <a asp-controller="Admin" asp-action="Users" class="nav-link">
+                        <span class="ti-face-smile icon"></span>
+                        <span> Users</span>
+                    </a>
+                </li>
+                <li>
+                    <a asp-controller="Admin" asp-action="ReportUser" class="nav-link">
+                        <span class="ti-agenda icon"></span>
+                        <span>Reports</span>
+                    </a>
+                </li>
+                <li>
+                    <a asp-controller="Admin" asp-action="Setting" class="nav-link">
+                        <span class="ti-settings icon"></span>
+                        <span>Account</span>
+                    </a>
+                </li>
+                <li>
+                    <a asp-controller="User" asp-action="Logout" class="nav-link">
+                        <span class="ti-arrow-left icon"></span>
+                        <span>Logout</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="main-content">
+        @RenderBody()
+    </div>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+<script>
+    $(document).ready(function () {
+        $(".user-info i.username").click(function () {
+            $("#username").addClass("active-field");
+            $("#username").removeAttr("disabled").focus();
+        })
+        // Activate tooltip
+        $('[data-toggle="tooltip"]').tooltip();
+        const regex = /http:\/\/.*\/(.*)/g;
+        const match = regex.exec(window.location.href);
+        // iterate over all and find match
+        if (match) {
+            $("li a.nav-link").each(function() {
+                if ($(this).attr("href").slice(7) == match[1]) {
+                    $(this).attr("style","background: black; border-radius: 30px 0 0 30px; align-items: center;width: 100%;");
+                }
+            });
+        }
+        // set active first element
+        else {
+            $(".nav-link:first").attr("style","background: black; border-radius: 30px 0 0 30px; align-items: center;width: 100%;");
+        }
+    })
+</script>
+
+</html>

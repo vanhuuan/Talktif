@@ -1,0 +1,258 @@
+@using Talktif.Models;
+@model User_Infor;
+@{
+    ViewData["Title"] = "Chat - Talktif";
+    @if (Model != null) ViewData["LoggedIn"] = true;
+    else ViewData["LoggedIn"] = false;
+    Layout = "~/Views/Shared/ChatLayout.cshtml";
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lykmapipo/themify-icons@0.1.2/css/themify-icons.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+        rel="stylesheet" />
+     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <!-- Latest compiled JavaScript -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
+    @* <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> *@
+    <link href="../logo_main.ico" rel="shortcut icon" type="image/x-icon" />
+    <link rel="stylesheet" href="../css/Chatting.css" />
+    <title>Chatting - Talktif</title>
+}
+
+
+<div class="chatting_box">
+    <div class="theme" title="Màu nền">
+        <span class="material-icons">
+            add
+        </span>
+    </div>
+    <div class='box_theme'>
+        <div class='item item1 light'><img src="../img/sunny.png" alt=""></div>
+        <div class='item item2 dark'><img src="../img/moon.png" alt=""></div>
+    </div>
+    <div class="group-chat col-lg-6 col-xs-8 col-md-8 col-sm-8">
+        <div class="row">
+            <div class="box-secret message-box">
+                <div class="chat-header">
+                    <div class="theme-title">
+                        <p>Người lạ</p>
+                    </div>
+                    <div class="theme-content">
+                        <div class="theme-mobile" title="Màu nền">
+                            <span class="material-icons">
+                                add
+                            </span>
+                        </div>
+                        <div class='box_theme_mobile'>
+                            <div class='item item1 light'><img src="../img/sunny.png" alt=""></div>
+                            <div class='item item2 dark'><img src="../img/moon.png" alt=""></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="message-box-content">
+                    @* <div class="message-row your-message">
+                        <div class="message-text">
+                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vitae id totam sint impedit
+                        consequuntur culpa quia, sed corrupti doloremque odio delectus iusto esse alias natus
+                        voluptatibus earum modi
+                        </div>
+                        </div>
+                        <div class="message-row other-message">
+                        <div class="message-text">
+                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vitae id totam sint impedit
+                        consequuntur culpa quia, sed corrupti doloremque odio delectus iusto esse alias natus
+                        voluptatibus earum modi
+                        </div>
+                        </div> *@
+                </div>
+                <form class="message-box-action">
+                    <input type="text" id="message" class="message" placeholder="Nhập tin nhắn..." />
+                     <div class="dropdown" style= "opacity: 1; position: absolute; right: 60px;">
+                            <span class="position-relative px-1" id="navbarDropdown" 
+                            role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span style="opacity : 0.4">😄</span>
+                            </span>
+
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <div class="reactions dropdown-item" style="display: grid;grid-template-columns: repeat(4,1fr);text-align: center;cursor: pointer;">
+                                    <span>❤️</span> 
+                                    <span>😆</span>
+                                    <span>😯</span>
+                                    <span>😢</span>
+                                    <span>😡</span> 
+                                    <span>👍</span>
+                                    <span>👎</span>
+                                    <span>😄</span>
+                                    <span>😂</span> 
+                                    <span>😍</span>
+                                    <span>😘</span>
+                                    <span>😭</span>
+                                    <span>😤</span> 
+                                    <span>🤤</span>
+                                    <span>👻</span>
+                                    <span>💀</span>
+                                 </div>
+                            </div>           
+                    </div>
+                    <button id="sendButton" class="send_message" type="submit">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </form>
+            </div>
+            @* TODO: Custom scrollbar for chatbox *@
+        </div>
+        <div class="row mt-2 w-100">
+            <div class="group-btn-interactive">
+                @if (Model != null)
+                {
+                    <button class="interactive" data-toggle="modal" data-target="#reportModal" title="Báo cáo"><i class="fas
+                fa-flag-checkered"></i></button>
+                    <!-- Report Modal -->
+                    <div class="modal fade" id="reportModal" tabindex="-1" role="dialog" aria-labelledby="reportTitle"
+                    aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="reportTitle">Báo cáo người dùng</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="input-group">
+                                        <label class="d-block w-100" for="reportReason">Lí do</label><br/>
+                                        <input type="text" class="form-control w-100" placeholder="Lỗi mà người dùng vi phạm"
+                                        id="reportReason"/>
+                                    </div>
+                                    <div class="input-group mt-3">
+                                        <label class="d-block w-100" for="reportNote">Ghi chú</label><br/>
+                                        <textarea class="w-100 p-2" placeholder="Ghi chú thêm chi tiết vi phạm (nếu có)"
+                                        id="reportNote"></textarea>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                                    <button type="button" class="btn btn-success" id="reportBtn" data-dismiss="modal">Gửi</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                @if (Model != null)
+                {
+                    <!-- Button trigger modal -->
+                    <button type="button" class="interactive" data-toggle="modal" data-target="#filterModal" title="Tùy chọn ghép đôi">
+                        <i class="fas fa-wrench"></i>
+                    </button>
+                    <!-- Setting Modal -->
+                    <div class="modal fade" id="filterModal" tabindex="-1" role="dialog" aria-labelledby="filterTitle"
+                    aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="filterTitle">Tùy chọn ưu tiên ghép đôi người dùng</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input filter-option"
+                                        id="hobbiesOption">
+                                        <label class="custom-control-label" for="hobbiesOption">Có sở thích chung</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input filter-option"
+                                        id="addressOption">
+                                        <label class="custom-control-label" for="addressOption">Có địa chỉ chung</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input filter-option" id="femaleOption">
+                                        <label class="custom-control-label" for="femaleOption">Có giới tính chung</label>
+                                    </div>
+                                    <i>Tính năng chỉ áp dụng với những người sử dụng tùy chọn này</i>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                                    <button type="button" class="btn btn-danger" id="saveFilter" data-dismiss="modal"
+                                    title="Hành động này sẽ thoát khỏi phòng chat hiện tại và tiến hành đợi ghép phòng mới">Lưu
+                                        tùy chọn</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                @if (Model != null)
+                {
+                    <button id="addFriendButton" class="interactive" title="Kết bạn"><i
+                        class="fas fa-user-plus"></i></button>
+                }
+                <button id="skipButton" class="btn-next-person d-flex justify-content-center align-items-center"
+                    type="submit">
+                    <p class="text mr-2 mb-0">Bỏ qua</p><img class="icon_next" src="/img/right-arrow.png" alt=""
+                        srcset="">
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<script src="~/js/signalr/dist/browser/signalr.js"></script>
+@if (Model != null)
+{
+    <script type="text/javascript">
+        var userID = @Model.id, username = "@Model.name", token = "@Model.token", userHobbies = "@Model.hobbies", userAddress = "@Model.cityId", userGender = "@(Model.gender ? "Female" : "Male")";
+    </script>
+}
+else
+{
+    <script type="text/javascript">
+        var userID = 0, username = null, token = null, userHobbies = null, userGender = null, userAddress = null;
+    </script>
+}
+<script src="~/js/chat1.js"></script>
+<script src="~/js/valid.js"></script>
+<script>
+  $(document).ready(function (){
+     $('.dark').click(function () {
+            $('nav').addClass('bg-dark');
+            $('.chatting_box').addClass('bg-dark');
+            $('.message-title span').attr("style", "color:white !important");
+            $('.message-box-content').attr("style", "background : #242526");
+            $('.message-box-action').attr("style", "background : #242526");
+             $('.group-btn-interactive').attr("style", "background : #343A40");
+            $('.message-box-action input').addClass('dark-message');
+            $('.other-message .message-text').addClass('dark-message');
+        });
+        $('.light').click(function () {
+            $('nav').removeClass('bg-dark');
+            $('.chatting_box').removeClass('bg-dark');
+            $('.message-title span').removeAttr("style", "color:white !important");
+            $('.message-box-content').removeAttr("style", "background : #242526");
+            $('.message-box-action').removeAttr("style", "background : #242526");
+            $('.group-btn-interactive').removeAttr("style", "background : #343A40");
+            $('.message-box-action input').removeClass('dark-message');
+            $('.other-message .message-text').removeClass('dark-message');
+        });
+
+        $('.reactions span').click(function (){
+            var icon = $(this).text();
+            var text = $('#message').val();
+            $('#message').val(function(i,val){
+                return val + icon;
+            })
+        }) 
+
+  })
+  document.querySelector(".theme").addEventListener("click", function (e) {
+  document.querySelector(".box_theme").classList.toggle("box-active");
+  document.querySelector(".theme").classList.toggle("theme-active");
+});
+ document.querySelector(".theme-mobile").addEventListener("click", function (e) {
+  document.querySelector(".box_theme_mobile").classList.toggle("box-active");
+  document.querySelector(".theme-mobile").classList.toggle("theme-active");
+ });
+</script>

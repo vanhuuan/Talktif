@@ -1,0 +1,173 @@
+@using Talktif.Models;
+@model User_Infor;
+@{
+    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+    List<City> cities = new List<City>();
+    if (ViewBag.Cities != null)
+    {
+        cities = ViewBag.Cities;
+    }
+    User_Infor user = new User_Infor();
+    user = ViewBag.Data;
+    ViewData["Name"] = user.name;
+    string a = "";
+    foreach (var i in cities)
+    {
+        if (i.id == user.cityId) a = i.name;
+    }
+    string name = (user != null) ? user.name : "";
+    ViewData["city"] = a;
+    string Message = (ViewBag.message != null) ? ViewBag.message : "";
+
+    bool sport = user.hobbies.IndexOf("Sport") >= 0;
+    bool study = user.hobbies.IndexOf("Study") >= 0;
+    bool movie = user.hobbies.IndexOf("Movie") >= 0;
+    bool music = user.hobbies.IndexOf("Music") >= 0;
+    bool game = user.hobbies.IndexOf("Game") >= 0;
+    bool reading = user.hobbies.IndexOf("Reading") >= 0;
+    bool shopping = user.hobbies.IndexOf("Shopping") >= 0;
+    bool travel = user.hobbies.IndexOf("Travel") >= 0;
+
+    
+    <link rel="stylesheet" href="../css/Setting.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+}
+<div class="container-fluid">
+    <div class="row row-wrapper">
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 tablet">
+            <div class="user-profile">
+                <h2 class="title">Thông tin cá nhân</h2>
+                <form asp-controller="User" asp-action="Index" class="form" method="POST">
+                    <div class="user-info">
+                        <span class="details">Tên người dùng :</span>
+                        <div class="name">
+                            <input id="username" name="name" type="text" value="@name" placeholder="Username" required
+                                disabled />
+                            <i class="fas fa-edit username"></i>
+                        </div>
+                    </div>
+                    <div class="user-info">
+                        <span class="details">Email :</span>
+                        <input id="email" name="email" type="email" value=@((user == null) ? "" : user.email)
+                            placeholder="Email" required disabled />
+                    </div>
+                    <div class="user-info">
+                        <span class="details">Mật khẩu cũ (bắt buộc) :</span>
+                        <div class="password">
+                            <input id="password" name="pass" type="password" placeholder="Password" />
+                            <span class="material-icons visibility" onclick="toggle()">
+                                visibility_off
+                            </span>
+                        </div>
+                    </div>
+                    <div class="user-info">
+                        <span class="details">Mật khẩu mới :</span>
+                        <input id="newpassword" name="newpass" type="password" placeholder="New Password" />
+                    </div>
+                    <div class="user-info">
+                        <span class="details">Xác nhận mật khẩu mới :</span>
+                        <input id="confirmpassword" name="confirmpassword" type="password"
+                            placeholder="Confirm Password" />
+                    </div>
+                    <div class="gender-details">
+                        <span class="gender-title">Giới tính :</span>
+                        <div class="category">
+                            <label>
+                                @Html.RadioButton("Gender","Male",user.gender)
+                                <td>
+                                    Nam
+                                </td>
+                            </label>
+                            <label>
+                                @Html.RadioButton("Gender","Female",!user.gender)
+                                <td>
+                                    Nữ
+                                </td>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="city-setting d-flex align-items-center mb-3 mt-3 ">
+                        <div class="city-title">
+                            <span>Nơi ở:</span>
+                        </div>
+                        <select name="format" id="format" class="select-setting">
+                            @foreach (var city in cities)
+                            {
+                                <option value="@city.id" selected="@((user != null) && (user.cityId == city.id))">
+                                    @city.name
+                                </option>
+                            }
+                        </select>
+                    </div>
+                    <div class="hobbies-checkboxes row">
+                        <span class="gender-title d-block w-100">Sở thích :</span>
+                        <div class="hobbies">
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="Sport" name="Sport" value="Sport" checked="@sport">
+                            <label class="custom-control-label" for="Sport">Thể thao</label>
+                        </div>
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="Study" name="Study" value="Study" checked="@study">
+                            <label class="custom-control-label" for="Study">Học tập</label>
+                        </div>
+
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="Movie" name="Movie" value="Movie" checked="@movie">
+                            <label class="custom-control-label" for="Movie">Xem phim</label>
+                        </div>
+
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="Game" name="Game" value="Game" checked="@game">
+                            <label class="custom-control-label" for="Game">Game</label>
+                        </div>
+
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="Music" name="Music" value="Music" checked="@music">
+                            <label class="custom-control-label" for="Music">Nghe nhạc</label>
+                        </div>
+
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="Reading" name="Reading"
+                                value="Reading" checked="@reading">
+                            <label class="custom-control-label" for="Reading">Đọc sách</label>
+                        </div>
+
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="Shopping" name="Shopping"
+                                value="Shopping" checked="@shopping">
+                            <label class="custom-control-label" for="Shopping">Mua sắm</label>
+                        </div>
+
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="Travel" name="Travel"
+                                value="Travel" checked="@travel">
+                            <label class="custom-control-label" for="Travel">Du lịch</label>
+                        </div>
+                        </div>
+                    </div>
+                    <div class="submit mt-3"><input type="submit" value="Lưu" class="Update-Profile" /></div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    if ("@Message" != "") alert("@Message");
+    var state = false;
+    function toggle() {
+        if(state){
+            document.querySelector('#password').setAttribute("type", "password");
+            document.querySelector('#newpassword').setAttribute("type", "password");
+            document.querySelector('#confirmpassword').setAttribute("type", "password");
+            document.querySelector('.visibility').innerHTML = 'visibility_off';
+            state = false;
+        }
+        else{
+            document.querySelector('#password').setAttribute("type", "text");
+            document.querySelector('#newpassword').setAttribute("type", "text");
+            document.querySelector('#confirmpassword').setAttribute("type", "text");
+            document.querySelector('.visibility').innerHTML = 'visibility';
+            state = true;
+        }
+    }
+</script>

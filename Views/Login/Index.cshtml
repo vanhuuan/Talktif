@@ -1,0 +1,289 @@
+@using Talktif.Models;
+@{
+    Layout = null;
+    string Message = (ViewBag.Message != null) ? ViewBag.Message : "";
+    List<City> cities = new List<City>();
+    if (ViewBag.Cities != null)
+    {
+        cities = ViewBag.Cities;
+    }
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lykmapipo/themify-icons@0.1.2/css/themify-icons.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="../css/Login.css" />
+    <title>Đăng nhập - Talktif</title>
+    <link href="../logo_main.ico" rel="shortcut icon" type="image/x-icon" />
+</head>
+
+<body>
+    <section>
+        <img src="../img/shape.png" class="square" alt="" />
+        <div class="form_1">
+            <header>
+                <div class="logo">
+                    <a href=""><img src="../img/logo_main.png" alt="" srcset="" class="logo_main" /></a>
+                </div>
+            </header>
+            <div class="container">
+                <div class="row main-section">
+                    <div class="textbox col-lg-7 col-md-7 col-sm-7 col-xs-7">
+                        <div class="instruction_app">
+                             <strong>Talktif</strong> là web app cho phép tìm bạn bè, kết bạn, nhắn tin với
+                        những người lạ, giúp bạn dễ dàng tìm thấy những bạn bè hoặc một nửa của mình.
+                        Trang web cho phép bạn nhắn tin kết nối với người lạ thông qua các tính năng tìm kiếm đa dạng,
+                        hứa hẹn sẽ đem lại cho bạn trải nghiệm đáng nhớ.
+                         </div>
+                    </div>
+                    <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                        <img src="../img/background-removebg-preview.png" class="img-background" alt="" />
+                    </div>
+                </div>
+            </div>
+            <div class="btn-group">
+                <a class="submit mt-4 resize_font mr-1 action_home" href="/Chat">Bắt đầu</a>
+                <button id="dangnnhap" data-toggle="collapse" aria-expanded="false"
+                    class="mt-4 ml-3 resize_font submit">
+                    Đăng nhập
+                </button>
+            </div>
+            <hr class="mt-3 mb-0" />
+            <footer>
+                <div class="copyright">&copy;TalkTif-2021</div>
+            </footer>
+        </div>
+    </section>
+    <!-- // Form Login -->
+    <div id="wrapper" class="cont">
+        <div class="img-mobile">
+            <div class="img-text m-up-sign-up">
+                <h5>Mới dùng?</h5>
+                <p>Hãy đăng kí để dùng nhiều tính năng hơn nhé!</p>
+            </div>
+            <div class="img-text m-up-sign-in">
+                <h5>Đã từng dùng?</h5>
+                <p>
+                    Nếu đã có tài khoản thì hãy đăng nhập đi nào!
+                </p>
+            </div>
+            <div class="img-btn-mobile">
+                <span class="m-up-sign-up">Đăng kí</span>
+                <span class="m-in-sign-in">Đăng nhập</span>
+            </div>
+        </div>
+        <div class="form sign-in">
+            <div class="back_home">
+                <span class="ti-arrow-left icon"></span>
+            </div>
+            <h2>Đăng nhập</h2>
+            <form action="/Login/Sign_In" method="POST" class="form_user">
+                <input id="login_email" type="email" name="Email" placeholder="Email Address" value=""
+                    oninput="CheckEmail(event)" />
+                <div id="error_email" class="text-center font-error"></div>
+                <div class="password">
+                     <input id="login_password" type="password" name="password" placeholder="Password" value=""
+                    oninput="CheckPassword(event)" />
+                <span class="material-icons visibility" onclick="toggle()">
+                    visibility_off
+                </span>
+                </div>
+                <div id="error_password" class="text-center font-error"></div>
+                <button type="submit" id="btnDangNhap" class="submit">
+                    Đăng nhập
+                </button>
+            </form>
+            <p class="forgot-pass"><a asp-controller="Login" asp-action="ForgotPass">Quên mật khẩu</a></p>
+        </div>
+        <div class="sub-cont">
+            <div class="img">
+                <div class="exit"><img src="../img/remove-button.png" alt="" /></div>
+                <div class="img-text m-up">
+                    <h2>Mới dùng?</h2>
+                    <p>Hãy đăng kí để dùng nhiều tính năng hơn nhé!</p>
+                </div>
+                <div class="img-text m-in">
+                    <h2>Đã từng dùng?</h2>
+                    <p>
+                        Nếu đã có tài khoản thì hãy đăng nhập đi nào!
+                    </p>
+                </div>
+                <div class="img-btn">
+                    <span class="m-up">Đăng kí</span>
+                    <span class="m-in">Đăng nhập</span>
+                </div>
+            </div>
+            <div class="form sign-up">
+                <h2>Đăng kí</h2>
+                <form action="/Login/Sign_Up" method="post" id="form_login">
+                    <input id="name" type="text" name="Name" placeholder="Name" oninput="CheckName(event)" />
+
+                    <input id="email" type="email" name="Email" placeholder="Email"
+                        oninput="CheckEmail_SignUp(event)" />
+                    <div id="error_name" class="text-center font-error"></div>
+                    <div id="error_email_sign_up" class="text-center font-error"></div>
+
+                    <input id="password" type="password" name="Password" placeholder="Password"
+                        oninput="CheckPassword_SignUp()" />
+
+                    <input id="confirm_password" type="password" placeholder="Confirm Password"
+                        oninput="CheckConfirmPassword(event)" />
+                    <div id="error_password_sign_up" class="text-center font-error"></div>
+                    <div id="error_confirm_password" class="text-center font-error"></div>
+                    <div class="gender-details">
+                        <span class="gender-title">Giới tính</span>
+                        <div class="category">
+                            <label>
+                                @Html.RadioButton("Gender","Male",true)
+                                <td>
+                                    Nam
+                                </td>
+                            </label>
+                            <label>
+                                @Html.RadioButton("Gender","Female")
+                                <td>
+                                    Nữ
+                                </td>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="city row">
+                        <span class="gender-title d-block w-100 mb-3">Nơi ở</span><br/>
+                        <select name="format" id="format">
+                            @foreach (var city in cities)
+                            {
+                                <option value="@city.id">
+                                    @city.name
+                                </option>
+                            }
+                        </select>
+                    </div>
+                    <div class="hobbies-checkboxes row">
+                        <span class="gender-title d-block w-100 mt-3">Sở thích</span>
+                      <div class="hobbies">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="Sport" name="Sport" value="Sport">
+                                <label class="custom-control-label" for="Sport">Thể thao</label>
+                            </div>
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="Study" name="Study" value="Study">
+                                <label class="custom-control-label" for="Study">Học tập</label>
+                            </div>
+
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="Movie" name="Movie" value="Movie">
+                                <label class="custom-control-label" for="Movie">Xem phim</label>
+                            </div>
+
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="Game" name="Game" value="Game">
+                                <label class="custom-control-label" for="Game">Game</label>
+                            </div>
+
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="Music" name="Music" value="Music">
+                                <label class="custom-control-label" for="Music">Nghe nhạc</label>
+                            </div>
+
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="Reading" name="Reading" value="Reading">
+                                <label class="custom-control-label" for="Reading">Đọc sách</label>
+                            </div>
+
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="Shopping" name="Shopping" value="Shopping">
+                                <label class="custom-control-label" for="Shopping">Mua sắm</label>
+                            </div>
+
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="Travel" name="Travel" value="Travel">
+                                <label class="custom-control-label" for="Travel">Du lịch</label>
+                            </div>
+                      </div>
+                    </div>
+                    <button id="Confirm_SignIn" type="submit" class="submit submit_sign_up" data-toggle="collapse"
+                        aria-expanded="false">
+                        Đăng kí ngay
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    </div>
+    <script>
+        if ("@Message" != "") alert("@Message");
+        $(document).ready(function () {
+            $("button").click(function () {
+                $("#wrapper").show();
+                $("section").addClass("blurs");
+            });
+            $(".exit").click(function () {
+                $("#wrapper").hide();
+                $("section").removeClass("blurs");
+            });
+            var width = $(window).width();
+            $("#wrapper").hide();
+            $(".img .exit").click(function () {
+                $(".form_1").show();
+                $("#wrapper").hide();
+            })
+            $("#dangnnhap").click(function () {
+                $(".form_1").hide();
+                $("#wrapper").show();
+                if (width <= 880) {
+                    $("section").hide();
+                    $("section").attr("style", "display: none !important");
+                }
+                else {
+                    $("section").removeAttr("style", "display:  none");
+                }
+            })
+
+            $(".img-btn-mobile").click(function () {
+                $(".cont").toggleClass("sign-up");
+            })
+            $('.back_home').click(function () {
+                  $(".form_1").show();
+                $("#wrapper").hide();
+                 $("section").removeAttr("style", "display:  none");
+            })
+        });
+
+
+        var state = false;
+
+        function toggle() {
+            if (state) {
+                document.querySelector('#login_password').setAttribute("type", "password");
+                document.querySelector('.visibility').innerHTML = 'visibility_off';
+                state = false;
+            } else {
+                document.querySelector('#login_password').setAttribute("type", "text");
+                 document.querySelector('.visibility').innerHTML = 'visibility';
+                state = true;
+            }
+        }
+
+    </script>
+    <script type="text/javascript" src="../js/valid.js"></script>
+</body>
+
+</html>

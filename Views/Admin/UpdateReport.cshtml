@@ -1,0 +1,77 @@
+@using Talktif.Models
+@{
+    ViewData["LoggedIn"] = false;
+    Layout = "~/Views/Shared/ChatLayout.cshtml";
+    <link href="../logo_main.ico" rel="shortcut icon" type="image/x-icon" />
+    <title>Chatting</title>
+    Report_Infor infor = new Report_Infor();
+    if (ViewBag.Infor != null) infor = ViewBag.Infor;
+    string Message = (ViewBag.Message != null) ? ViewBag.Message : "";
+    <link rel="stylesheet" href="../css/AdminUpdateReport.css" />
+}
+<div class="wrapper_update">
+    <form action="/Admin/UpdateReport" class="form" method="POST">
+        <div class="user-info">
+            <span class="details">Reporter :</span>
+            <div class="name">
+                <input id="Reporter" name="Reporter" type="text" value=@((infor != null) ? infor.reporter.ToString() : "") required disabled />
+            </div>
+        </div>
+        <div class="user-info">
+            <span class="details">Suspect :</span>
+            <input id="Suspect" name="Suspect" type="text" value=@((infor == null) ? "" : infor.suspect.ToString())
+                required disabled />
+        </div>
+        <div class="user-info">
+            <span class="details">Reason :</span>
+            <textarea name="reason" id="reason" cols="30" rows="5" required disabled>@infor.reason</textarea>
+        </div>
+        <div class="user-info">
+            <span class="details">Notes :</span>
+            <textarea name="notes" id="notes" cols="30" rows="5">@infor.note</textarea>
+        </div>
+        <div class="status-details">
+            <span class="status-title">Status :</span>
+            <div class="category">
+                <label>
+                    @Html.RadioButton("Status","True",infor.status)
+                    <td>
+                        True
+                    </td>
+                </label>
+                <label>
+                    @Html.RadioButton("Status","False",!infor.status)
+                    <td>
+                        False
+                    </td>
+                </label>
+            </div>
+        </div>
+        <div class="group-btn-update">
+            <a asp-controller="Admin" asp-action="Home"
+                class="btn-back d-flex justify-content-center align-items-center">
+                <p class="text ml-2 mb-0">
+                    Back to Home
+                </p>
+            </a>
+            <button class="btn-next-person d-flex justify-content-center align-items-center" type="submit"
+                onclick="HandleReport(event)">
+                <p class="text mr-2 mb-0">
+                    OK
+                </p>
+            </button>
+        </div>
+    </form>
+</div>
+<script>
+    function HandleReport(event) {
+        var success = window.confirm("Are you want to update report?");
+        if (success == true) {
+            alert("Update successfully");
+        }
+        else {
+            event.preventDefault();
+        }
+    }
+    if ("@Message" != "") alert("@Message");
+</script>
