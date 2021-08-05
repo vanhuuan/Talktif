@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace Talktif.Models
@@ -8,7 +9,7 @@ namespace Talktif.Models
         public string Filter { get; set; }
         public List<string> SkipID { get; set; }
         public int UserID { get; set; }
-        public string UserName { get; set; }
+        public String UserName { get; set; }
         public bool FriendRequest { get; set; }
         public WaitUser()
         {
