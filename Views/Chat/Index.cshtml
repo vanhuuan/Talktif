@@ -1,3 +1,4 @@
+@using System.Web;
 @using Talktif.Models;
 @model User_Infor;
 @{
@@ -204,7 +205,7 @@
 @if (Model != null)
 {
     <script type="text/javascript">
-        var userID = @Model.id, username = "@Model.name", token = "@Model.token", userHobbies = "@Model.hobbies", userAddress = "@Model.cityId", userGender = "@(Model.gender ? "Female" : "Male")";
+        var userID = @Model.id, username = '@Html.Raw(HttpUtility.JavaScriptStringEncode(Model.name))', token = "@Model.token", userHobbies = "@Model.hobbies", userAddress = "@Model.cityId", userGender = "@(Model.gender ? "Female" : "Male")";
     </script>
 }
 else

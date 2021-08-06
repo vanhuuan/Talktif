@@ -32,6 +32,10 @@ namespace Talktif.Repository
                 client.BaseAddress = new Uri(UriString);
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                 System.Console.WriteLine("CreateChatRoomAPICalled");
+                System.Console.WriteLine(chatroom.User1Id);
+                System.Console.WriteLine(chatroom.User2Id);
+                System.Console.WriteLine(chatroom.User1NickName);
+                System.Console.WriteLine(chatroom.User2NickName);
                 System.Console.WriteLine(token);
                 return await client.PostAsJsonAsync("CreateChatRoom", chatroom);
             }
