@@ -38,7 +38,7 @@ namespace Talktif.Controllers
                 ViewBag.Cities = await _userService.GetCity();
                 return View("Index");
             }
-            LoginRequest lr = new LoginRequest() { Email = form["Email"].ToString(), Password = form["Password"].ToString(), Device = (System.Environment.MachineName).ToString() };
+            LoginRequest lr = new LoginRequest() { Email = form["Email"].ToString(), Password = form["Password"].ToString(), Device = (System.Net.Dns.GetHostName()).ToString() };
             var loginResult =await _userService.Sign_In(lr);
             string a = loginResult.Content.ReadAsStringAsync().Result;
             if (loginResult.IsSuccessStatusCode)
