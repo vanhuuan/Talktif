@@ -174,6 +174,7 @@ namespace Talktif.Hubs
                         room.Members[0].UserName,
                         room.Members[1].UserName,
                         token);
+                    await Clients.Group(room.ID).BroadcastMessage($"2 bạn đã trở thành bạn bè!");
                 }
             }
 
