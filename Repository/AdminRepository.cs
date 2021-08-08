@@ -9,8 +9,8 @@ namespace Talktif.Repository
     public interface IAdminRepo
     {
         Task<HttpResponseMessage> Statistic(string token);
-        Task<HttpResponseMessage> GetAllUser(long From, long To, string token);
-        Task<HttpResponseMessage> GetAllReport(long From, long To, string token);
+        Task<HttpResponseMessage> GetAllUser(long Top, string token,string filtter,string search);
+        Task<HttpResponseMessage> GetAllReport(long Top, string token,string filtter,string search);
         Task<HttpResponseMessage> UpdateReport(UpdateReportRequest request, string token);
         Task<HttpResponseMessage> UpdateUser(UpdateUserRequest request, string token);
         Task<HttpResponseMessage> DeleteUser(int id, string token);
@@ -31,22 +31,22 @@ namespace Talktif.Repository
                 return await client.GetAsync("Count");
             }
         }
-        public async Task<HttpResponseMessage> GetAllUser(long From, long To, string token)
+        public async Task<HttpResponseMessage> GetAllUser(long Top, string token,string filter,string search)
         {
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(UriString);
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-                return await client.GetAsync("GetAllUser/" + From + "/" + To + "/UserId");
+                return await client.GetAsync("GetAllUser/"+Top + "/UserId/"+filter+"/"+search);
             }
         }
-        public async Task<HttpResponseMessage> GetAllReport(long From, long To, string token)
+        public async Task<HttpResponseMessage> GetAllReport(long Top, string token,string filter,string search)
         {
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(UriString);
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-                return await client.GetAsync("GetAllReport/" + From + "/" + To + "/ReportId");
+                return await client.GetAsync("GetAllReport/"+Top+ "/ReportId/"+filter+"/"+search);
             }
         }
         public async Task<HttpResponseMessage> UpdateReport(UpdateReportRequest request, string token)

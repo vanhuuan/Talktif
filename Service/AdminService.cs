@@ -12,11 +12,11 @@ namespace Talktif.Service
     public interface IAdminService
     {
         Task<Statistic> GetStatisticData(HttpRequest Request, HttpResponse Response);
-        Task<List<user>> GetAllUser(HttpRequest Request, HttpResponse Response);
+        Task<List<user>> GetAllUser(HttpRequest Request, HttpResponse Response,String Filter,String Search);
         Task<User_Infor> GetUserInfo(HttpRequest Request, HttpResponse Response, int ID_User);
         Task<bool> UpdateUser(HttpRequest Request, HttpResponse Response, UpdateUserRequest updateRequest);
         Task<bool> DeleteUser(HttpRequest Request, HttpResponse Response, int ID);
-        Task<List<Report_Infor>> GetAllReport(HttpRequest Request, HttpResponse Response);
+        Task<List<Report_Infor>> GetAllReport(HttpRequest Request, HttpResponse Response,String Filter,String Search);
         Task<Report_Infor> GetReportInfo(HttpRequest Request, HttpResponse Response, int ID_Report);
         Task<bool> UpdateReport(HttpRequest Request, HttpResponse Response, UpdateReportRequest updateRequest);
         Task<long> GetNumberofUser(HttpRequest Request, HttpResponse Response);
@@ -61,15 +61,14 @@ namespace Talktif.Service
                 return new Statistic();
             }
         }
-        public async Task<List<user>> GetAllUser(HttpRequest Request, HttpResponse Response)
+        public async Task<List<user>> GetAllUser(HttpRequest Request, HttpResponse Response,String Filter,String Search)
         {
             try
             {
-                long first = await GetNumberofUser(Request,Response);
-                long last = 0;
+                long top = await GetNumberofUser(Request,Response);
                 List<user> users = new List<user>();
                 Cookie_Data cookie_Data = _userService.ReadUserCookie(Request);
-                var result = await _adminRepo.GetAllUser(first, last, cookie_Data.token);
+                var result = await _adminRepo.GetAllUser(top, cookie_Data.token,Filter,Search);
                 string a = result.Content.ReadAsStringAsync().Result;
                 if (result.IsSuccessStatusCode)
                 {
@@ -81,9 +80,10 @@ namespace Talktif.Service
                 }
                 else
                 {
+                    Console.WriteLine(result.StatusCode);
                     await _userService.RefreshToken(Response, cookie_Data);
                     cookie_Data = _userService.ReadUserCookie(Request);
-                    result = await _adminRepo.GetAllUser(first, last, cookie_Data.token);
+                    result = await _adminRepo.GetAllUser(top, cookie_Data.token,Filter,Search);
                     a = result.Content.ReadAsStringAsync().Result;
                     users = JsonConvert.DeserializeObject<List<user>>(a);
                     for (int i = 0; i < users.Count; i++)
@@ -169,26 +169,24 @@ namespace Talktif.Service
                 return false;
             }
         }
-        public async Task<List<Report_Infor>> GetAllReport(HttpRequest Request, HttpResponse Response)
+        public async Task<List<Report_Infor>> GetAllReport(HttpRequest Request, HttpResponse Response,String Filter,String Search)
         {
             try
             {
-                long first = await GetNumberofReport(Request,Response);
-                long last = 0;
+                long top = await GetNumberofReport(Request,Response);
                 List<Report_Infor> reports = new List<Report_Infor>();
                 Cookie_Data cookie_Data = _userService.ReadUserCookie(Request);
-                var result = await _adminRepo.GetAllReport(first, last, cookie_Data.token);
+                var result = await _adminRepo.GetAllReport(top, cookie_Data.token,Filter,Search);
                 string a = result.Content.ReadAsStringAsync().Result;
                 if (result.IsSuccessStatusCode)
                 {
-                    ;
                     reports = JsonConvert.DeserializeObject<List<Report_Infor>>(a);
                 }
                 else
                 {
                     await _userService.RefreshToken(Response, cookie_Data);
                     cookie_Data = _userService.ReadUserCookie(Request);
-                    result = await _adminRepo.GetAllReport(first, last, cookie_Data.token);
+                    result = await _adminRepo.GetAllReport(top, cookie_Data.token,Filter,Search);
                     a = result.Content.ReadAsStringAsync().Result;
                     reports = JsonConvert.DeserializeObject<List<Report_Infor>>(a);
                 }

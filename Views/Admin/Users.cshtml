@@ -17,17 +17,19 @@
 }
 <div class="container admin-user">
      <header>
+        <form action="/Admin/SearchUser" method="POST">
             <div class="search-wrapper">
                 <span class="ti-search"></span>
-                <input id="search" type="search" placeholder="Search" oninput="FilterSearch()" />
+                <input id="search" type="search" placeholder="Search" name = "search"/>
             </div>
             <div class="filter">
-                <select name="filter" id="filter" onchange="Filter()">
+                <select name="filter" id="filter">
                    <option value="ID">ID</option>
                    <option value="Name">Name</option>
                    <option value="Email">Email</option>
                 </select>
             </div>
+        </form>
     </header>
     <div class="table-wrapper">
         <div class="table-title">

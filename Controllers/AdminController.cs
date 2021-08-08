@@ -35,13 +35,11 @@ namespace Talktif.Controllers
             ViewBag.Statistic = await _adminService.GetStatisticData(Request, Response);
             return View();
         }
-        public async Task<IActionResult> Users()
+        public async Task<IActionResult> Users(String filter="ID",String search="null")
         {
             if (_userService.IsAdmin(Request) != true) return NotFound();
-
             List<user> us = new List<user>();
-            us = await _adminService.GetAllUser(Request, Response);
-
+            us = await _adminService.GetAllUser(Request, Response,filter,search);
             List<user> users = new List<user>();
             for(int i = us.Count -1;i>=0;i--)
             {
@@ -50,6 +48,16 @@ namespace Talktif.Controllers
             ViewBag.Users = users;
             ViewBag.Cities = await _userService.GetCity();
             return View();
+        }
+        [HttpPost, ActionName("SearchUser")]
+        public async Task<IActionResult> SearchUsers(IFormCollection form)
+        {
+            List<user> us = new List<user>();
+            var fil = form["filter"].ToString();
+            var sch = form["search"].ToString();
+            if(sch.Equals("")) sch="null";
+            await _adminService.GetStatisticData(null,null);
+            return RedirectToAction("Users",new {filter = fil, search = sch});
         }
         [HttpPost, ActionName("Users")]
         public async Task<IActionResult> CreateNewAdmin(IFormCollection form)
@@ -68,7 +76,7 @@ namespace Talktif.Controllers
             else
             {
                 ViewBag.Message = a;
-                ViewBag.Users = await _adminService.GetAllUser(Request, Response);
+                ViewBag.Users = await _adminService.GetAllUser(Request, Response,"ID","null");
                 ViewBag.Cities = await _userService.GetCity();
                 return View();
             }
@@ -123,12 +131,12 @@ namespace Talktif.Controllers
             if (result == false) Console.WriteLine("An error has occur !");
             return RedirectToAction("Users");
         }
-        public async Task<IActionResult> ReportUser()
+        public async Task<IActionResult> ReportUser(String filter="ID",String search="null")
         {
             if (_userService.IsAdmin(Request) != true) return NotFound();
 
             List<Report_Infor> rep = new List<Report_Infor>();
-            rep = await _adminService.GetAllReport(Request, Response);
+            rep = await _adminService.GetAllReport(Request, Response,filter,search);
             List<Report_Infor> reports = new List<Report_Infor>();
             for(int i = rep.Count -1;i>=0;i--)
             {
@@ -136,6 +144,16 @@ namespace Talktif.Controllers
             }
             ViewBag.Reports = reports;
             return View();
+        }
+        [HttpPost, ActionName("SearchReport")]
+        public async Task<IActionResult> SearchReport(IFormCollection form)
+        {
+            List<user> us = new List<user>();
+            var fil = form["filter"].ToString();
+            var sch = form["search"].ToString();
+            if(sch.Equals("")) sch="null";
+            await _adminService.GetStatisticData(null,null);
+            return RedirectToAction("ReportUser",new {filter = fil, search = sch});
         }
         public async Task<IActionResult> UpdateReport(int ID)
         {
