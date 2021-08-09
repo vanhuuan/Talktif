@@ -68,6 +68,17 @@ main {
 
 .card-footer a {
     color: var(--main-color);
+    text-decoration: none;
+}
+
+.card-footer:hover {
+    background: var(--main-color);
+    transform: scale(1.07);
+    transition: transform 1.3s;
+}
+
+.card-footer:hover a {
+    color: white;
 }
 
 .recent {

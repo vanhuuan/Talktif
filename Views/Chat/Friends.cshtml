@@ -218,7 +218,7 @@
                 var message = document.createElement("span");
                 var time = document.createElement("div");
                 name.innerHTML += data[i].name_PartNer;
-                message.innerHTML += (data[i].Sender === data[i].ID_User ? "Bạn" : data[i].name_PartNer) + " : " + data[i].lastMessage;
+                message.innerHTML += (data[i].sender === data[i].iD_User ? "Bạn" : data[i].name_PartNer) + " : " + data[i].lastMessage;
                 nameUser.appendChild(name);
                 nameUser.appendChild(message);
                 time.className = "time-chat";

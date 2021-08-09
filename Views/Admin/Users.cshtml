@@ -16,21 +16,21 @@
     string Message = (String.IsNullOrEmpty(ViewBag.Message)) ? "" : ViewBag.Message;
 }
 <div class="container admin-user">
-     <header>
-        <form action="/Admin/SearchUser" method="POST">
-            <div class="search-wrapper">
-                <span class="ti-search"></span>
-                <input id="search" type="search" placeholder="Search" name = "search"/>
-            </div>
-            <div class="filter">
-                <select name="filter" id="filter">
-                   <option value="ID">ID</option>
-                   <option value="Name">Name</option>
-                   <option value="Email">Email</option>
-                </select>
-            </div>
-        </form>
-    </header>
+    <form action="/Admin/SearchUser" method="POST">
+        <header>
+                <div class="search-wrapper">
+                    <span class="ti-search"></span>
+                    <input id="search" type="search" placeholder="Search" name = "search"/>
+                </div>
+                <div class="filter">
+                    <select name="filter" id="filter">
+                    <option value="ID">ID</option>
+                    <option value="Name">Name</option>
+                    <option value="Email">Email</option>
+                    </select>
+                </div>
+        </header>
+     </form>
     <div class="table-wrapper">
         <div class="table-title">
             <div class="row">
